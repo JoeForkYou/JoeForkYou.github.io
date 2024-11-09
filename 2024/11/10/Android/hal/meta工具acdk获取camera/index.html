@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>meta工具acdk获取camera | JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC] 1 背景meta工具需要获取到cameraModuleInfo,然后把这个信息给到工具，工具需要字符串匹配检查.(meta这个工具自检就应该被废弃，太没有用了) 对于我们camera驱动来说，要完成的工作无非两点，一个就是创建节点，给予hal和上层ap的权限(selinux),其二就是把这个信息存好给返回给工具. 对于这个需求的难点.如果对我来说就是camerahalserver要在关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="meta工具acdk获取camera">
+<meta property="og:url" content="https://joeforkyou.github.io/2024/11/10/Android/hal/meta%E5%B7%A5%E5%85%B7acdk%E8%8E%B7%E5%8F%96camera/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:description" content="[TOC] 1 背景meta工具需要获取到cameraModuleInfo,然后把这个信息给到工具，工具需要字符串匹配检查.(meta这个工具自检就应该被废弃，太没有用了) 对于我们camera驱动来说，要完成的工作无非两点，一个就是创建节点，给予hal和上层ap的权限(selinux),其二就是把这个信息存好给返回给工具. 对于这个需求的难点.如果对我来说就是camerahalserver要在关">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2024-11-09T20:29:50.000Z">
+<meta property="article:modified_time" content="2024-11-09T20:31:15.109Z">
+<meta property="article:author" content="JoeNero">
+<meta property="article:tag" content="hal">
+<meta property="article:tag" content="camera">
+<meta property="article:tag" content="meta">
+<meta property="article:tag" content="acdk">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/butterfly-icon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://joeforkyou.github.io/2024/11/10/Android/hal/meta%E5%B7%A5%E5%85%B7acdk%E8%8E%B7%E5%8F%96camera/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'meta工具acdk获取camera',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">meta工具acdk获取camera</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">meta工具acdk获取camera</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-11-09T20:29:50.000Z" title="Created 2024-11-10 04:29:50">2024-11-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-09T20:31:15.109Z" title="Updated 2024-11-10 04:31:15">2024-11-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>[TOC]</p>
+<h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h1><p>meta工具需要获取到cameraModuleInfo,然后把这个信息给到工具，工具需要字符串匹配检查.(<strong>meta这个工具自检就应该被废弃，太没有用了</strong>)</p>
+<p>对于我们camera驱动来说，要完成的工作无非两点，一个就是创建节点，给予hal和上层ap的权限(selinux),其二就是把这个信息存好给返回给工具.</p>
+<p>对于这个需求的难点.如果对我来说就是camerahalserver要在关机状态下先自启一遍，保证把相关的Camera info先拷贝给节点.因为关机状态下的cameraProvider是不启动的.</p>
+<p>关机下init.rc 去启动cameraProvider的流程，我到现在都懒得去整理，没有好一点的项目练手这部分，找机会再说.</p>
+<h1 id="2-流程"><a href="#2-流程" class="headerlink" title="2 流程"></a>2 流程</h1><p>节点的创建，我这边不想再说了，这边做的节点就是一坨屎.</p>
+<p>老子要是有空就全部删了 重做.</p>
+<p>下面主要描述下meta的工作流程和camera的资源获取.</p>
+<p>meta的路径:</p>
+<p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;meta</p>
+<p>我这边主要先关注这个文件<strong>FtModule.cpp</strong></p>
+<p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;meta&#x2F;common&#x2F;src&#x2F;FtModule.cpp</p>
+<p>获取节点信息的代码非常简单，打开这个节点，获取copy过来就可以了.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CAM_INFO_PATH  <span class="string">&quot;/proc/cameraModuleInfo&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">char</span> <span class="title">read_cam_info</span><span class="params">(<span class="type">char</span>* peer_buf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">char</span> buf[<span class="number">255</span>];</span><br><span class="line">	<span class="type">ssize_t</span> byte_read = <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> inode = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (peer_buf == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> META_FAILED;</span><br><span class="line"></span><br><span class="line">	inode = <span class="built_in">open</span>(CAM_INFO_PATH, O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span> (inode &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="built_in">META_LOG</span>(<span class="string">&quot;[Meta][FT] read_cam_info open %s fail!&quot;</span>, CAM_INFO_PATH);</span><br><span class="line">		<span class="keyword">return</span> META_FAILED;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">memset</span>(buf, <span class="number">0</span>, <span class="built_in">sizeof</span>(buf));</span><br><span class="line">	byte_read = <span class="built_in">read</span>(inode, buf, <span class="built_in">sizeof</span>(buf) - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">META_LOG</span>(<span class="string">&quot;[Meta][FT] read_cam_info: %s&quot;</span>, buf);</span><br><span class="line">	<span class="built_in">close</span>(inode);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">sprintf</span>(peer_buf, <span class="string">&quot;%s&quot;</span>, buf);</span><br><span class="line">	<span class="keyword">return</span> META_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在这个函数执行对应cmd</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">FtModCustomer::exec</span><span class="params">(Frame **pFrm*)</span></span></span><br><span class="line"><span class="function">    ...</span></span><br><span class="line"><span class="function">    <span class="title">switch</span><span class="params">(req-&gt;cmd.m_u1Dummy)</span></span></span><br><span class="line"><span class="function">        ...</span></span><br><span class="line"><span class="function">            <span class="keyword">case</span> 4:</span></span><br><span class="line"><span class="function">			META_LOG(<span class="string">&quot;[Meta][FT] read cam info&quot;</span>);</span></span><br><span class="line">			<span class="keyword">if</span>(!<span class="built_in">acdkIFInit</span>())&#123; <span class="comment">//跟踪这个 </span></span><br><span class="line">			    ft_cnf.status = <span class="built_in">read_cam_info</span>(peer_buf); <span class="comment">//获取节点信息</span></span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			    ft_cnf.status = META_FAILED;</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure>
+
+<p>acdkIFInit 中使用了ioctrl 我自定义的ACDK_CMD_SET_HAL_INIT 来完成camerahal 的信息自启动获取.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">acdkIFInit</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ACDK_FEATURE_INFO_STRUCT rAcdkFeatureInfo;</span><br><span class="line">    <span class="type">bool</span> bRet;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> u4RetLen;</span><br><span class="line">    <span class="type">int</span> srcDev = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//====== Create ACDK Object ======</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Mdk_Open</span>() == <span class="literal">false</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">META_LOG</span>(<span class="string">&quot;Mdk_Open() Fail&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//====== Select Camera Sensor ======</span></span><br><span class="line">    rAcdkFeatureInfo.puParaIn = (MUINT8 *)&amp;srcDev;</span><br><span class="line">    rAcdkFeatureInfo.u4ParaInLen = <span class="built_in">sizeof</span>(<span class="type">int</span>);</span><br><span class="line">    rAcdkFeatureInfo.puParaOut = <span class="literal">NULL</span>;</span><br><span class="line">    rAcdkFeatureInfo.u4ParaOutLen = <span class="number">0</span>;</span><br><span class="line">    rAcdkFeatureInfo.pu4RealParaOutLen = &amp;u4RetLen;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">META_LOG</span>(<span class="string">&quot;%s : srcDev:%d\n&quot;</span>,__FUNCTION__,srcDev);</span><br><span class="line">    bRet = <span class="built_in">Mdk_IOControl</span>(ACDK_CMD_SET_SRC_DEV, &amp;rAcdkFeatureInfo);</span><br><span class="line">    <span class="keyword">if</span> (!bRet)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">META_LOG</span>(<span class="string">&quot;ACDK_FEATURE_SET_SRC_DEV Fail: %d\n&quot;</span>,srcDev);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bRet = <span class="built_in">Mdk_IOControl</span>(ACDK_CMD_SET_HAL_INIT, &amp;rAcdkFeatureInfo); <span class="comment">//主要是跟踪这个位置的代码</span></span><br><span class="line">    <span class="keyword">if</span> (!bRet)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">META_LOG</span>(<span class="string">&quot;ACDK_CMD_SET_HAL_INIT Fail: %d\n&quot;</span>,srcDev);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">META_LOG</span>(<span class="string">&quot;ACDK_CMD_SET_HAL_INIT ok: srcDev%d\n&quot;</span>,srcDev);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个文件中新添加对应的cmd(<strong>ACDK_COMMAND_END</strong>)</p>
+<p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;mtkcam&#x2F;include&#x2F;mtkcam&#x2F;main&#x2F;acdk&#x2F;AcdkCommon.h</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    ++ACDK_CMD_SET_HAL_INIT,</span><br><span class="line">    ACDK_COMMAND_END</span><br><span class="line">&#125;eACDK_COMMAND;</span><br></pre></td></tr></table></figure>
+
+<p>好了 到这部基本就可以使用这个cmd.</p>
+<p>接下来就是通过这个cmd 做对应的操作了</p>
+<p>这个ioctrl 的cmd的</p>
+<p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;mtkcam&#x2F;main&#x2F;acdk&#x2F;v4.0&#x2F;src&#x2F;acdk&#x2F;AcdkMain.cpp</p>
+<p><strong>Mdk_IOControl</strong>的实际实现是通过一下的这个函数.直接在里面加我需要的camera hal的操作即可.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">AcdkMain::sendcommand</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+    <span class="keyword">else</span> <span class="keyword">if</span>(a_u4Ioctl == ACDK_CMD_SET_HAL_INIT)</span><br><span class="line">+    &#123;</span><br><span class="line">+        <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] ioctrl a_u4Ioctl=%d&quot;</span>,a_u4Ioctl);</span><br><span class="line">+        err = <span class="built_in">sensorInit</span>();</span><br><span class="line">+        <span class="keyword">if</span> (err != ACDK_RETURN_NO_ERROR)</span><br><span class="line">+        &#123;</span><br><span class="line">+            <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] Sensor setting Fail. err(0x%x)&quot;</span>,err);</span><br><span class="line">+            err = ACDK_RETURN_API_FAIL;</span><br><span class="line">+        &#125;</span><br><span class="line">+        <span class="keyword">else</span></span><br><span class="line">+        &#123;</span><br><span class="line">+            <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] Sensor setting ok&quot;</span>);</span><br><span class="line">+        &#125;</span><br><span class="line">+</span><br><span class="line">+        err = <span class="built_in">getSensorInfo</span>();</span><br><span class="line">+        <span class="keyword">if</span>(err != ACDK_RETURN_NO_ERROR)</span><br><span class="line">+        &#123;</span><br><span class="line">+            <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] getSensorInfo error(0x%x)&quot;</span>,err);</span><br><span class="line">+            err = ACDK_RETURN_API_FAIL;</span><br><span class="line">+        &#125;</span><br><span class="line">+        <span class="keyword">else</span></span><br><span class="line">+        &#123;</span><br><span class="line">+            <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] getSensorInfo ok&quot;</span>);</span><br><span class="line">+        &#125;</span><br><span class="line">+</span><br><span class="line">+        <span class="comment">//====== Initialize AcdkMhal ======</span></span><br><span class="line">+        err = m_pAcdkMhalObj-&gt;<span class="built_in">acdkMhalInit</span>();</span><br><span class="line">+        <span class="keyword">if</span>(err != ACDK_RETURN_NO_ERROR)</span><br><span class="line">+        &#123;</span><br><span class="line">+            <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] acdkMhalInit Fail(0x%x)&quot;</span>, err);</span><br><span class="line">+        &#125;</span><br><span class="line">+        <span class="keyword">else</span></span><br><span class="line">+        &#123;</span><br><span class="line">+            <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] acdkMhalInit ok&quot;</span>);</span><br><span class="line">+        &#125;</span><br><span class="line">+</span><br><span class="line">+        err = m_pAcdkMhalObjEng-&gt;<span class="built_in">acdkMhalInit</span>();</span><br><span class="line">+        <span class="keyword">if</span>(err != ACDK_RETURN_NO_ERROR)</span><br><span class="line">+        &#123;</span><br><span class="line">+            <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] acdkMhalInit eng Fail(0x%x)&quot;</span>, err);</span><br><span class="line">+        &#125;</span><br><span class="line">+        <span class="keyword">else</span></span><br><span class="line">+        &#123;</span><br><span class="line">+            <span class="built_in">ACDK_LOGE</span>(<span class="string">&quot;[meta] acdkMhalInit eng ok&quot;</span>);</span><br><span class="line">+        &#125;</span><br><span class="line">+    &#125;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(a_u4Ioctl == ACDK_CMD_SET_OPERATION_MODE)</span><br><span class="line">     &#123;</span><br><span class="line">         eACDK_OPERA_MODE eOpMode = ACDK_OPT_NONE_MODE;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-编译debug"><a href="#3-编译debug" class="headerlink" title="3 编译debug"></a>3 编译debug</h1><h2 id="3-1-meta"><a href="#3-1-meta" class="headerlink" title="3.1 meta"></a>3.1 meta</h2><p>对于meta部分:直接看这个Android.mk</p>
+<p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;meta&#x2F;common&#x2F;Android.mk</p>
+<pre><code>LOCAL_MODULE:=meta_tst
+</code></pre>
+<p>目标模块名字是这个.我本来以为是编译出来so或者a文件，结果编译出来一个二进制文件就叫meta_tst.</p>
+<p>直接push到vendor&#x2F;bin&#x2F;中就可以. meta的工具是直接通过这个bin 来下cmd交互的.我也不想研究，早该弃用的东西没什么软用.这一套和车机ais_server和ais_be_server的交互倒是很相似的.</p>
+<pre><code>adb push  meta_tst vendor/bin/meta_tst
+</code></pre>
+<p>理论上这个meta_tst可以直接在手机上运行. 当然是直接运行其main函数.而不是通过工具来操作的.</p>
+<p>这个我不想梳理，没啥用. 知道改meta路径下的文件push  meta_tst到 vendor&#x2F;bin&#x2F;即可.</p>
+<h2 id="3-2-acdk"><a href="#3-2-acdk" class="headerlink" title="3.2 acdk"></a>3.2 acdk</h2><p>我们本质上是通过acdk已经写好的函数来完成操作的.</p>
+<p>acdk代码路径:</p>
+<p>外部接口头文件说明:</p>
+<p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;mtkcam&#x2F;include&#x2F;mtkcam&#x2F;main&#x2F;acdk</p>
+<p>该so库主要实现代码:</p>
+<p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;mtkcam&#x2F;main&#x2F;acdk</p>
+<p>这边主要用到v4.0(<strong>能观察到mtk源码和很多其他的acdk，那些都是针对单独模块做的.我这个是最源生的</strong>.)</p>
+<p>然后我们看到对应的mk文件:</p>
+<p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;mtkcam&#x2F;main&#x2F;acdk&#x2F;v4.0&#x2F;src&#x2F;Android.mk</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LOCAL_MODULE := libacdk</span><br></pre></td></tr></table></figure>
+
+<p>从这里就能知道编译生成的文件是libacdk.so</p>
+<p>push路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push libacdk.so vendor/lib64/</span><br></pre></td></tr></table></figure>
+
+<p>同理需要杀掉cameraProvider才能生效.</p>
+<p>mtk对cameraProvider进行了封装,是camerahalserver.所以杀掉camerahalserver即可</p>
+<p>从上述内容基本了解到如何编译，但是怎么debug呢？这是关机的状态.如果一直拿meta工具去debug,要不停地重启和抓log.效率极其低下。因为进meta模式机器经常卡死，要好久才能开机.</p>
+<p>于是乎，这边就用到mtk自己编写的测试文件.平台的专业就专业在每个模块都是可以做单独的测试，都写好了对应的接口，push到vendor&#x2F;bin下运行即可.</p>
+<p>对应的test文件路径也在其对应的模块下.</p>
+<p>示例如下:</p>
+<p><strong>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;hardware&#x2F;mtkcam&#x2F;main&#x2F;acdk&#x2F;v4.0&#x2F;src&#x2F;test</strong></p>
+<p>main.cpp 函数入口，我自己debug的时候基本删的很干净，一来是方便debug，二来是跑得快.只跑我要的代码块即可.</p>
+<p>main中其他的我不关注.只要关注这个</p>
+<pre><code>ret *=* main_testMdk(argc, argv, &amp;(crcResults[loop]));
+</code></pre>
+<p>main_testMdk在test_mdk.cpp中实现</p>
+<p>这个编译是生成acdk_camshottest  然后push到vendor&#x2F;bin&#x2F;</p>
+<p>直接在手机里运行即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./vendor/bin/acdk_camshottest  </span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io">JoeNero</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io/2024/11/10/Android/hal/meta%E5%B7%A5%E5%85%B7acdk%E8%8E%B7%E5%8F%96camera/">https://joeforkyou.github.io/2024/11/10/Android/hal/meta%E5%B7%A5%E5%85%B7acdk%E8%8E%B7%E5%8F%96camera/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/hal/">hal</a><a class="post-meta__tags" href="/tags/camera/">camera</a><a class="post-meta__tags" href="/tags/meta/">meta</a><a class="post-meta__tags" href="/tags/acdk/">acdk</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2024/11/10/Android/3rd/lightroomv/" title="lightroomv"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">lightroomv</div></div><div class="info-2"><div class="info-item-1">1 lightroomv三方apk lightroomv 拍照. 一次性只能拍照4张，无法生成第5张图片. 很明显能看到异常的时候会有如下的报错log,到这里hal就没有收到任何拍照请求. 12345#上一张拍照请求到hal,下述log. pic_req =1 ，拍照请求到hal 查收了05-13 17:32:18.966   560 12747 D Cam3HWI : 2317, processCaptureRequest: camId=0, bufs_num=2, frame_num=49, cap_intent=2, pic_req=1, first_regular_req=0#已经报错05-13 16:53:39.869  8798 12489 W ImageReader_JNI: Unable to acquire a buffer item, very likely client tried to acquire more than maxImages buffers#下面就无法打印出对应的拍照请求.    2...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">1 背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">2 流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E7%BC%96%E8%AF%91debug"><span class="toc-number">3.</span> <span class="toc-text">3 编译debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-meta"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 meta</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-acdk"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 acdk</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Android/hal/meta%E5%B7%A5%E5%85%B7acdk%E8%8E%B7%E5%8F%96camera/" title="meta工具acdk获取camera">meta工具acdk获取camera</a><time datetime="2024-11-09T20:29:50.000Z" title="Created 2024-11-10 04:29:50">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Android/3rd/lightroomv/" title="lightroomv">lightroomv</a><time datetime="2024-11-09T19:28:45.000Z" title="Created 2024-11-10 03:28:45">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/%E6%90%AD%E5%BB%BA/linux%E4%B8%8BopenCV%E6%90%AD%E5%BB%BA/" title="linux下openCV搭建">linux下openCV搭建</a><time datetime="2024-11-09T19:09:18.000Z" title="Created 2024-11-10 03:09:18">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Linux/Linux-%E5%91%BD%E4%BB%A4%E4%B9%8BAWK%E8%BF%87%E6%BB%A4%E6%8F%90%E5%8F%96%E9%9C%80%E8%A6%81%E7%9A%84%E4%BF%A1%E6%81%AF/" title="Linux 命令之AWK过滤提取需要的信息">Linux 命令之AWK过滤提取需要的信息</a><time datetime="2024-11-09T19:07:29.000Z" title="Created 2024-11-10 03:07:29">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Android/%E7%81%AB%E7%84%B0%E5%9B%BE%E6%8A%93%E5%8F%96/" title="火焰图抓取">火焰图抓取</a><time datetime="2024-11-09T18:45:27.000Z" title="Created 2024-11-10 02:45:27">2024-11-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
