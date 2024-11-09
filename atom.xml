@@ -271,9 +271,9 @@
     
     <category term="Android" scheme="https://joeforkyou.github.io/tags/Android/"/>
     
-    <category term="ITS" scheme="https://joeforkyou.github.io/tags/ITS/"/>
-    
     <category term="GMS" scheme="https://joeforkyou.github.io/tags/GMS/"/>
+    
+    <category term="ITS" scheme="https://joeforkyou.github.io/tags/ITS/"/>
     
   </entry>
   
@@ -391,9 +391,9 @@
     
     <category term="Android" scheme="https://joeforkyou.github.io/tags/Android/"/>
     
-    <category term="GMS" scheme="https://joeforkyou.github.io/tags/GMS/"/>
-    
     <category term="cts" scheme="https://joeforkyou.github.io/tags/cts/"/>
+    
+    <category term="GMS" scheme="https://joeforkyou.github.io/tags/GMS/"/>
     
   </entry>
   
