@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据结构_vector | JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1 STL 简介 STL是Standard Template Library的简称，中文名标准模板库STL可分为容器(containers)、迭代器(iterators)、空间配置器(allocator)、配接器(adapters)、算法(algorithms)、仿函数(functors)六个部分。  选自百度词条STL百度词条C++标准中，STL组件被组织命名为以下13个头文件  &lt; al">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构_vector">
+<meta property="og:url" content="https://joeforkyou.github.io/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-vector/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:description" content="1 STL 简介 STL是Standard Template Library的简称，中文名标准模板库STL可分为容器(containers)、迭代器(iterators)、空间配置器(allocator)、配接器(adapters)、算法(algorithms)、仿函数(functors)六个部分。  选自百度词条STL百度词条C++标准中，STL组件被组织命名为以下13个头文件  &lt; al">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2024-11-09T17:14:59.000Z">
+<meta property="article:modified_time" content="2024-11-09T17:15:24.776Z">
+<meta property="article:author" content="JoeNero">
+<meta property="article:tag" content="cpp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/butterfly-icon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://joeforkyou.github.io/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-vector/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据结构_vector',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">数据结构_vector</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">数据结构_vector</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-11-09T17:14:59.000Z" title="Created 2024-11-10 01:14:59">2024-11-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-09T17:15:24.776Z" title="Updated 2024-11-10 01:15:24">2024-11-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="1-STL-简介"><a href="#1-STL-简介" class="headerlink" title="1 STL 简介"></a>1 STL 简介</h1><blockquote>
+<p>STL是Standard Template Library的简称，中文名标准模板库<br>STL可分为<br>容器(containers)、<br>迭代器(iterators)、<br>空间配置器(allocator)、<br>配接器(adapters)、<br>算法(algorithms)、<br>仿函数(functors)六个部分。</p>
+</blockquote>
+<p>选自百度词条<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/STL/70103?fr=aladdin">STL百度词条</a><br>C++标准中，STL组件被组织命名为以下13个头文件</p>
+<blockquote>
+<p>&lt; algorithm&gt;<br>&lt; deque&gt;<br>&lt; functional&gt;<br>&lt; iterator&gt;<br>&lt; vector&gt;<br>&lt; list&gt;<br>&lt; map&gt;<br>&lt; memory.h&gt;<br>&lt; numeric&gt;<br>&lt; queue&gt;<br>&lt; set&gt;<br>&lt; stack&gt;<br>&lt; utility&gt;</p>
+</blockquote>
+<h1 id="2-容器-vector"><a href="#2-容器-vector" class="headerlink" title="2 容器 vector"></a>2 容器 vector</h1><p>向量(vector) 连续存储的元素&lt; vector&gt;;<br>vector是一个能够存放任意类型的动态数组，能够增加和压缩数据。<br>为了更好理解，不用基础类型，自行定义一个MyInt结构体</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">MyInt</span></span><br><span class="line">&#123;</span><br><span class="line">	string name;	<span class="comment">//用作标识符</span></span><br><span class="line">	<span class="type">int</span> Int;        <span class="comment">//实际存储类型</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>写一个打印函数如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">功能: 	- vector类打印</span></span><br><span class="line"><span class="comment">		@param</span></span><br><span class="line"><span class="comment">		@param</span></span><br><span class="line"><span class="comment">		@param</span></span><br><span class="line"><span class="comment">描述	:</span></span><br><span class="line"><span class="comment">示例	:</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printVector</span><span class="params">(vector&lt;MyInt&gt;&amp; v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (vector&lt;MyInt&gt;::iterator it = v.<span class="built_in">begin</span>(); it != v.<span class="built_in">end</span>(); it++)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;标识符为:&quot;</span> &lt;&lt; it-&gt;name &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;数据为:&quot;</span>&lt;&lt; it-&gt;Int &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-1-构造"><a href="#2-1-构造" class="headerlink" title="2.1 构造"></a>2.1 构造</h2><p>vector类构造demo</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	vector&lt;MyInt&gt; v1; <span class="comment">//无参构造</span></span><br><span class="line">	MyInt* myInt = <span class="keyword">new</span> MyInt[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		myInt[i].name = <span class="string">&#x27;0&#x27;</span> + i;</span><br><span class="line">		myInt[i].Int = i;</span><br><span class="line">		v<span class="number">1.</span><span class="built_in">push_back</span>(myInt[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printVector</span>(v1);</span><br><span class="line">	<span class="function">vector&lt;MyInt&gt; <span class="title">v2</span><span class="params">(v<span class="number">1.</span>begin(), v<span class="number">1.</span>end())</span></span>;</span><br><span class="line">	<span class="built_in">printVector</span>(v2);</span><br><span class="line">	vector&lt;MyInt&gt;::iterator it = v<span class="number">1.</span><span class="built_in">begin</span>();</span><br><span class="line">	<span class="function">vector&lt;MyInt&gt; <span class="title">v3</span><span class="params">(it<span class="number">+1</span>, v<span class="number">1.</span>end())</span></span>;</span><br><span class="line">	<span class="built_in">printVector</span>(v3);</span><br><span class="line">	<span class="keyword">delete</span>[] myInt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下，因为用了迭代器来访问v1.begin() + 1的位置 ，(非基础类型不能用v1[1]访问),所以打印v3容器输出的结果是1到9<br><img src="https://i-blog.csdnimg.cn/blog_migrate/cd43e6bd2b8d53298c83d9d6dc3ff2b2.jpeg" alt="在这里插入图片描述"></p>
+<h2 id="2-2-成员函数"><a href="#2-2-成员函数" class="headerlink" title="2.2 成员函数"></a>2.2 成员函数</h2><p>基础访问操作:（注意v3.at[int index]适合访问基础类型,int,char等，自定义的类型还是用迭代器访问）<br>vector不支持头插(push_front)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v<span class="number">3.</span><span class="built_in">push_back</span>(elem)  <span class="comment">//在尾部插入一个elem数据。</span></span><br><span class="line">v<span class="number">3.</span><span class="built_in">pop_back</span>()       <span class="comment">//删除末尾的数据。</span></span><br><span class="line">v<span class="number">3.</span><span class="built_in">at</span>(<span class="type">int</span> index)	<span class="comment">//传回索引为index的数据,如果index越界</span></span><br><span class="line">					<span class="comment">//抛出out_of_range异常。</span></span><br><span class="line">					<span class="comment">//非基础类型需要通过迭代器访问</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-1-assgin"><a href="#2-2-1-assgin" class="headerlink" title="2.2.1 assgin"></a>2.2.1 assgin</h3><p>v3.assign(beg,end)将[beg,end)一个左闭右开区间的数据赋值给v3。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v<span class="number">3.</span><span class="built_in">assign</span>(v<span class="number">1.</span><span class="built_in">begin</span>(), v<span class="number">1.</span><span class="built_in">end</span>());</span><br><span class="line"><span class="built_in">printVector</span>(v3);</span><br></pre></td></tr></table></figure>
+<p>v3.assign (n,elem)将n个elem的拷贝赋值给v3。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v<span class="number">3.</span><span class="built_in">assign</span>(<span class="number">2</span>, myInt[<span class="number">2</span>]);</span><br><span class="line"><span class="built_in">printVector</span>(v3);</span><br></pre></td></tr></table></figure>
+<p>输出结果如下:<br><img src="https://i-blog.csdnimg.cn/blog_migrate/8f4409bb6edf35adcb6ebecb83746ac9.jpeg" alt="在这里插入图片描述"></p>
+<h3 id="2-2-2-数据大小操作"><a href="#2-2-2-数据大小操作" class="headerlink" title="2.2.2 数据大小操作"></a>2.2.2 数据大小操作</h3><h4 id="2-2-1-empty"><a href="#2-2-1-empty" class="headerlink" title="2.2.1.empty"></a>2.2.1.empty</h4><p>v1.empty() &#x2F;&#x2F;  判空操作<br>先看empty()定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_NODISCARD <span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; _My_data = _Mypair._Myval2;</span><br><span class="line">    <span class="keyword">return</span> _My_data._Myfirst == _My_data._Mylast;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试容器空的状况:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;MyInt&gt; v1; <span class="comment">//无参构造</span></span><br><span class="line">cout &lt;&lt; v<span class="number">1.</span><span class="built_in">empty</span>() &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p>空返回1<br><img src="https://i-blog.csdnimg.cn/blog_migrate/d1d724b0d342e5c785976127f9cb4a2f.jpeg" alt="在这里插入图片描述"><br>非空返回 0<br><img src="https://i-blog.csdnimg.cn/blog_migrate/f681f1fda108aa3696c04aa80a2a0b76.jpeg" alt="在这里插入图片描述"><br>了解empty后修改打印函数(暂时不抛出异常)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">printVector</span><span class="params">(vector&lt;MyInt&gt;&amp; v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (v.<span class="built_in">empty</span>())</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;打印Vector为空&quot;</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (vector&lt;MyInt&gt;::iterator it = v.<span class="built_in">begin</span>(); it != v.<span class="built_in">end</span>(); it++)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;标识符为:&quot;</span> &lt;&lt; it-&gt;name &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;数据为:&quot;</span> &lt;&lt; it-&gt;Int &lt;&lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-容量"><a href="#2-2-2-容量" class="headerlink" title="2.2.2  容量"></a>2.2.2  容量</h4><p>参考链接<a target="_blank" rel="noopener" href="https://blog.csdn.net/JIEJINQUANIL/article/details/51166154">capacity用法</a></p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>capacity()</td>
+<td>容器能存储 数据的个数(真实大小)</td>
+</tr>
+<tr>
+<td>size()</td>
+<td>目前存在的元素个数</td>
+</tr>
+<tr>
+<td>max_size</td>
+<td>最大容量</td>
+</tr>
+<tr>
+<td>resize()</td>
+<td>重新指定大小 ，若指定的更小，超出部分元素被删除</td>
+</tr>
+<tr>
+<td>reserve</td>
+<td>预留空间</td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&quot;v1真实的大小 = &quot;</span> &lt;&lt; v<span class="number">1.</span><span class="built_in">capacity</span>() &lt;&lt; endl;		<span class="comment">//真实的大小</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;v1的大小 = &quot;</span> &lt;&lt; v<span class="number">1.</span><span class="built_in">size</span>() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;v1最大容量 = &quot;</span> &lt;&lt; v<span class="number">1.</span><span class="built_in">max_size</span>() &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/67b826a0fe159edebbc23f08616daa89.jpeg" alt="在这里插入图片描述"><br>resize()使用，<br>重新指定大小10的v1容器为12，多指定的空间重新插入内容myInt[2]；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v<span class="number">1.</span><span class="built_in">resize</span>(<span class="number">12</span>, myInt[<span class="number">2</span>]);</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br></pre></td></tr></table></figure>
+<p>打印输出结果:<br><img src="https://i-blog.csdnimg.cn/blog_migrate/5fa6feb23652dc4f316bd766deac09f6.jpeg" alt="在这里插入图片描述"><br>重新指定v1打下，删除超过索引的内容</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v<span class="number">1.</span><span class="built_in">resize</span>(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br></pre></td></tr></table></figure>
+<p>输出结果<br><img src="https://i-blog.csdnimg.cn/blog_migrate/8b63a542688e35cfd61689810353b8e5.jpeg" alt="在这里插入图片描述"></p>
+<h3 id="2-2-3-删除与插入操作"><a href="#2-2-3-删除与插入操作" class="headerlink" title="2.2.3 删除与插入操作"></a>2.2.3 删除与插入操作</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pop_back()</td>
+<td>尾删</td>
+</tr>
+<tr>
+<td>insert（）</td>
+<td>插入操作</td>
+</tr>
+<tr>
+<td>erase()</td>
+<td>擦除</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>测试代码如下:</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;MyInt&gt; v1; <span class="comment">//无参构造</span></span><br><span class="line">MyInt* myInt = <span class="keyword">new</span> MyInt[<span class="number">3</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">	myInt[i].name = <span class="string">&#x27;0&#x27;</span> + i;</span><br><span class="line">	myInt[i].Int = i;</span><br><span class="line">	v<span class="number">1.</span><span class="built_in">push_back</span>(myInt[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br><span class="line"><span class="comment">//尾删</span></span><br><span class="line">v<span class="number">1.</span><span class="built_in">pop_back</span>();</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br><span class="line"><span class="comment">//插入</span></span><br><span class="line">vector&lt;MyInt&gt;::iterator it = v<span class="number">1.</span><span class="built_in">begin</span>();</span><br><span class="line"></span><br><span class="line">v<span class="number">1.</span><span class="built_in">insert</span>(it<span class="number">+1</span>, myInt[<span class="number">1</span>]);</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br><span class="line">v<span class="number">1.</span><span class="built_in">insert</span>(v<span class="number">1.</span><span class="built_in">begin</span>(), <span class="number">2</span>, myInt[<span class="number">2</span>]);</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br><span class="line"><span class="comment">////删除</span></span><br><span class="line">v<span class="number">1.</span><span class="built_in">erase</span>(v<span class="number">1.</span><span class="built_in">begin</span>());</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;擦除头:&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br><span class="line"><span class="comment">////清空</span></span><br><span class="line"><span class="comment">//v1.erase(v1.begin(), v1.end());</span></span><br><span class="line"><span class="comment">//printVector(v1);</span></span><br><span class="line">v<span class="number">1.</span><span class="built_in">clear</span>();</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br><span class="line"><span class="keyword">delete</span>[] myInt;</span><br></pre></td></tr></table></figure>
+<p>打印输出结果</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/70b367434aee7da1b47c36dced4fab0f.jpeg" alt="在这里插入图片描述"></p>
+<h3 id="2-2-4-swap"><a href="#2-2-4-swap" class="headerlink" title="2.2.4 swap"></a>2.2.4 swap</h3><p>速览其定义:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(vector&amp; _Right)</span> <span class="keyword">noexcept</span> <span class="comment">/* strengthened */</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> != _STD <span class="built_in">addressof</span>(_Right)) &#123;</span><br><span class="line">        _Pocs(_Getal(), _Right._Getal());</span><br><span class="line">        _Mypair._Myval<span class="number">2.</span>_Swap_val(_Right._Mypair._Myval2);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>swap交换，直接看代码吧:两容器大小需要一致，否在会进入异常</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;MyInt&gt; v1; </span><br><span class="line">vector&lt;MyInt&gt; v2;</span><br><span class="line">MyInt* myInt = <span class="keyword">new</span> MyInt[<span class="number">3</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">	myInt[i].name = <span class="string">&#x27;0&#x27;</span> + i;</span><br><span class="line">	myInt[i].Int = i;</span><br><span class="line">	v<span class="number">1.</span><span class="built_in">push_back</span>(myInt[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">	myInt[i].name = <span class="string">&#x27;0&#x27;</span> + i;</span><br><span class="line">	myInt[i].Int = <span class="number">3</span> - i;</span><br><span class="line">	v<span class="number">2.</span><span class="built_in">push_back</span>(myInt[i]);</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot; v1 =&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br><span class="line">cout &lt;&lt; <span class="string">&quot; v2 =&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="built_in">printVector</span>(v2);</span><br><span class="line"><span class="comment">//互换容器</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;互换后&quot;</span> &lt;&lt; endl;</span><br><span class="line">v<span class="number">1.</span><span class="built_in">swap</span>(v2);</span><br><span class="line">cout &lt;&lt; <span class="string">&quot; v1 =&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="built_in">printVector</span>(v1);</span><br><span class="line">cout &lt;&lt; <span class="string">&quot; v2 =&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="built_in">printVector</span>(v2);</span><br></pre></td></tr></table></figure>
+<p>输出打印结果如下:<br><img src="https://i-blog.csdnimg.cn/blog_migrate/76d01921df3a4cba71f040a84ae42ae5.jpeg" alt="在这里插入图片描述"><br>在实际应用中swap常常用于与自身交换来达到收缩内存的效果，这里不加累述<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/liyazhen2011/article/details/103179974">swap收缩内存参考链接</a></p>
+<h1 id="3-vector总结"><a href="#3-vector总结" class="headerlink" title="3 vector总结"></a>3 vector总结</h1><table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>push_back</td>
+<td>尾插</td>
+</tr>
+<tr>
+<td>assign</td>
+<td><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq844352155/article/details/38583529">assgin用法</a></td>
+</tr>
+<tr>
+<td>resize</td>
+<td>重构大小</td>
+</tr>
+<tr>
+<td>capacity</td>
+<td>容量(真实大小)</td>
+</tr>
+<tr>
+<td>size</td>
+<td>当前大小</td>
+</tr>
+<tr>
+<td>max_size</td>
+<td>最大容量</td>
+</tr>
+<tr>
+<td>pop_back</td>
+<td>尾删</td>
+</tr>
+<tr>
+<td>insert</td>
+<td>插入</td>
+</tr>
+<tr>
+<td>erase</td>
+<td>删除</td>
+</tr>
+<tr>
+<td>clear</td>
+<td>清空</td>
+</tr>
+<tr>
+<td>swap</td>
+<td>交换</td>
+</tr>
+<tr>
+<td>reserve</td>
+<td>预留空间</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io">JoeNero</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-vector/">https://joeforkyou.github.io/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-vector/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/cpp/">cpp</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2024/11/10/Python/python%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94/" title="python爬取天气"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">python爬取天气</div></div><div class="info-2"><div class="info-item-1">1 安装使用VSCode中安装相关的插件就可以配合chatgpt来实现一些简单的爬虫操作，只能应对比较简单的场景.安装插件chatGPT-ChatMoss 2 实例给AI发送python 爬取无锡七日天气回复如下:要爬取无锡七日天气，可以使用Python中的第三方库 requests 和 Beautiful Soup。以下是详细步骤：  导入必要的库  12import requestsfrom bs4 import BeautifulSoup   发送GET请求获取网页内容  12url = &quot;http://www.weather.com.cn/weather/101190201.shtml&quot;response = requests.get(url)   解析网页内容  1soup = BeautifulSoup(response.content, &quot;html.parser&quot;)   找到需要的天气信息所在的标签  1weather_data =...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/11/10/CPP/STL/" title="STL速学"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-10</div><div class="info-item-2">STL速学</div></div><div class="info-2"><div class="info-item-1">1.容器1.1 arrayarray保存在栈中 1234567std::array&lt;int, 4&gt; arr= &#123;1,2,3,4&#125;;int len = 4;std::array&lt;int, len&gt; arr = &#123;1,2,3,4&#125;; // 非法, 数组大小参数必须是常量表达式const int len = 4;std::array&lt;int, len&gt; arr = &#123;1,2,3,4&#125;; // 正确写法  1.2 vector不同的编译器实现的扩容方式不一样，vector 在VS2015中以1.5倍扩容，GCC以2倍扩容。 vector保存在堆中 12345vector&lt;vector&lt;int&gt;&gt; v;v.size();		//返回行数v[0].size();	//返回列数     1.3 listlist 是双向循环链表 记住！！！ List的插入、删除或者拼合操作不会造成原有迭代器的失效。 List不能用STL...</div></div></div></a><a class="pagination-related" href="/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84_%E9%93%BE%E8%A1%A8/" title="数据结构_链表"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-10</div><div class="info-item-2">数据结构_链表</div></div><div class="info-2"><div class="info-item-1">1 链表的创建链表是一种物理存储单元上非连续、非顺序的存储结构。摘自百度百科如下存储: 1234567891011struct Node&#123;	int data;  //数据域	Node* next;//指针域	Node():data(0),next(nullptr)&#123;&#125;	Node(int _data,Node* _next)	&#123;		this-&gt;data = _data;		this-&gt;next = _next;	&#125;&#125;; 1.1 头插 1234567891011void pushFront(Node* head, int data)&#123;	Node* pNew= new Node();           //定义新节点头	pNew-&gt;data = data;                //存储数据	if (nullptr== head-&gt;next)			//判断是不是只有头结点	&#123;		head-&gt;next = pNew;                ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-STL-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">1 STL 简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%AE%B9%E5%99%A8-vector"><span class="toc-number">2.</span> <span class="toc-text">2 容器 vector</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E6%9E%84%E9%80%A0"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 成员函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-assgin"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 assgin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E6%95%B0%E6%8D%AE%E5%A4%A7%E5%B0%8F%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 数据大小操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-empty"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">2.2.1.empty</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E5%AE%B9%E9%87%8F"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">2.2.2  容量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E5%88%A0%E9%99%A4%E4%B8%8E%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 删除与插入操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-4-swap"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 swap</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-vector%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">3 vector总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-vector/" title="数据结构_vector">数据结构_vector</a><time datetime="2024-11-09T17:14:59.000Z" title="Created 2024-11-10 01:14:59">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Python/python%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94/" title="python爬取天气">python爬取天气</a><time datetime="2024-11-09T17:07:35.000Z" title="Created 2024-11-10 01:07:35">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/GMS/cts%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" title="cts基础操作">cts基础操作</a><time datetime="2024-11-09T17:01:39.000Z" title="Created 2024-11-10 01:01:39">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84_%E9%93%BE%E8%A1%A8/" title="数据结构_链表">数据结构_链表</a><time datetime="2024-11-09T16:58:26.000Z" title="Created 2024-11-10 00:58:26">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Linux/git%E7%9A%84%E4%BD%BF%E7%94%A8/" title="git的使用">git的使用</a><time datetime="2024-11-09T16:50:40.000Z" title="Created 2024-11-10 00:50:40">2024-11-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
