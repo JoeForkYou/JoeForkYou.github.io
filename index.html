@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>JoeNero的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="JoeNero的博客">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:locale">
+<meta property="article:author" content="JoeNero">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="JoeNero的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">JoeNero的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Android/APP/APP_1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/10/Android/APP/APP_1/" class="article-date">
+  <time class="dt-published" datetime="2024-11-09T16:41:32.000Z" itemprop="datePublished">2024-11-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/10/Android/APP/APP_1/">Andoird camera app从零养成计划【一】</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>要创建一个基本的Camera App demo，我们将使用Android Studio和Java来编写一个应用，该应用能够打开相机预览，拍照，并保存照片到设备的存储中。这里将使用Android的Camera2 API，因为它提供了更丰富的功能和更好的性能，尽管它比Camera API（已弃用）更复杂一些。</p>
+<h3 id="步骤-1-创建一个新的Android项目"><a href="#步骤-1-创建一个新的Android项目" class="headerlink" title="步骤 1: 创建一个新的Android项目"></a>步骤 1: 创建一个新的Android项目</h3><ol>
+<li>打开Android Studio，选择“Start a new Android Studio project”。</li>
+<li>选择“Empty Activity”，然后点击“Next”。</li>
+<li>填写你的应用名称（如 <code>CameraDemo</code>），选择你的保存位置，语言选择Java，最小API级别设置为21（因为Camera2 API在API 21（Android 5.0）上引入）。</li>
+<li>点击“Finish”创建项目。</li>
+</ol>
+<h3 id="步骤-2-添加权限"><a href="#步骤-2-添加权限" class="headerlink" title="步骤 2: 添加权限"></a>步骤 2: 添加权限</h3><p>在你的 <code>AndroidManifest.xml</code> 文件中添加必要的权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">&quot;你的包名&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.CAMERA&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">&quot;android.hardware.camera&quot;</span> <span class="attr">android:required</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">&quot;android.hardware.camera.autofocus&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">...</span></span></span><br><span class="line"><span class="tag">        &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.MainActivity&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤-3-布局文件"><a href="#步骤-3-布局文件" class="headerlink" title="步骤 3: 布局文件"></a>步骤 3: 布局文件</h3><p>修改 <code>res/layout/activity_main.xml</code> 文件来添加必要的视图控件（如TextureView用于显示相机预览，Button用于拍照）：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:context</span>=<span class="string">&quot;.MainActivity&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextureView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/textureView&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_above</span>=<span class="string">&quot;@+id/button_capture&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">&quot;@+id/button_capture&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_alignParentBottom</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_centerHorizontal</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">&quot;拍照&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤-4-编写MainActivity"><a href="#步骤-4-编写MainActivity" class="headerlink" title="步骤 4: 编写MainActivity"></a>步骤 4: 编写MainActivity</h3><p>由于Camera2 API较为复杂，这里不会详细展开全部代码，但会概述主要步骤和关键代码片段。</p>
+<ol>
+<li><strong>初始化Camera2 API</strong>：打开相机，设置预览大小，创建CaptureSession等。</li>
+<li><strong>设置TextureView显示预览</strong>。</li>
+<li><strong>处理拍照和保存</strong>：在点击按钮时，捕获图像并保存到存储。</li>
+</ol>
+<p>你需要创建多个类来处理Camera2的不同部分，如CameraStateCallback、CaptureRequest等。</p>
+<h3 id="示例代码片段（MainActivity部分）"><a href="#示例代码片段（MainActivity部分）" class="headerlink" title="示例代码片段（MainActivity部分）"></a>示例代码片段（MainActivity部分）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> TextureView textureView;</span><br><span class="line">    <span class="keyword">private</span> CameraDevice cameraDevice;</span><br><span class="line">    <span class="keyword">private</span> CaptureRequest.Builder previewRequestBuilder;</span><br><span class="line">    <span class="comment">// 其他变量...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        textureView = findViewById(R.id.textureView);</span><br><span class="line">        <span class="comment">// 初始化相机，设置TextureView显示预览等...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 拍照按钮点击事件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCaptureButtonClick</span><span class="params">(View view)</span> &#123;</span><br><span class="line">        <span class="comment">// 拍照逻辑...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 相机打开，关闭等状态的回调</span></span><br><span class="line">    <span class="keyword">private</span> CameraDevice.<span class="type">StateCallback</span> <span class="variable">stateCallback</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CameraDevice</span>.StateCallback() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onOpened</span><span class="params">(<span class="meta">@NonNull</span> CameraDevice camera)</span> &#123;</span><br><span class="line">            <span class="comment">// 相机成功打开</span></span><br><span class="line">            cameraDevice = camera;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onDisconnected</span><span class="params">(<span class="meta">@NonNull</span> CameraDevice camera)</span> &#123;</span><br><span class="line">            <span class="comment">// 相机被断开</span></span><br><span class="line">            cameraDevice.close();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onError</span><span class="params">(<span class="meta">@NonNull</span> CameraDevice camera, <span class="type">int</span> error)</span> &#123;</span><br><span class="line">            <span class="comment">// 相机发生错误</span></span><br><span class="line">            cameraDevice.close();</span><br><span class="line">            cameraDevice = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 其他方法...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤-5-运行时权限请求"><a href="#步骤-5-运行时权限请求" class="headerlink" title="步骤 5: 运行时权限请求"></a>步骤 5: 运行时权限请求</h3><p>由于Android 6.0（API 级别 23）及以上版本需要在运行时请求权限，你需要检查并在必要时请求权限。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这里只提供了一个基本的框架和思路。Camera2 API 涉及很多复杂的步骤和概念，如处理相机状态、创建和管理CaptureRequests、SurfaceTexture等。为了完整实现功能，你需要深入研究Camera2 API的文档和示例代码。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/10/Android/APP/APP_1/" data-id="cm3aebklc0001cwkd74pk91l4" data-title="Andoird camera app从零养成计划【一】" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-CPP/STL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/10/CPP/STL/" class="article-date">
+  <time class="dt-published" datetime="2024-11-09T16:39:08.000Z" itemprop="datePublished">2024-11-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/10/CPP/STL/">STL速学</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="1-容器"><a href="#1-容器" class="headerlink" title="1.容器"></a>1.容器</h1><h2 id="1-1-array"><a href="#1-1-array" class="headerlink" title="1.1 array"></a>1.1 array</h2><p><strong>array保存在栈中</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">std::array&lt;<span class="type">int</span>, 4&gt; arr= &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> len = <span class="number">4</span>;</span><br><span class="line">std::array&lt;<span class="type">int</span>, len&gt; arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;; <span class="comment">// 非法, 数组大小参数必须是常量表达式</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> len = <span class="number">4</span>;</span><br><span class="line">std::array&lt;<span class="type">int</span>, len&gt; arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;; <span class="comment">// 正确写法</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-vector"><a href="#1-2-vector" class="headerlink" title="1.2 vector"></a>1.2 vector</h2><p>不同的编译器实现的扩容方式不一样，vector 在VS2015中以1.5倍扩容，GCC以2倍扩容。</p>
+<p><strong>vector保存在堆中</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; v;</span><br><span class="line"></span><br><span class="line">v.<span class="built_in">size</span>();		<span class="comment">//返回行数</span></span><br><span class="line"></span><br><span class="line">v[<span class="number">0</span>].<span class="built_in">size</span>();	<span class="comment">//返回列数</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="1-3-list"><a href="#1-3-list" class="headerlink" title="1.3 list"></a>1.3 list</h2><p>list 是双向循环链表 记住！！！</p>
+<p>List的插入、删除或者拼合操作不会造成原有迭代器的失效。</p>
+<p>List不能用STL 中的sort函数进行排序，而是要用自身的sort函数。List仅支持随机访问迭代器，而List是双向迭代器。</p>
+<h2 id="1-4-forward-list"><a href="#1-4-forward-list" class="headerlink" title="1.4 forward_list"></a>1.4 forward_list</h2><p>单向链表，标准库容器中唯一不提供size()方法的容器，当不需要双向迭代时，具备比list更高的空间利用率。</p>
+<h2 id="1-5-stack"><a href="#1-5-stack" class="headerlink" title="1.5 stack"></a>1.5 stack</h2><p>基础示例:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">stack&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">s.<span class="built_in">push</span>(<span class="number">10</span>);</span><br><span class="line">s.<span class="built_in">push</span>(<span class="number">20</span>);</span><br><span class="line">s.<span class="built_in">push</span>(<span class="number">30</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (!s.<span class="built_in">empty</span>())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//输出栈顶元素</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;栈顶元素&quot;</span> &lt;&lt; s.<span class="built_in">top</span>() &lt;&lt; endl;</span><br><span class="line">	<span class="comment">//弹出栈顶元素</span></span><br><span class="line">	s.<span class="built_in">pop</span>();</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;栈的大小为:&quot;</span> &lt;&lt; s.<span class="built_in">size</span>() &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p>emplace :&#x2F;&#x2F;emplace函数可以将一个元素加入栈中，与push的区别在于：emplace可以直接传入Node的构造函数的参数，并将构造的元素加入栈中</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>       </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    <span class="type">int</span> a,b;</span><br><span class="line">    <span class="built_in">Node</span> (<span class="type">int</span> x, <span class="type">int</span> y) &#123;</span><br><span class="line">        a = x; b = y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    stack&lt;Node&gt; mystack;</span><br><span class="line">    mystack.<span class="built_in">emplace</span>(<span class="number">1</span>,<span class="number">2</span>);        </span><br><span class="line">    <span class="comment">//mystack.push(1,2);        //编译不通过，要达到上面的效果需要手动构造，例如mystack.push(Node(1,2));</span></span><br><span class="line">    Node p = mystack.<span class="built_in">top</span>();</span><br><span class="line">    cout &lt;&lt; p.a &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; p.b &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    stack&lt;Node&gt; my2;</span><br><span class="line">    my<span class="number">2.</span><span class="built_in">swap</span>(mystack);            <span class="comment">//swap函数可以交换两个栈的元素</span></span><br><span class="line">    cout &lt;&lt; mystack.<span class="built_in">size</span>() &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; my<span class="number">2.</span><span class="built_in">size</span>() &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2-智能指针"><a href="#2-智能指针" class="headerlink" title="2.智能指针"></a>2.智能指针</h1><p>对于编译器来说，智能指针实际上是一个栈对象，并非指针类型，在栈对象生命期即将结束时，智能指针通过析构函数释放有它管理的堆内存。所有智能指针都重载了“operator-&gt;”操作符，直接返回对象的引用，用以操作对象。访问智能指针原来的方法则使用“.”操作符。</p>
+<p>访问智能指针包含的裸指针则可以用 get() 函数。由于智能指针是一个对象，所以if (my_smart_object)永远为真，要判断智能指针的裸指针是否为空，需要这样判断：if (my_smart_object.get())。</p>
+<h2 id="2-1auto-ptr"><a href="#2-1auto-ptr" class="headerlink" title="2.1	auto_ptr"></a>2.1	auto_ptr</h2><p><strong>采用管理权转移，拷贝时会导致对象悬空，设计有缺陷，不建议使用</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//auto_ptr&lt;int&gt; p;//初始化为NULL</span></span><br><span class="line"><span class="comment">//  错误写法  auto_ptr&lt;int&gt; p = new int(123);</span></span><br><span class="line"><span class="function">auto_ptr&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(<span class="keyword">new</span> <span class="type">int</span>(<span class="number">123</span>))</span></span>;</span><br><span class="line">cout &lt;&lt; *p;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function">auto_ptr&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(<span class="keyword">new</span> <span class="type">int</span>(<span class="number">123</span>))</span></span>;</span><br><span class="line">    <span class="function">auto_ptr&lt;<span class="type">int</span>&gt; <span class="title">p1</span><span class="params">(p)</span></span>;<span class="comment">//将p的使用权转给p1,p1已经指向nullptr无法正常访问</span></span><br><span class="line"><span class="comment">//    cout &lt;&lt; *p &lt;&lt; endl;</span></span><br><span class="line">    cout &lt;&lt; *p1 &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2unique-ptr"><a href="#2-2unique-ptr" class="headerlink" title="2.2	unique_ptr"></a>2.2	unique_ptr</h2><p><strong>特点：防拷贝，简单粗暴，建议使用</strong></p>
+<p><strong>缺点：不能拷贝，可以转让</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(<span class="keyword">new</span> <span class="type">int</span>(<span class="number">123</span>))</span></span>;</span><br><span class="line">*p = <span class="number">7</span>;</span><br><span class="line">cout &lt;&lt; *p&lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">unique_ptr&lt;string&gt; upt1=std::<span class="built_in">move</span>(upt);  <span class="comment">//控制权限转移</span></span><br><span class="line"><span class="keyword">if</span>(upt.<span class="built_in">get</span>()!=<span class="literal">nullptr</span>)					<span class="comment">//判空操作更安全</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">unique_ptr&lt;<span class="type">int</span>&gt; p1;          <span class="comment">//创建空的智能指针</span></span><br><span class="line">p<span class="number">1.</span><span class="built_in">reset</span>(<span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">3</span>));    <span class="comment">//绑定动态对象</span></span><br><span class="line"><span class="function">unique_ptr&lt;<span class="type">int</span>&gt; <span class="title">p2</span><span class="params">(<span class="keyword">new</span> <span class="type">int</span>(<span class="number">4</span>))</span> </span>;        <span class="comment">//创建时绑定动态对象</span></span><br><span class="line">cout &lt;&lt; *p1 &lt;&lt;endl;</span><br><span class="line">cout &lt;&lt; *p2 &lt;&lt;endl;</span><br><span class="line"><span class="comment">//所有权发生变化</span></span><br><span class="line"><span class="type">int</span> *p = p<span class="number">1.</span><span class="built_in">release</span>();      <span class="comment">//释放所有权</span></span><br><span class="line"></span><br><span class="line"><span class="function">unique_ptr&lt;string&gt; <span class="title">p_s1</span><span class="params">(<span class="keyword">new</span> string(<span class="string">&quot;abc&quot;</span>))</span></span>;</span><br><span class="line"><span class="comment">//    unique_ptr&lt;string&gt; p_s2 = std::move(p_s1);</span></span><br><span class="line">    cout &lt;&lt; *p_s1 &lt;&lt;endl;</span><br><span class="line"><span class="comment">//    cout &lt;&lt; p_s2 &lt;&lt;endl;</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-3shared-ptr"><a href="#2-3shared-ptr" class="headerlink" title="2.3	shared_ptr"></a>2.3	shared_ptr</h2><p> shared_ptr的原理：通过引用计数的方式来实现多个shared_ptr对象之间共享资源。</p>
+<ol>
+<li>shared_ptr在其内部，给每个资源都维护了一份计数，用来记录该份资源被几个对象共享。</li>
+<li>在对象被销毁时(也就是析构函数调用)，就说明自己不使用该资源了，对象的引用计数减一。</li>
+<li>如果引用计数是0，就说明自己是最后一个使用该资源的对象，必须释放该资源。</li>
+<li>如果不是0，就说明除了自己还有其他对象在使用该份资源，不能释放该资源，否则其他对象就成野指针了。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">shared_ptr&lt;<span class="type">int</span>&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> <span class="type">int</span>(<span class="number">123</span>))</span></span>;</span><br><span class="line"><span class="function">shared_ptr&lt;<span class="type">int</span>&gt; <span class="title">p2</span><span class="params">(p1)</span></span>;</span><br><span class="line"><span class="function">shared_ptr&lt;<span class="type">int</span>&gt; <span class="title">p3</span><span class="params">(p2)</span></span>;</span><br><span class="line">cout &lt;&lt; *p1 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; p<span class="number">1.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; *p2 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; p<span class="number">2.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p>循环引用</p>
+<p>循坏引用分析：</p>
+<ol>
+<li>node1和node2两个智能指针对象指向两个结点，引用计数变成1，我们不需要手动delete。</li>
+<li>node1和_next指向node2，node2的_prev还指向下一个结点。但是_prev还指向上一个节点。</li>
+<li>node1和node2析构，引用计数减一，但是_next还指向下一个节点。但是_prev还指向上一个节点。</li>
+<li>也就是说_next析构了，node2就释放了。</li>
+<li>也就是说_prev析构了，node1就释放了。</li>
+<li>但是_next属于node成员，node1释放了，_next才会析构，而node1由_prev管理，_prev属于node2成员，所以这就叫循环引用，谁也不会释放。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ListNode</span> &#123;</span><br><span class="line">    <span class="type">int</span> _data;</span><br><span class="line">    shared_ptr&lt;ListNode&gt; _prev;</span><br><span class="line">    shared_ptr&lt;ListNode&gt; _next;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">ListNode</span>() &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;~ListNode()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">shared_ptr&lt;ListNode&gt; <span class="title">node1</span><span class="params">(<span class="keyword">new</span> ListNode)</span></span>;</span><br><span class="line">    <span class="function">shared_ptr&lt;ListNode&gt; <span class="title">node2</span><span class="params">(<span class="keyword">new</span> ListNode)</span></span>;</span><br><span class="line">    cout &lt;&lt; node<span class="number">1.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; node<span class="number">2.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    node1-&gt;_next = node2;</span><br><span class="line">    node2-&gt;_prev = node1;</span><br><span class="line">    cout &lt;&lt; node<span class="number">1.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; node<span class="number">2.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方案：在引用计数的场景下，把节点中的_prev和_next改成weak_ptr就可以了</strong></p>
+<p><strong>原理：node1-&gt;_next &#x3D; node2;和node2-&gt;_prev &#x3D; node1;时weak_ptr的_next和_prev不会增加 node1和node2的引用计数。</strong> </p>
+<h2 id="2-4weak-ptr"><a href="#2-4weak-ptr" class="headerlink" title="2.4	weak_ptr"></a>2.4	weak_ptr</h2><p>weak_ptr 被设计为与 shared_ptr 共同工作，可以从一个 shared_ptr 或者另一个 weak_ptr 对象构造而来。weak_ptr 是为了配合 shared_ptr 而引入的一种智能指针，它更像是 shared_ptr 的一个助手而不是智能指针，因为它不具有普通指针的行为，没有重载 operator* 和 operator-&gt; ，因此取名为 weak，表明其是功能较弱的智能指针。它的最大作用在于协助 shared_ptr 工作，可获得资源的观测权，像旁观者那样观测资源的使用情况。观察者意味着 weak_ptr 只对 shared_ptr 进行引用，而不改变其引用计数，当被观察的 shared_ptr 失效后，相应的 weak_ptr 也相应失效。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ListNode</span> &#123;</span><br><span class="line">    <span class="type">int</span> _data;</span><br><span class="line">    weak_ptr&lt;ListNode&gt; _prev;</span><br><span class="line">    weak_ptr&lt;ListNode&gt; _next;</span><br><span class="line"></span><br><span class="line">~<span class="built_in">ListNode</span>() &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;~ListNode()&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">shared_ptr&lt;ListNode&gt; <span class="title">node1</span><span class="params">(<span class="keyword">new</span> ListNode)</span></span>;</span><br><span class="line">    <span class="function">shared_ptr&lt;ListNode&gt; <span class="title">node2</span><span class="params">(<span class="keyword">new</span> ListNode)</span></span>;</span><br><span class="line">    cout &lt;&lt; node<span class="number">1.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; node<span class="number">2.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    node1-&gt;_next = node2;</span><br><span class="line">    node2-&gt;_prev = node1;</span><br><span class="line">    cout &lt;&lt; node<span class="number">1.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; node<span class="number">2.</span><span class="built_in">use_count</span>() &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面给出几个使用指南。<br>（1）如果程序要使用多个指向同一个对象的指针，应选择shared_ptr。这样的情况包括：<br>（a）的元素和最小的元素；<br>（b）两个对象都包含指向第三个对象的指针；<br>（c）STL容器包含指针。很多STL算法都支持复制和赋值操作，这些操作可用于shared_ptr，但不能用于unique_ptr（编译器发出warning）和auto_ptr（行为不确定）。如果你的编译器没有提供shared_ptr，可使用Boost库提供的shared_ptr</p>
+<h1 id="3-类型推导"><a href="#3-类型推导" class="headerlink" title="3.类型推导"></a>3.类型推导</h1><h2 id="3-1-auto"><a href="#3-1-auto" class="headerlink" title="3.1 auto"></a>3.1 auto</h2><p>编程时候常常需要把表达式的值付给变量,需要在声明变量的时候清楚的知道变量是什么类型。然而做到这一点并非那么容易(特别是模板中)，有时候根本做不到。为了解决这个问题，C++11新标准就引入了auto类型说明符，用它就能让编译器替我们去分析表达式所属的类型。和原来那些只对应某种特定的类型说明符(例如 int)不同。auto 让编译器通过初始值来进行类型推演。从而获得定义变量的类型，所以说 auto 定义的变量必须有初始值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">auto</span> a = i,&amp;b = i,*c = &amp;i;<span class="comment">//正确: a初始化为i的副本,b初始化为i的引用,c为i的指针.</span></span><br><span class="line"><span class="keyword">auto</span> sz = <span class="number">0</span>, pi = <span class="number">3.14</span>;<span class="comment">//错误,两个变量的类型不一样。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-decltype"><a href="#3-2-decltype" class="headerlink" title="3.2 decltype"></a>3.2 decltype</h2><p><code>decltype</code> 关键字是为了解决 auto 关键字只能对变量进行类型推导的缺陷而出现的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">decltype</span>(i) i2 = i;</span><br><span class="line">cout  &lt;&lt; i &lt;&lt; <span class="string">&quot;\t&quot;</span>;</span><br><span class="line">cout &lt;&lt; i2;</span><br></pre></td></tr></table></figure>
+<h1 id="4-强制类型转换"><a href="#4-强制类型转换" class="headerlink" title="4.强制类型转换"></a>4.强制类型转换</h1><p>C++中四种类型转换是：static_cast, dynamic_cast, const_cast, reinterpret_cast</p>
+<h2 id="4-1-const-cast"><a href="#4-1-const-cast" class="headerlink" title="4.1 const_cast"></a>4.1 const_cast</h2><p><strong>const_cast&lt;类型说明符&gt; (变量或表达式)</strong></p>
+<p> 用于将const变量转换为非const类型</p>
+<p>const_cast用于强制去掉const这种不能被修改的常数特性，但需要特别注意的是const_cast不是用于去除变量的常量性，而是去除指向常数对象的指针或引用的常量性，其去除常量性的对象必须为指针或引用。</p>
+<h2 id="4-2-static-cast"><a href="#4-2-static-cast" class="headerlink" title="4.2  static_cast"></a>4.2  static_cast</h2><p>static_cast&lt;类型说明符&gt; (变量或表达式)</p>
+<p>用于各种隐私转换，比如非const转const， void*转指针等， static_cast 能用于多态向上转化，如果向下转能成功但是不安全，结果未知。</p>
+<h2 id="4-3-dynamic-cast"><a href="#4-3-dynamic-cast" class="headerlink" title="4.3 dynamic_cast"></a>4.3 dynamic_cast</h2><p>dynamic_cast&lt;类型说明符&gt; (变量或表达式)</p>
+<p>用于动态类型转换，只能用于含有虚函数的类，用于类层次间的向上和向下转化。只能转指针或引用。向上转换：指的是子类向基类转换。 向下转换：指的是基类向子类转换。  他通过判断在执行到该语句的时候变量的运行时类型和要转换的类型是否相同来判断是否能够向下转换。    </p>
+<h2 id="4-4-reinterpret-cast"><a href="#4-4-reinterpret-cast" class="headerlink" title="4.4 reinterpret_cast"></a>4.4 reinterpret_cast</h2><p>reinterpret_cast&lt;类型说明符&gt; (变量或表达式)</p>
+<p>几乎什么都可以转，比如将int转指针，可能会出问题，尽量少用。</p>
+<p>改变指针或引用的类型、将指针或引用转换为一个足够长度的整形、将整型转换为指针或引用类型。</p>
+<h2 id="4-5-为什么不用C的强制转换？"><a href="#4-5-为什么不用C的强制转换？" class="headerlink" title="4.5 为什么不用C的强制转换？"></a>4.5 为什么不用C的强制转换？</h2><p>C的强制转换表面上看起来功能强大什么都能转换，但转化不够明确，不能进行错误检查，容易出错。</p>
+<h1 id="委托构造函数"><a href="#委托构造函数" class="headerlink" title="委托构造函数"></a>委托构造函数</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> value1;</span><br><span class="line">    <span class="type">int</span> value2;</span><br><span class="line">    <span class="built_in">Base</span>() &#123;</span><br><span class="line">        value1 = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">Base</span>(<span class="type">int</span> value) : <span class="built_in">Base</span>() &#123;  <span class="comment">// 委托 Base() 构造函数</span></span><br><span class="line">        value2 = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="继承构造"><a href="#继承构造" class="headerlink" title="继承构造"></a>继承构造</h1><p>在继承体系中，如果派生类想要使用基类的构造函数，需要在构造函数中显式声明。<br> 假若基类拥有为数众多的不同版本的构造函数，这样，在派生类中得写很多对应的“透传”构造函数。如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">A</span>(<span class="type">int</span> i) &#123;&#125;</span><br><span class="line">  <span class="built_in">A</span>(<span class="type">double</span> d,<span class="type">int</span> i)&#123;&#125;</span><br><span class="line">  <span class="built_in">A</span>(<span class="type">float</span> f,<span class="type">int</span> i,<span class="type">const</span> <span class="type">char</span>* c)&#123;&#125;</span><br><span class="line">  <span class="comment">//...等等系列的构造函数版本</span></span><br><span class="line">&#125;；</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">B</span>:A</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">B</span>(<span class="type">int</span> i):<span class="built_in">A</span>(i)&#123;&#125;</span><br><span class="line">  <span class="built_in">B</span>(<span class="type">double</span> d,<span class="type">int</span> i):<span class="built_in">A</span>(d,i)&#123;&#125;</span><br><span class="line">  <span class="built_in">B</span>(folat f,<span class="type">int</span> i,<span class="type">const</span> <span class="type">char</span>* c):<span class="built_in">A</span>(f,i,e)&#123;&#125;</span><br><span class="line">  <span class="comment">//......等等好多个和基类构造函数对应的构造函数</span></span><br><span class="line">&#125;；</span><br></pre></td></tr></table></figure>
+
+<p>C++11的继承构造：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">A</span>(<span class="type">int</span> i) &#123;&#125;</span><br><span class="line">  <span class="built_in">A</span>(<span class="type">double</span> d,<span class="type">int</span> i)&#123;&#125;</span><br><span class="line">  <span class="built_in">A</span>(<span class="type">float</span> f,<span class="type">int</span> i,<span class="type">const</span> <span class="type">char</span>* c)&#123;&#125;</span><br><span class="line">  <span class="comment">//...等等系列的构造函数版本</span></span><br><span class="line">&#125;；</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">B</span>:A</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">using</span> A::A;</span><br><span class="line">  <span class="comment">//关于基类各构造函数的继承一句话搞定</span></span><br><span class="line">  <span class="comment">//......</span></span><br><span class="line">&#125;；</span><br></pre></td></tr></table></figure>
+
+<h1 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int a = 0;</span><br><span class="line">auto f = [=] &#123; return a; &#125;;</span><br><span class="line"></span><br><span class="line">a+=1;</span><br><span class="line"></span><br><span class="line">cout &lt;&lt; f() &lt;&lt; endl;       //输出0</span><br><span class="line"></span><br><span class="line">int a = 0;</span><br><span class="line">auto f = [&amp;a] &#123; return a; &#125;;</span><br><span class="line"></span><br><span class="line">a+=1;</span><br><span class="line"></span><br><span class="line">cout &lt;&lt; f() &lt;&lt;endl;       //输出1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">singleNumber</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums.<span class="built_in">empty</span>()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> len = nums.<span class="built_in">size</span>();</span><br><span class="line">    <span class="type">int</span> temp = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; len ; i++)&#123;</span><br><span class="line">        temp ^=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/10/CPP/STL/" data-id="cm3aebkl90000cwkd7wj2hg2s" data-title="STL速学" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/10/Android/APP/APP_1/">Andoird camera app从零养成计划【一】</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/10/CPP/STL/">STL速学</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 JoeNero<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
