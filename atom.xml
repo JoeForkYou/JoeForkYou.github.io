@@ -6,7 +6,7 @@
   <link href="https://joeforkyou.github.io/atom.xml" rel="self"/>
   
   <link href="https://joeforkyou.github.io/"/>
-  <updated>2024-11-09T23:25:11.178Z</updated>
+  <updated>2024-11-09T23:33:15.508Z</updated>
   <id>https://joeforkyou.github.io/</id>
   
   <author>
@@ -17,9 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>模式切换</title>
+    <link href="https://joeforkyou.github.io/2024/11/10/Android/hal/%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2/"/>
+    <id>https://joeforkyou.github.io/2024/11/10/Android/hal/%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2/</id>
+    <published>2024-11-09T23:32:09.000Z</published>
+    <updated>2024-11-09T23:33:15.508Z</updated>
+    
+    <content type="html"><![CDATA[<p>[toc]</p><h1 id="1-摘要"><a href="#1-摘要" class="headerlink" title="1 摘要"></a>1 摘要</h1><p>这里提到的mode切换主要是拍照切换到video，或者切换到超夜之类</p><table><thead><tr><th>阶段</th><th>说明</th></tr></thead><tbody><tr><td>S0(App)</td><td>从点击事件到调用 <code>flush</code> 的间隔；</td></tr><tr><td>S1(HAL)</td><td>flush的总耗时</td></tr><tr><td>S2(App)</td><td><code>flush</code> 结束后，到 <code>createSession</code> 的间隔；</td></tr><tr><td>S3(Hal)</td><td><code>createSession</code> 的耗时；</td></tr><tr><td>S4(App)</td><td><code>createSession</code> 结束到 <code>setRepeatingRequests</code> 的间隔；</td></tr><tr><td>S5(HAL)</td><td><code>setRepeatingRequests</code> 到底层出第一帧的时间；</td></tr><tr><td>S6(<strong>App + Multimedia</strong>)</td><td>底层第一帧到真正显示出第一帧的间隔。</td></tr></tbody></table><h1 id="2-S0"><a href="#2-S0" class="headerlink" title="2 S0"></a>2 S0</h1><p>从点击事件到调用 <code>flush</code> 的间隔；</p><p>搜索ptr:up<br>这个是按下抬起的动作<br><img src="https://i.loli.net/2021/04/09/B8yZztXA1hR7urT.png" alt="选区_003.png"><br><img src="https://i.loli.net/2021/04/09/RYChKUed5HTM1IA.png" alt="选区_004.png"><br>然后搜索CameraHal::flush</p><p><img src="https://i.loli.net/2021/04/09/2oaSdCM1zYVxg48.png" alt="选区_006.png"></p><p>上面的间隔时间56.958ms就是s0</p><h1 id="3-S1"><a href="#3-S1" class="headerlink" title="3 S1"></a>3 S1</h1><p>  flush的总耗时,</p><p>搜索CameraHal::flush,这个持续时间就是S1的耗时</p><p><img src="https://i.loli.net/2021/04/09/FiMa7me4VRK2H1h.png" alt="选区_005.png"></p><h1 id="4-S2"><a href="#4-S2" class="headerlink" title="4 S2"></a>4 S2</h1><p><code>flush</code> 结束后，到 <code>createSession</code> 的间隔；</p><p>如下图：</p><p><img src="https://i.loli.net/2021/04/09/Kcr9st7LDgWNmOJ.png"></p><h1 id="5-S3"><a href="#5-S3" class="headerlink" title="5 S3"></a>5 S3</h1><p><code>endConfigure</code> 的总耗时</p><p><img src="https://i.loli.net/2021/04/09/6t3oGNqIkuDz58Z.png" alt="选区_001.png"></p><h1 id="6-S4"><a href="#6-S4" class="headerlink" title="6 S4"></a>6 S4</h1><p>即 <code>endConfigure</code> 结束到下 <code>setRepeatingRequests</code> 的间隔<br><img src="https://i.loli.net/2021/04/09/jg6okQ9WwcMBPLX.png" alt="选区_002.png"></p><h1 id="7-S5"><a href="#7-S5" class="headerlink" title="7 S5"></a>7 S5</h1><p>则是 <code>setRepeatingRequests</code> 到底层出第一帧（cameraserver 收到 <code>first full buffer</code>）的间隔<br><img src="https://i.loli.net/2021/04/09/ZFn2C75TaGAI9ib.png" alt="2021-04-09 09-49-19屏幕截图.png"></p><h1 id="8-S7"><a href="#8-S7" class="headerlink" title="8 S7"></a>8 S7</h1><p>是底层第一帧上传后，到真正显示的第一帧的间隔：</p><p>根据 <code>first full buffer</code> 时间，找到 SurfaceTexture 收到第一帧的时间点，再找到 APP 第一次取用帧数据去 <code>Draw</code> 的时间点</p><p>多媒体画图日后研究，每个项目的机制不一样，需要根据实际去研究</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
+&lt;h1 id=&quot;1-摘要&quot;&gt;&lt;a href=&quot;#1-摘要&quot; class=&quot;headerlink&quot; title=&quot;1 摘要&quot;&gt;&lt;/a&gt;1 摘要&lt;/h1&gt;&lt;p&gt;这里提到的mode切换主要是拍照切换到video，或者切换到超夜之类&lt;/p&gt;
+&lt;table&gt;
+&lt;t</summary>
+      
+    
+    
+    
+    <category term="camera" scheme="https://joeforkyou.github.io/categories/camera/"/>
+    
+    
+    <category term="camera" scheme="https://joeforkyou.github.io/tags/camera/"/>
+    
+  </entry>
+  
+  <entry>
     <title>前后摄切换</title>
-    <link href="https://joeforkyou.github.io/2024/11/10/%E5%89%8D%E5%90%8E%E6%91%84%E5%88%87%E6%8D%A2/"/>
-    <id>https://joeforkyou.github.io/2024/11/10/%E5%89%8D%E5%90%8E%E6%91%84%E5%88%87%E6%8D%A2/</id>
+    <link href="https://joeforkyou.github.io/2024/11/10/Android/hal/%E5%89%8D%E5%90%8E%E6%91%84%E5%88%87%E6%8D%A2/"/>
+    <id>https://joeforkyou.github.io/2024/11/10/Android/hal/%E5%89%8D%E5%90%8E%E6%91%84%E5%88%87%E6%8D%A2/</id>
     <published>2024-11-09T23:24:01.000Z</published>
     <updated>2024-11-09T23:25:11.178Z</updated>
     
@@ -522,30 +549,6 @@
     <category term="GMS" scheme="https://joeforkyou.github.io/tags/GMS/"/>
     
     <category term="cts" scheme="https://joeforkyou.github.io/tags/cts/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据结构 【链表】</title>
-    <link href="https://joeforkyou.github.io/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84_%E9%93%BE%E8%A1%A8/"/>
-    <id>https://joeforkyou.github.io/2024/11/10/CPP/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84_%E9%93%BE%E8%A1%A8/</id>
-    <published>2024-11-09T16:58:26.000Z</published>
-    <updated>2024-11-09T22:24:35.271Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-链表的创建"><a href="#1-链表的创建" class="headerlink" title="1 链表的创建"></a>1 链表的创建</h1><p>链表是一种物理存储单元上非连续、非顺序的存储结构。<a href="https://baike.baidu.com/item/%E9%93%BE%E8%A1%A8/9794473?fr=aladdin">摘自百度百科</a><br>如下存储:<br><img src="https://i-blog.csdnimg.cn/blog_migrate/f48f0f5139f85857d9312f68547090a9.png#pic_center" alt="在这里插入图片描述"></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">int</span> data;  <span class="comment">//数据域</span></span><br><span class="line">Node* next;<span class="comment">//指针域</span></span><br><span class="line"><span class="built_in">Node</span>():<span class="built_in">data</span>(<span class="number">0</span>),<span class="built_in">next</span>(<span class="literal">nullptr</span>)&#123;&#125;</span><br><span class="line"><span class="built_in">Node</span>(<span class="type">int</span> _data,Node* _next)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;data = _data;</span><br><span class="line"><span class="keyword">this</span>-&gt;next = _next;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><h2 id="1-1-头插"><a href="#1-1-头插" class="headerlink" title="1.1 头插"></a>1.1 头插</h2><p><img src="https://i-blog.csdnimg.cn/blog_migrate/632c55adc58345acff9828e9156eccf8.png#pic_center" alt="在这里插入图片描述"></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">pushFront</span><span class="params">(Node* head, <span class="type">int</span> data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">Node* pNew= <span class="keyword">new</span> <span class="built_in">Node</span>();           <span class="comment">//定义新节点头</span></span><br><span class="line">pNew-&gt;data = data;                <span class="comment">//存储数据</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">nullptr</span>== head-&gt;next)<span class="comment">//判断是不是只有头结点</span></span><br><span class="line">&#123;</span><br><span class="line">head-&gt;next = pNew;                 </span><br><span class="line">&#125;</span><br><span class="line">pNew-&gt;next = head-&gt;next;</span><br><span class="line">head-&gt;next = pNew;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="1-2-尾插"><a href="#1-2-尾插" class="headerlink" title="1.2 尾插"></a>1.2 尾插</h2><p>尾插:<br>申请一个新的节点pNew.将要插入的数据赋值给pNew节点的数据域.并且将pNew的指针域指向空.<br>定义一个节点p指向head(实际操作时一般定义一个新的节点来操作,以便返回头结点)<br><img src="https://i-blog.csdnimg.cn/blog_migrate/32562b09f6b08b564462edc635094d76.png#pic_center" alt="在这里插入图片描述"></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">pushBack</span><span class="params">(Node* head, <span class="type">int</span> data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">Node* pNew = <span class="keyword">new</span> Node;          <span class="comment">//定义一个Node结点指针newNode</span></span><br><span class="line">pNew-&gt;next = <span class="literal">NULL</span>;              <span class="comment">//定义newNode的数据域和指针域</span></span><br><span class="line">pNew-&gt;data = data;</span><br><span class="line">Node* p = head;                 <span class="comment">//定义指针p指向头结点</span></span><br><span class="line"><span class="keyword">if</span> (head == <span class="literal">NULL</span>)</span><br><span class="line">&#123;                               <span class="comment">//当头结点为空时，设置newNode为头结点</span></span><br><span class="line">head = pNew;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>                            <span class="comment">//循环直到最后一个节点，将newNode放置在最后</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">while</span> (p-&gt;next != <span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">p = p-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line">p-&gt;next = pNew;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="1-3-获取链表长度"><a href="#1-3-获取链表长度" class="headerlink" title="1.3 获取链表长度"></a>1.3 获取链表长度</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">getLens</span><span class="params">(Node* head)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">int</span> lens = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (head-&gt;next!=<span class="literal">nullptr</span>)</span><br><span class="line">&#123;</span><br><span class="line">lens++;</span><br><span class="line">head = head-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> lens;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="2-翻转链表"><a href="#2-翻转链表" class="headerlink" title="2 翻转链表"></a>2 翻转链表</h1><p><img src="https://i-blog.csdnimg.cn/blog_migrate/8c9f8af8dce4ffb2b62ca9986fba3e80.png#pic_center" alt="在这里插入图片描述"></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">reverse</span><span class="params">(Node* head)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span> ((head-&gt;next == <span class="literal">nullptr</span> )||(head-&gt;next-&gt;next == <span class="literal">nullptr</span>))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">Node* pCur = head-&gt;next;</span><br><span class="line">Node* pNext = pCur-&gt;next;</span><br><span class="line">Node* pre = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="keyword">while</span> (pNext)</span><br><span class="line">&#123;</span><br><span class="line">pCur-&gt;next = pre;</span><br><span class="line">pre = pCur;</span><br><span class="line">pCur = pNext;</span><br><span class="line">pNext = pCur-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line">pCur-&gt;next = pre;</span><br><span class="line">head-&gt;next = pCur;</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;1-链表的创建&quot;&gt;&lt;a href=&quot;#1-链表的创建&quot; class=&quot;headerlink&quot; title=&quot;1 链表的创建&quot;&gt;&lt;/a&gt;1 链表的创建&lt;/h1&gt;&lt;p&gt;链表是一种物理存储单元上非连续、非顺序的存储结构。&lt;a href=&quot;https://baike.ba</summary>
-      
-    
-    
-    
-    <category term="cpp" scheme="https://joeforkyou.github.io/categories/cpp/"/>
-    
-    
-    <category term="cpp" scheme="https://joeforkyou.github.io/tags/cpp/"/>
     
   </entry>
   
