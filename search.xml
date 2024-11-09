@@ -189,9 +189,9 @@
             
             <tag> Android </tag>
             
-            <tag> GMS </tag>
-            
             <tag> ITS </tag>
+            
+            <tag> GMS </tag>
             
         </tags>
       
@@ -286,11 +286,11 @@
       
         <tags>
             
-            <tag> cts </tag>
-            
             <tag> Android </tag>
             
             <tag> GMS </tag>
+            
+            <tag> cts </tag>
             
         </tags>
       
