@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>python爬取天气 | JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1 安装使用VSCode中安装相关的插件就可以配合chatgpt来实现一些简单的爬虫操作，只能应对比较简单的场景.安装插件chatGPT-ChatMoss 2 实例给AI发送python 爬取无锡七日天气回复如下:要爬取无锡七日天气，可以使用Python中的第三方库 requests 和 Beautiful Soup。以下是详细步骤：  导入必要的库  12import requestsfrom">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python爬取天气">
+<meta property="og:url" content="https://joeforkyou.github.io/2024/11/10/Python/python%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:description" content="1 安装使用VSCode中安装相关的插件就可以配合chatgpt来实现一些简单的爬虫操作，只能应对比较简单的场景.安装插件chatGPT-ChatMoss 2 实例给AI发送python 爬取无锡七日天气回复如下:要爬取无锡七日天气，可以使用Python中的第三方库 requests 和 Beautiful Soup。以下是详细步骤：  导入必要的库  12import requestsfrom">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2024-11-09T17:07:35.000Z">
+<meta property="article:modified_time" content="2024-11-09T17:08:09.069Z">
+<meta property="article:author" content="JoeNero">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/butterfly-icon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://joeforkyou.github.io/2024/11/10/Python/python%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'python爬取天气',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">python爬取天气</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">python爬取天气</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-11-09T17:07:35.000Z" title="Created 2024-11-10 01:07:35">2024-11-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-09T17:08:09.069Z" title="Updated 2024-11-10 01:08:09">2024-11-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="1-安装使用"><a href="#1-安装使用" class="headerlink" title="1 安装使用"></a>1 安装使用</h1><p>VSCode中安装相关的插件就可以配合chatgpt来实现一些简单的爬虫操作，只能应对比较简单的场景.<br>安装插件<br>chatGPT-ChatMoss</p>
+<h1 id="2-实例"><a href="#2-实例" class="headerlink" title="2 实例"></a>2 实例</h1><p>给AI发送<br>python 爬取无锡七日天气<br>回复如下:<br>要爬取无锡七日天气，可以使用Python中的第三方库 requests 和 Beautiful Soup。以下是详细步骤：</p>
+<ol>
+<li>导入必要的库</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>发送GET请求获取网页内容</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&quot;http://www.weather.com.cn/weather/101190201.shtml&quot;</span></span><br><span class="line">response = requests.get(url)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>解析网页内容</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(response.content, <span class="string">&quot;html.parser&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>找到需要的天气信息所在的标签</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">weather_data = soup.select(<span class="string">&quot;.t&gt;li&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>提取天气信息并输出</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> weather <span class="keyword">in</span> weather_data:</span><br><span class="line">    <span class="comment"># 获取日期、天气状况、最高温度和最低温度</span></span><br><span class="line">    date = weather.select_one(<span class="string">&quot;.date&quot;</span>).get_text()</span><br><span class="line">    condition = weather.select_one(<span class="string">&quot;.wea&quot;</span>).get_text()</span><br><span class="line">    high_temperature = weather.select_one(<span class="string">&quot;.tem span&quot;</span>).get_text()</span><br><span class="line">    low_temperature = weather.select_one(<span class="string">&quot;.tem i&quot;</span>).get_text()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印天气信息</span></span><br><span class="line">    <span class="built_in">print</span>(date, condition, high_temperature, low_temperature)</span><br></pre></td></tr></table></figure>
+
+<p>完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://www.weather.com.cn/weather/101190201.shtml&quot;</span></span><br><span class="line"></span><br><span class="line">response = requests.get(url)</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(response.content, <span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line"></span><br><span class="line">weather_data = soup.select(<span class="string">&quot;.t&gt;li&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> weather <span class="keyword">in</span> weather_data:</span><br><span class="line">    date = weather.select_one(<span class="string">&quot;.date&quot;</span>).get_text()</span><br><span class="line">    condition = weather.select_one(<span class="string">&quot;.wea&quot;</span>).get_text()</span><br><span class="line">    high_temperature = weather.select_one(<span class="string">&quot;.tem span&quot;</span>).get_text()</span><br><span class="line">    low_temperature = weather.select_one(<span class="string">&quot;.tem i&quot;</span>).get_text()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(date, condition, high_temperature, low_temperature)</span><br></pre></td></tr></table></figure>
+
+<p>但是上述实际运行是存在一些小问题的。</p>
+<p>打印结果如下: 这个很明显就是date这个数据为None</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">None &lt;p <span class="class"><span class="keyword">class</span>=&quot;<span class="title">wea</span>&quot; <span class="title">title</span>=&quot;多云&quot;&gt;多云&lt;/<span class="title">p</span>&gt; &lt;<span class="title">span</span>&gt;28&lt;/<span class="title">span</span>&gt; &lt;<span class="title">i</span>&gt;17℃&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">None</span> &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">wea</span>&quot; <span class="title">title</span>=&quot;多云&quot;&gt;多云&lt;/<span class="title">p</span>&gt; &lt;<span class="title">span</span>&gt;27&lt;/<span class="title">span</span>&gt; &lt;<span class="title">i</span>&gt;15℃&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">None</span> &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">wea</span>&quot; <span class="title">title</span>=&quot;多云&quot;&gt;多云&lt;/<span class="title">p</span>&gt; &lt;<span class="title">span</span>&gt;24&lt;/<span class="title">span</span>&gt; &lt;<span class="title">i</span>&gt;12℃&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">None</span> &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">wea</span>&quot; <span class="title">title</span>=&quot;阴转小雨&quot;&gt;阴转小雨&lt;/<span class="title">p</span>&gt; &lt;<span class="title">span</span>&gt;20&lt;/<span class="title">span</span>&gt; &lt;<span class="title">i</span>&gt;15℃&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">None</span> &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">wea</span>&quot; <span class="title">title</span>=&quot;阴&quot;&gt;阴&lt;/<span class="title">p</span>&gt; &lt;<span class="title">span</span>&gt;15&lt;/<span class="title">span</span>&gt; &lt;<span class="title">i</span>&gt;13℃&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">None</span> &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">wea</span>&quot; <span class="title">title</span>=&quot;小雨&quot;&gt;小雨&lt;/<span class="title">p</span>&gt; &lt;<span class="title">span</span>&gt;19&lt;/<span class="title">span</span>&gt; &lt;<span class="title">i</span>&gt;14℃&lt;/<span class="title">i</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">None</span> &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">wea</span>&quot; <span class="title">title</span>=&quot;小雨转晴&quot;&gt;小雨转晴&lt;/<span class="title">p</span>&gt; &lt;<span class="title">span</span>&gt;16&lt;/<span class="title">span</span>&gt; &lt;<span class="title">i</span>&gt;8℃&lt;/<span class="title">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>继续追问机器人:</p>
+<p>优化下代码，没有获取到天数，并且这个get_text有报错.</p>
+<p>机器人直接回复:</p>
+<p>以下是优化后的代码，已解决上述问题：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://www.weather.com.cn/weather/101190201.shtml&quot;</span></span><br><span class="line"></span><br><span class="line">response = requests.get(url)</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(response.content, <span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line"></span><br><span class="line">weather_data = soup.select(<span class="string">&quot;.t li&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> weather <span class="keyword">in</span> weather_data:</span><br><span class="line">    <span class="comment"># 获取日期、天气状况、最高温度和最低温度</span></span><br><span class="line">    date = weather.select_one(<span class="string">&quot;h1&quot;</span>).get_text()</span><br><span class="line">    condition = weather.select_one(<span class="string">&quot;.wea&quot;</span>).get_text()</span><br><span class="line">    high_temperature = weather.select(<span class="string">&quot;.tem span&quot;</span>)[<span class="number">0</span>].get_text()</span><br><span class="line">    low_temperature = weather.select(<span class="string">&quot;.tem i&quot;</span>)[<span class="number">0</span>].get_text()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打印天气信息</span></span><br><span class="line">    <span class="built_in">print</span>(date, condition, high_temperature, low_temperature)</span><br></pre></td></tr></table></figure>
+
+
+<p>在优化代码时，我们对原有代码进行了以下改进：</p>
+<ul>
+<li>将CSS选择器中的“&gt;”删除，因为它只会选择直接子元素，导致无法获取到所有的天气信息。</li>
+<li>由于天数信息并不在 “.date” 标签内，所以将日期信息从该标签中提取出来。在这里，我们使用了 h1 标签来获取日期信息。</li>
+<li>使用 select() 方法来选取多个元素，并且使用索引 [0] 来定位到需要的元素，因为 .select_one() 方法只能返回单个元素，如果要选取多个元素，需要使用 select() 方法。同时，我们还修改了 “.tem span” 和 “.tem i” 的类选择器，以便正确获取最高温度和最低温度。</li>
+<li>在使用 get_text() 方法时，需要确保该元素存在并且不为空。如果该元素不存在或为空，会导致 AttributeError 异常。</li>
+</ul>
+<p>这一次就非常好用了.</p>
+<p>打印出的结果如下:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">19</span>日（今天） 多云 <span class="number">28</span> <span class="number">17</span>℃</span><br><span class="line"><span class="number">20</span>日（明天） 多云 <span class="number">27</span> <span class="number">15</span>℃</span><br><span class="line"><span class="number">21</span>日（后天） 多云 <span class="number">24</span> <span class="number">12</span>℃</span><br><span class="line"><span class="number">22</span>日（周六） 阴转小雨 <span class="number">20</span> <span class="number">15</span>℃</span><br><span class="line"><span class="number">23</span>日（周日） 阴 <span class="number">15</span> <span class="number">13</span>℃</span><br><span class="line"><span class="number">24</span>日（周一） 小雨 <span class="number">19</span> <span class="number">14</span>℃</span><br><span class="line"><span class="number">25</span>日（周二） 小雨转晴 <span class="number">16</span> <span class="number">8</span>℃</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io">JoeNero</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io/2024/11/10/Python/python%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94/">https://joeforkyou.github.io/2024/11/10/Python/python%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2024/11/10/GMS/cts%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" title="cts基础操作"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">cts基础操作</div></div><div class="info-2"><div class="info-item-1">手机端设置永久不锁屏 1 CTS进入cts目录tools运行以下命令 12./cts-tradefedadb devices找设备数串 12345整跑run cts -m CtsCameraTestCases --skip-preconditionsrun cts -m CtsMediaTestCases单测格式如下 -t 后面是单跑的内容run cts -m CtsCameraTestCases -t android.hardware.camera2.cts.StillCaptureTest#testAeCompensation --skip-preconditions 123456789101112查看设备状态l d查看报告状态l r查看当前命令l c打开报告nautilus ./run retry --retry &lt;session-number&gt;重跑(注意:重跑需要同一个机子同一个版本)run retry --retry sessionrun retry --retry 0 以上的是在环境中跑cts.cts...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">1 安装使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">2 实例</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Python/python%E7%88%AC%E5%8F%96%E5%A4%A9%E6%B0%94/" title="python爬取天气">python爬取天气</a><time datetime="2024-11-09T17:07:35.000Z" title="Created 2024-11-10 01:07:35">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/GMS/cts%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" title="cts基础操作">cts基础操作</a><time datetime="2024-11-09T17:01:39.000Z" title="Created 2024-11-10 01:01:39">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Linux/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84_%E9%93%BE%E8%A1%A8/" title="数据结构_链表">数据结构_链表</a><time datetime="2024-11-09T16:58:26.000Z" title="Created 2024-11-10 00:58:26">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Linux/git%E7%9A%84%E4%BD%BF%E7%94%A8/" title="git的使用">git的使用</a><time datetime="2024-11-09T16:50:40.000Z" title="Created 2024-11-10 00:50:40">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Android/APP/APP_1/" title="Andoird camera app从零养成计划【一】">Andoird camera app从零养成计划【一】</a><time datetime="2024-11-09T16:41:32.000Z" title="Created 2024-11-10 00:41:32">2024-11-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
