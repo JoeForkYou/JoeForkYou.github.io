@@ -13,12 +13,20 @@
       
       <categories>
           
+          <category> Android </category>
+          
+          <category> GMS </category>
+          
           <category> cts </category>
           
       </categories>
       
       
         <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> GMS </tag>
             
             <tag> cts </tag>
             
