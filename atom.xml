@@ -6,7 +6,7 @@
   <link href="https://joeforkyou.github.io/atom.xml" rel="self"/>
   
   <link href="https://joeforkyou.github.io/"/>
-  <updated>2024-11-09T23:18:04.574Z</updated>
+  <updated>2024-11-09T23:24:59.139Z</updated>
   <id>https://joeforkyou.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前后摄切换</title>
+    <link href="https://joeforkyou.github.io/2024/11/10/%E5%89%8D%E5%90%8E%E6%91%84%E5%88%87%E6%8D%A2/"/>
+    <id>https://joeforkyou.github.io/2024/11/10/%E5%89%8D%E5%90%8E%E6%91%84%E5%88%87%E6%8D%A2/</id>
+    <published>2024-11-09T23:24:01.000Z</published>
+    <updated>2024-11-09T23:24:59.139Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-摘要"><a href="#1-摘要" class="headerlink" title="1 摘要"></a>1 摘要</h1><p>这里提到的切换主要是前摄&lt;-&gt;后摄的切换<br>总的来说可以分成以下的内容:</p><table><thead><tr><th>阶段</th><th>说明</th></tr></thead><tbody><tr><td>S0(App)</td><td>从点击事件到调用 <code>flush</code> 的间隔</td></tr><tr><td>S1(Hal)</td><td><code>flush</code> + <code>disconnect</code> 的总耗时，即关闭前一个摄像头的整个流程</td></tr><tr><td>S2(App)</td><td><code>disconnect</code> 完成后，到下 open camera 指令的间隔</td></tr><tr><td>S3(Hal)</td><td>open camera 到 <code>onOpened</code> 回调的耗时</td></tr><tr><td>S4(App)</td><td>onOpened<code>回调上来后，间隔多久才开始</code>createSession</td></tr><tr><td>S5(Hal)</td><td><code>createSession</code> 完成的时间，对应 <code>endConfigure</code> 的耗时</td></tr><tr><td>S6(App)</td><td><code>createSession</code> 完成后，到下 <code>setRepeatingRequests</code> 的间隔；</td></tr><tr><td>S7(Hal)</td><td><code>setRepeatingRequests</code> 指令下来后，底层要多久才准备好第一帧上抛</td></tr><tr><td>S8(App + Multimedia)</td><td>第一帧送给 App 后，多久后才真正第一次显示出数据帧</td></tr></tbody></table><h1 id="2-拆解"><a href="#2-拆解" class="headerlink" title="2 拆解"></a>2 拆解</h1><h2 id="2-1-S0-App"><a href="#2-1-S0-App" class="headerlink" title="2.1 S0(App)"></a>2.1 S0(App)</h2><p>App管辖<br>S0:从点击事件到调用 <code>flush</code> 的间隔<br>搜索ptr:up，找到如下的内容:这是按下切换释放的操作.<br>按下和释放分别对应:</p><p>AppLaunch_dispatchPtr:Down</p><p>AppLaunch_dispatchPtr:Up</p><p>我们拆解S0的时候关注up的操作.从这个start开始记录.</p><p><img src="https://img-blog.csdnimg.cn/20210320220203593.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">搜索CameraHal::flush<img src="https://img-blog.csdnimg.cn/20210320220715608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>S0的时间就是AppLaunch_dispatchPtr:Up的开始到CameraHal::flush的开始</p><h2 id="2-2-S1-Hal"><a href="#2-2-S1-Hal" class="headerlink" title="2.2 S1(Hal)"></a>2.2 S1(Hal)</h2><p>Hal 管辖<br>closeStart-&gt;CloseDone的过程.<br><img src="https://img-blog.csdnimg.cn/20210320221536995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="2-3-S2-App"><a href="#2-3-S2-App" class="headerlink" title="2.3 S2(App)"></a>2.3 S2(App)</h2><p>App管辖<br>disconnect 完成后，到下 open camera 指令的间隔<br>关键字:connectDevice</p><p><img src="https://img-blog.csdnimg.cn/2021032022190832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="2-4-S3-Hal"><a href="#2-4-S3-Hal" class="headerlink" title="2.4 S3(Hal)"></a>2.4 S3(Hal)</h2><p>Hal管辖<br>open camera 到 <code>onOpened</code> 回调的耗时<br>关键字connectDevices<br><img src="https://img-blog.csdnimg.cn/2021032022235337.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="2-5-S4-App"><a href="#2-5-S4-App" class="headerlink" title="2.5 S4(App)"></a>2.5 S4(App)</h2><p>App管辖<br>onOpened<code>回调上来后，间隔多久才开始</code>createSession<br><img src="https://img-blog.csdnimg.cn/20210320222831820.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="2-6-S5-Hal"><a href="#2-6-S5-Hal" class="headerlink" title="2.6 S5(Hal)"></a>2.6 S5(Hal)</h2><p><code>createSession</code> 完成的时间，对应 <code>endConfigure</code> 的耗时<br>内容如下:<br><img src="https://img-blog.csdnimg.cn/20210320223348459.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="2-7-S6-App"><a href="#2-7-S6-App" class="headerlink" title="2.7 S6(App)"></a>2.7 S6(App)</h2><p> <code>createSession</code> 完成后，到下 <code>setRepeatingRequests</code> 的间隔<br> <img src="https://img-blog.csdnimg.cn/20210320224052997.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="2-8-S7-Hal"><a href="#2-8-S7-Hal" class="headerlink" title="2.8 S7(Hal)"></a>2.8 S7(Hal)</h2><p><code>setRepeatingRequests</code> 指令下来后，底层要准备好第一帧上抛<br>搜索关键字:first full buffer<br><img src="https://img-blog.csdnimg.cn/20210320224431766.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4NzUzNzQ5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h2 id="2-9-S8-App-Multimedia"><a href="#2-9-S8-App-Multimedia" class="headerlink" title="2.9 S8(App + Multimedia)"></a>2.9 S8(App + Multimedia)</h2><p>每个手机的绘画机制不一样，有待研究.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;1-摘要&quot;&gt;&lt;a href=&quot;#1-摘要&quot; class=&quot;headerlink&quot; title=&quot;1 摘要&quot;&gt;&lt;/a&gt;1 摘要&lt;/h1&gt;&lt;p&gt;这里提到的切换主要是前摄&amp;lt;-&amp;gt;后摄的切换&lt;br&gt;总的来说可以分成以下的内容:&lt;/p&gt;
+&lt;table&gt;
+&lt;thea</summary>
+      
+    
+    
+    
+    <category term="camera" scheme="https://joeforkyou.github.io/categories/camera/"/>
+    
+    
+    <category term="camera" scheme="https://joeforkyou.github.io/tags/camera/"/>
+    
+  </entry>
   
   <entry>
     <title>cif</title>
@@ -520,31 +546,6 @@
     
     
     <category term="cpp" scheme="https://joeforkyou.github.io/tags/cpp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>git的使用</title>
-    <link href="https://joeforkyou.github.io/2024/11/10/Linux/git%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
-    <id>https://joeforkyou.github.io/2024/11/10/Linux/git%E7%9A%84%E4%BD%BF%E7%94%A8/</id>
-    <published>2024-11-09T16:50:40.000Z</published>
-    <updated>2024-11-09T22:26:07.829Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-git-下载"><a href="#1-git-下载" class="headerlink" title="1.git 下载"></a>1.git 下载</h1><p>最好是更新下镜像源</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt<span class="literal">-get</span> update</span><br></pre></td></tr></table></figure><p>下载git</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt<span class="literal">-get</span> install git</span><br></pre></td></tr></table></figure><p><img src="https://i-blog.csdnimg.cn/blog_migrate/57610ea2389eed7f411f029a43c3c8b5.png"><br>检测git下载成功的版本</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git version</span><br></pre></td></tr></table></figure><p>版本显示正确后执行再执行下一步<br><img src="https://i-blog.csdnimg.cn/blog_migrate/804594cf93c6f0f70dbe0f7e487fed39.png"></p><h1 id="2-ssh"><a href="#2-ssh" class="headerlink" title="2 ssh"></a>2 ssh</h1><p>ssh具体内容参考百度词条<a href="https://baike.baidu.com/item/SSH/10407">ssh</a><br>执行</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt<span class="literal">-get</span> install ssh </span><br></pre></td></tr></table></figure><p>显示如下<br><img src="https://i-blog.csdnimg.cn/blog_migrate/2d7bb5fce1275523d01140a2a1c01424.png"><br>查看ssh服务</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ps</span> <span class="literal">-e</span> | grep sshd</span><br></pre></td></tr></table></figure><p>显示sshd的话表示ssh-server已经启动<br><img src="https://i-blog.csdnimg.cn/blog_migrate/ccac9456c7008cd8439c45c645c8c26e.png"><br>生成ssh-key</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh<span class="literal">-keygen</span> <span class="literal">-t</span> rsa <span class="literal">-C</span> <span class="string">&quot;你的邮箱@qq.com&quot;</span></span><br></pre></td></tr></table></figure><p>生成后默认就行，直接回车生成文件隐藏<br>用下面命令检测是否在根目录下生存(上面建议默认，是直接在根目录下生成的)</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> <span class="literal">-al</span> ~/.ssh</span><br></pre></td></tr></table></figure><p><img src="https://i-blog.csdnimg.cn/blog_migrate/de0994ad8d808f189ed4ec9030615e3b.png"><br>然后打开显示隐藏文件<br><img src="https://i-blog.csdnimg.cn/blog_migrate/eb47eba16f9a712bd8047524f5f5eb84.png">找到<br><img src="https://i-blog.csdnimg.cn/blog_migrate/bcc065d14a29d13598f4d56647b41ed2.png"><br>再进入到文件夹下找到以下文件，这个是公钥。<br>打开这个文件将其内容复制(用记事本或者vim打开都行)<br><img src="https://i-blog.csdnimg.cn/blog_migrate/7c0c0e8b5c356f45ba34f74f38fd475a.png"><br><img src="https://i-blog.csdnimg.cn/blog_migrate/c787fd589d622eef983fe42f02857eff.png">打开你的github帐号，进入你的settings<br><img src="https://i-blog.csdnimg.cn/blog_migrate/c948ad84b69384cd61385fe7347ad056.png">找到ssh<br><img src="https://i-blog.csdnimg.cn/blog_migrate/978cb04f1e14a96e65df43568252c90d.png"><br>新建一个ssh<br><img src="https://i-blog.csdnimg.cn/blog_migrate/df880886f641c1af1f64f360b189b121.png">将复制的内容粘贴进去后便是如上显示</p><h1 id="3-git-使用"><a href="#3-git-使用" class="headerlink" title="3 git 使用"></a>3 git 使用</h1><h2 id="3-1-新建仓库"><a href="#3-1-新建仓库" class="headerlink" title="3.1 新建仓库"></a>3.1 新建仓库</h2><p><img src="https://i-blog.csdnimg.cn/blog_migrate/d9eb93e958f4078d7cbca14191487f6d.png"><br>这部分比较简单(其实都不难)，直接看图说话吧。名字和描诉整干净后直接创建仓库</p><p><img src="https://i-blog.csdnimg.cn/blog_migrate/4eb16a6a5731d31d61aea7dca0a0c4eb.png">然后把地址复制下来<br><img src="https://i-blog.csdnimg.cn/blog_migrate/460b2d3f06233ee1b0a8aaade07a981e.png"></p><h2 id="3-2-git它！！！git就万事了"><a href="#3-2-git它！！！git就万事了" class="headerlink" title="3.2 git它！！！git就万事了"></a>3.2 git它！！！git就万事了</h2><p>在你自己的文件夹下git clone远程仓库</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone 网址</span><br></pre></td></tr></table></figure><p>然后进入到目录里初始化他<br><img src="https://i-blog.csdnimg.cn/blog_migrate/36735234074ff0312a22d082cb636779.png"><br>在该目录下创建你自己的文件,这个随便你怎么建立，touch 是创建命令</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch README.md</span><br></pre></td></tr></table></figure><p>git add .  是有个空格后再家一个点。直接该该目录下的文件添加到暂存区域<br>git add 文件名  是直接将相应的文件添加到暂存区域</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line"><span class="comment">#git add README.md</span></span><br></pre></td></tr></table></figure><p>提交本次修改<br>git commit</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit <span class="literal">-m</span> <span class="string">&quot;add readme file&quot;</span> <span class="comment">#提交本次修改</span></span><br></pre></td></tr></table></figure><p>推送到远程仓库<br>格式为 git push (brash) 我这里是直接推送到origin master</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master<span class="comment">#推送到远程仓库</span></span><br></pre></td></tr></table></figure><p><img src="https://i-blog.csdnimg.cn/blog_migrate/e1c8ad0468251a3f08b6c1b1de785d3e.png"><br>输入你名字和密码<br><img src="https://i-blog.csdnimg.cn/blog_migrate/524377bf2fdf3cca28cc2a639e873c5a.png"><br>刷新你的仓库，内容就提交上去了<br><img src="https://i-blog.csdnimg.cn/blog_migrate/d4fb82ae9b4940d3130cff0c98c91b05.png"></p><p>更多笔记请访问<br><a href="https://joenero.github.io/">JoeNero私人博客</a><br>参考链接<br><a href="https://blog.csdn.net/wxy540843763/article/details/80197301">参考链接1</a><br><a href="https://blog.csdn.net/qicheng777/article/details/74724015">参考链接2</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;1-git-下载&quot;&gt;&lt;a href=&quot;#1-git-下载&quot; class=&quot;headerlink&quot; title=&quot;1.git 下载&quot;&gt;&lt;/a&gt;1.git 下载&lt;/h1&gt;&lt;p&gt;最好是更新下镜像源&lt;/p&gt;
-&lt;figure class=&quot;highlight powersh</summary>
-      
-    
-    
-    
-    <category term="git" scheme="https://joeforkyou.github.io/categories/git/"/>
-    
-    
-    <category term="git" scheme="https://joeforkyou.github.io/tags/git/"/>
     
   </entry>
   
