@@ -281,9 +281,9 @@
           
           <category> Android </category>
           
-          <category> ITS </category>
-          
           <category> GMS </category>
+          
+          <category> ITS </category>
           
       </categories>
       
@@ -412,11 +412,11 @@
       
       <categories>
           
-          <category> cts </category>
-          
           <category> Android </category>
           
           <category> GMS </category>
+          
+          <category> cts </category>
           
       </categories>
       
