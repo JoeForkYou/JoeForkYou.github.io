@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>mtk_fd参数说明</title>
+      <link href="/2024/11/10/Android/mtk-fd%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/"/>
+      <url>/2024/11/10/Android/mtk-fd%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-参数说明"><a href="#1-参数说明" class="headerlink" title="1 参数说明"></a>1 参数说明</h1><p>vendor&#x2F;mediatek&#x2F;proprietary&#x2F;custom&#x2F;mt6765&#x2F;hal&#x2F;camera&#x2F;camera_custom_fd.cpp</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;camera_custom_fd.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_fd_CustomizeData</span><span class="params">(FD_Customize_PARA  *FDDataOut)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FDDataOut-&gt;FDThreadNum = <span class="number">1</span>;</span><br><span class="line">    FDDataOut-&gt;FDThreshold = <span class="number">256</span>;</span><br><span class="line">    FDDataOut-&gt;MajorFaceDecision = <span class="number">1</span>;</span><br><span class="line">    FDDataOut-&gt;OTRatio = <span class="number">1088</span>;</span><br><span class="line">    FDDataOut-&gt;SmoothLevel = <span class="number">8</span>;</span><br><span class="line">    FDDataOut-&gt;Momentum = <span class="number">0</span>;</span><br><span class="line">    FDDataOut-&gt;MaxTrackCount = <span class="number">10</span>;</span><br><span class="line">    FDDataOut-&gt;FDSkipStep = <span class="number">2</span>;</span><br><span class="line">    FDDataOut-&gt;FDRectify = <span class="number">10</span>;</span><br><span class="line">    FDDataOut-&gt;FDRefresh = <span class="number">3</span>;</span><br><span class="line">    FDDataOut-&gt;SDThreshold = <span class="number">69</span>;</span><br><span class="line">    FDDataOut-&gt;SDMainFaceMust = <span class="number">1</span>;</span><br><span class="line">    FDDataOut-&gt;SDMaxSmileNum = <span class="number">3</span>;</span><br><span class="line">    FDDataOut-&gt;GSensor = <span class="number">1</span>;</span><br><span class="line">    FDDataOut-&gt;FDModel = <span class="number">1</span>;</span><br><span class="line">    FDDataOut-&gt;OTFlow = <span class="number">1</span>;  <span class="comment">//0:Original Flow (FDRefresh:60)  , 1:New Flow (FDRefresh:3)</span></span><br><span class="line">    FDDataOut-&gt;UseCustomScale = <span class="number">1</span>;</span><br><span class="line">    FDDataOut-&gt;FDSizeRatio = <span class="number">0.0</span>;  <span class="comment">// float:0~1</span></span><br><span class="line">    FDDataOut-&gt;SkipPartialFD = <span class="number">0</span>;</span><br><span class="line">    FDDataOut-&gt;SkipAllFD = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>比较常客制化的一些值及其意义：</p><p><strong>FDThreshold</strong> ： tune FD detection rate and false positive rate 。值越大代表检测的越严格。</p><p><strong>MajorFaceDecision</strong> ： 决定 face 排列方式。 value &#x3D; 0 or 1，value &#x3D; 0，则以Face Size的大小作为检测标准，也就是优先检测最大的人脸。value &#x3D; 1，优先检测在画面中心的人脸。Face AE,AF会参考Major Face资讯 。</p><p><strong>SmoothLevel</strong>：  决定人脸框的移动速度。value: 8~16 。值越大，跟随感越慢。 会把前面value的值平均作为下一次移动的参考。value值越大，人脸框移动会smooth，若人脸移动速度太快，则会出现人脸框跳动的情形。</p><p><strong>MaxTrackCount</strong>： 当人脸 lose 时，会用 tracking 机制继续 keep 的帧数。 </p><p><strong>GSensor</strong>： 是否使用 GSensor 资讯(AP带下来)。如果为0，则会做四个角度轮流侦测，initial detection time 会变慢。</p><p><strong>OTFlow</strong>： 只能是 1 且必须是 1 。</p><p><strong>FDSizeRatio</strong>： 用来设置过滤图中某个比例 以下的人脸。</p><p><strong>FDThreadNum</strong>：value 值增大时时会加大cpuloading，相对的检测Face的速度也快，该Thread主要跑的是FD Algo 。</p><p><strong>OTRatio</strong>:value越大，当周围环境change时，人脸框越不容易fail，缺点是可能追踪到不是人脸的物体 。</p><p><strong>Momentum</strong>:值可以是 0~3 。 0 &#x3D; force to project direction ；3 &#x3D; no reference project direction</p><p><strong>FDSkipStep</strong>:跳点，为了提高SW FD的performance 。</p><p><strong>FDRefresh</strong>:不是每一帧都做FD，若检测到Face后，接下来会做Face Tracking，若value &#x3D; 3，则做3次FaceTracking（几毫秒可以做</p><p>一次）。</p><p><strong>SDMainFaceMust</strong> :value &#x3D; 0 or 1，为0则会检测前面三张Face；为1，则需要根据MajorFaceDecision 的值确定，可能不会起作用 。</p><p><strong>FDModel</strong> :FD的核心是用某种算法training出来的model，不同的database或参数就会training出不同的model，也可以理解为侧重点不同。 </p><p>建议不要修改 OTRatio 、SmoothLevel 、FDRectify ，会影响 tracking。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> camera </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> camera </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>pyton基础速通</title>
       <link href="/2024/11/10/Python/pyton%E5%9F%BA%E7%A1%80%E9%80%9F%E9%80%9A/"/>
       <url>/2024/11/10/Python/pyton%E5%9F%BA%E7%A1%80%E9%80%9F%E9%80%9A/</url>
