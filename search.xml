@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>hexo博客搭建</title>
+      <link href="/2024/11/10/%E6%90%AD%E5%BB%BA/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+      <url>/2024/11/10/%E6%90%AD%E5%BB%BA/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
+      
+        <content type="html"><![CDATA[<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>hexo 博客的搭建要依赖nodejs的组件<br>直接去官网nodejs.org下载即可<br>在浏览器中输入<a href="https://nodejs.org/zh-cn">https://nodejs.org/zh-cn</a><br>下载添加到环境变量中即可<br>win10 用户的环境变量和系统变量都添加然后重启就行.<br>因为我也不知道怎么让win10的环境变量生效,对于linux来说只要bash一下就可以了.</p><p>下载完验证</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">v22.11.0</span><br><span class="line">npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure><p>打印出来node的版本信息,然后更换镜像源</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=http://registry.npm.taobao.org</span><br></pre></td></tr></table></figure><p>用cnpm代替npm安装hexo架构</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install -g hexo-cli  </span><br></pre></td></tr></table></figure><p>查看hexo的版本</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure><h1 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h1><p>准备工作做的差不多了,该开始搭建了<br>创建一个你自己的文件，我这边是直接创建了blog文件<br>然后进入到这个文件中做初始化即可,这个要等等,不一定能拉全或者拉下来，可能还要改host文件.忘了以后再说</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure><p>基础操作<br>启动默认端口是本地的4000端口</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure><p>访问即可<a href="http://localhost:4000/">http://localhost:4000/</a><br>hexo init的时候回创建一个默认的markdown文件.<br>最常用的就是hexo g 生成静态文件<br>在hexo g之前先hexo clean一下,清除静态文件<br>然后hexo s查看改动后的效果</p><h1 id="托管"><a href="#托管" class="headerlink" title="托管"></a>托管</h1><p>github pages 托管<br>自检一个githu仓库，然后命名为username.github.io<br>hexo d 部署<br>要用hexo d部署的话,需要配置_config.yml文件,并且<br>要安装hexo-deployer-git<br>cnpm install –save hexo-deployer-git #在blog目录下安装git部署插件<br>这样子后我们再去配置_config.yml文件<br>在如下的位置添加自己部署的仓库和分支,然后hexo d部署即可</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">  <span class="attr">repo:</span>  <span class="string">https://github.com/JoeForkYou/JoeForkYou.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure><p>hexo d部署后,需要等待一段时间才能生效.<br>要访问的话直接输入类似我这种格式:<br><a href="https://joeforkyou.github.io/">https://joeforkyou.github.io/</a><br>自此一个简单的静态博客就搭建好了<br>搭建完后续的工作就是建立分类和搜索索引,这个我打算单独写一篇文章</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>mtk_fd参数说明</title>
       <link href="/2024/11/10/Android/mtk-fd%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/"/>
       <url>/2024/11/10/Android/mtk-fd%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/</url>
