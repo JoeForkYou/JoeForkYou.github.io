@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>pyton基础速通</title>
+      <link href="/2024/11/10/Python/pyton%E5%9F%BA%E7%A1%80%E9%80%9F%E9%80%9A/"/>
+      <url>/2024/11/10/Python/pyton%E5%9F%BA%E7%A1%80%E9%80%9F%E9%80%9A/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-基础"><a href="#1-基础" class="headerlink" title="1 基础"></a>1 基础</h1><h2 id="1-1-输出"><a href="#1-1-输出" class="headerlink" title="1.1 输出"></a>1.1 输出</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;helloworld&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;我的名字是%s,我的国籍是%s&quot;</span>%(<span class="string">&quot;JoeNero&quot;</span>,<span class="string">&quot;中国&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;a=%d&quot;</span>%age)</span><br></pre></td></tr></table></figure><h2 id="1-2-输入"><a href="#1-2-输入" class="headerlink" title="1.2 输入"></a>1.2 输入</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">password = <span class="built_in">input</span>(<span class="string">&quot;请输入密码&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;您刚才输入的密码是&quot;</span>,password)</span><br></pre></td></tr></table></figure><h2 id="1-3-注释"><a href="#1-3-注释" class="headerlink" title="1.3 注释"></a>1.3 注释</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">多行注释</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#单行注释</span></span><br></pre></td></tr></table></figure><h2 id="1-4-流程控制"><a href="#1-4-流程控制" class="headerlink" title="1.4 流程控制"></a>1.4 流程控制</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件:</span><br><span class="line">  执行语句</span><br><span class="line"><span class="keyword">elif</span> 条件:</span><br><span class="line">  执行语句</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line"> 执行语句</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> a &lt; <span class="number">10</span></span><br><span class="line">  a++</span><br><span class="line">  <span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    </span><br><span class="line">  a = [<span class="string">&quot;aa&quot;</span>,<span class="string">&quot;bb&quot;</span>,<span class="string">&quot;cc&quot;</span>,<span class="string">&quot;dd&quot;</span>]</span><br><span class="line"> <span class="keyword">for</span>  i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(a)):</span><br><span class="line">        <span class="built_in">print</span>(i,a[i])</span><br></pre></td></tr></table></figure><h1 id="2-字符串"><a href="#2-字符串" class="headerlink" title="2 字符串"></a>2 字符串</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_str = <span class="string">&quot;I said \&quot;I like you \&quot;&quot;</span> <span class="comment">#   \&quot;转义输出&quot;</span></span><br><span class="line"><span class="built_in">print</span>(my_str)</span><br></pre></td></tr></table></figure><p>输出打印字符串的片段</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span> = <span class="string">&quot;chengdu&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>[<span class="number">0</span>:<span class="number">5</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>[:<span class="number">5</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>[<span class="number">1</span>:<span class="number">7</span>:<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>[<span class="number">6</span>:])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>+<span class="string">&quot;123&quot;</span>) <span class="comment">#字符串链接</span></span><br></pre></td></tr></table></figure><p>输出</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cheng</span><br><span class="line">cheng</span><br><span class="line">hnd</span><br><span class="line">u</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello\n&quot;</span>)  <span class="comment">#\n转义字符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">r&quot;hello\n&quot;</span>) <span class="comment">#加r使转义字符失效</span></span><br></pre></td></tr></table></figure><h1 id="3-元组"><a href="#3-元组" class="headerlink" title="3 元组"></a>3 元组</h1><p>元组是不允许修改的</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tup1 = () <span class="comment">#创建空的元组</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(tup1))</span><br><span class="line"></span><br><span class="line">tup2 =(<span class="number">50</span>,<span class="number">60</span>,<span class="number">70</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(tup2))</span><br></pre></td></tr></table></figure><h1 id="4-函数"><a href="#4-函数" class="headerlink" title="4 函数"></a>4 函数</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a,b</span>):</span><br><span class="line">    <span class="built_in">print</span>(a+b)</span><br><span class="line"></span><br><span class="line">add(<span class="number">1</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure><h1 id="5-文件操作"><a href="#5-文件操作" class="headerlink" title="5 文件操作"></a>5 文件操作</h1><h2 id="5-1-打开"><a href="#5-1-打开" class="headerlink" title="5.1 打开"></a>5.1 打开</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f = open(&quot;test.txt&quot;,&quot;w&quot;) #打开文件.w模式，写模式</span><br><span class="line"></span><br><span class="line">f.write(&quot;hello world JoeNero&quot;)  #将字符串写入文件中哦</span><br><span class="line"></span><br><span class="line">f = open(&quot;test.txt&quot;,&quot;r&quot;) #打开文件.r模式，</span><br><span class="line">content = f.read(5) #读取五个字符</span><br><span class="line">print(content)</span><br><span class="line">f.close() #关闭文件</span><br></pre></td></tr></table></figure><table><thead><tr><th>模式</th><th></th></tr></thead><tbody><tr><td>r</td><td>以只读方式打开文件.文件的指针会放在文件的开头。这是默认模式</td></tr><tr><td>w</td><td>打开一个文件只用于写入.如果该文件已存在则将其覆盖.如果该文件不存在.则创建新文件</td></tr><tr><td>a</td><td>打开一个文件用于追加.如果该文件已经存在.文件指针会放在文件的结尾<br>如果该文件不存在,创建新文件进行写入</td></tr><tr><td>rb</td><td>以二进制格式打开一个文件用于写入.文件指针会放在文件的开头.这是默认模式</td></tr><tr><td>wb</td><td>以二进制的格式打开一个文件只用于写入.如果该文件存在，则会将其覆盖.如果文件不存在，创建新文件</td></tr><tr><td>ab</td><td>以二进制格式打开一个文件用于追加.<br>如果该文件存在，文件指针将会放在文件的结尾.也就是说新的内容会被写入到以有内容之后.如果文件不存在,创建新文件进行写入</td></tr><tr><td>r+</td><td>打开一个文件用于读写.文件指针将会放在文件的开头</td></tr><tr><td>w+</td><td>打开一个文件用于读写.如果该文件已经存在，则覆盖.如果该文件不存在.创建新文件</td></tr><tr><td>a+</td><td>打开一个文件用于读写.如果该文件已经存在.文件指针将会放在文件的结尾.<br>文件打开时会追加模式.如果该文件不存在,创建新文件用于读写</td></tr><tr><td>rb+</td><td>以二进制格式打开一个文件用于读写.文件指针将会放在文件的开头</td></tr></tbody></table><h2 id="5-2-读取"><a href="#5-2-读取" class="headerlink" title="5.2 读取"></a>5.2 读取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>,<span class="string">&quot;r&quot;</span>)</span><br><span class="line">content = f.readlines() <span class="comment">#一次性读取全部文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#print(content)</span></span><br><span class="line"></span><br><span class="line">i = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> temp <span class="keyword">in</span> content:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%d:%s&quot;</span>%(i,temp))</span><br><span class="line">    i +=<span class="number">1</span></span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">os.rename(<span class="string">&quot;test.txt&quot;</span>,<span class="string">&quot;test1.txt&quot;</span>) <span class="comment">#重命名</span></span><br></pre></td></tr></table></figure><h1 id="6-错误和异常"><a href="#6-错误和异常" class="headerlink" title="6 错误和异常"></a>6 错误和异常</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">except</span> IOErrpr:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="keyword">except</span> IOErrpr:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    f.close()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;文件关闭&quot;</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>linux常用基础命令</title>
       <link href="/2024/11/10/Linux/linux%E5%B8%B8%E7%94%A8%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
       <url>/2024/11/10/Linux/linux%E5%B8%B8%E7%94%A8%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</url>
@@ -51,9 +76,9 @@
             
             <tag> Android </tag>
             
-            <tag> cts </tag>
-            
             <tag> GMS </tag>
+            
+            <tag> cts </tag>
             
         </tags>
       
@@ -84,9 +109,9 @@
             
             <tag> Android </tag>
             
-            <tag> cts </tag>
-            
             <tag> GMS </tag>
+            
+            <tag> cts </tag>
             
         </tags>
       
@@ -512,9 +537,9 @@
             
             <tag> Android </tag>
             
-            <tag> GMS </tag>
-            
             <tag> ITS </tag>
+            
+            <tag> GMS </tag>
             
         </tags>
       
@@ -645,9 +670,9 @@
             
             <tag> Android </tag>
             
-            <tag> cts </tag>
-            
             <tag> GMS </tag>
+            
+            <tag> cts </tag>
             
         </tags>
       
