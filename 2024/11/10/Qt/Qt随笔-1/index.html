@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Qt随笔【一】 | JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1 linux 下注意点找不到mysql.h文件 sudo apt-get install libmysqlclient-dev 编译太慢,更改 -j 4       4为线程 &lt;&#x3D; cpu的线程 缺少:-1: error: 找不到 -lGLsudo apt-get install libgl1-mesa-dev 使用以下模块需要 实现下载这个 qt会自动查找 sudo apt-g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt随笔【一】">
+<meta property="og:url" content="https://joeforkyou.github.io/2024/11/10/Qt/Qt%E9%9A%8F%E7%AC%94-1/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:description" content="1 linux 下注意点找不到mysql.h文件 sudo apt-get install libmysqlclient-dev 编译太慢,更改 -j 4       4为线程 &lt;&#x3D; cpu的线程 缺少:-1: error: 找不到 -lGLsudo apt-get install libgl1-mesa-dev 使用以下模块需要 实现下载这个 qt会自动查找 sudo apt-g">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg">
+<meta property="article:published_time" content="2024-11-10T08:45:34.000Z">
+<meta property="article:modified_time" content="2024-11-10T08:46:21.694Z">
+<meta property="article:author" content="JoeNero">
+<meta property="article:tag" content="qt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="https://joeforkyou.github.io/2024/11/10/Qt/Qt%E9%9A%8F%E7%AC%94-1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"IZ845G3SQG","apiKey":"381e98702820650923216a5f47f18d71","indexName":"movie","hitsPerPage":6,"languages":{"input_placeholder":"Search for Posts","hits_empty":"No results found for: ${query}","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Qt随笔【一】',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="JoeNero的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">18</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Qt随笔【一】</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Qt随笔【一】</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-11-10T08:45:34.000Z" title="Created 2024-11-10 16:45:34">2024-11-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-10T08:46:21.694Z" title="Updated 2024-11-10 16:46:21">2024-11-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/qt/">qt</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="1-linux-下注意点"><a href="#1-linux-下注意点" class="headerlink" title="1 linux 下注意点"></a>1 linux 下注意点</h1><p>找不到mysql.h文件</p>
+<p>sudo apt-get install libmysqlclient-dev</p>
+<p>编译太慢,更改</p>
+<p>-j 4       4为线程 &lt;&#x3D; cpu的线程</p>
+<p>缺少:-1: error: 找不到 -lGL<br>sudo apt-get install libgl1-mesa-dev</p>
+<p>使用以下模块需要 实现下载这个 qt会自动查找</p>
+<p>sudo apt-get install qtmultimedia5-dev</p>
+<p>如果不行则加:</p>
+<p>sudo apt-get install libpul se-dev</p>
+<p>视频相关控件需要安装如下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install libpulse-dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT       += multimedia</span><br></pre></td></tr></table></figure>
+<p>libusbzhic库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libusb-dev</span><br><span class="line">sudo apt-get install libusb-1.0-0-dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-布局管理"><a href="#2-布局管理" class="headerlink" title="2 布局管理"></a>2 布局管理</h1><h2 id="2-1-QGridLayout网格布局"><a href="#2-1-QGridLayout网格布局" class="headerlink" title="2.1 QGridLayout网格布局"></a>2.1 QGridLayout网格布局</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">layout-&gt;<span class="built_in">setRowStretch</span>(<span class="type">int</span> row, <span class="type">int</span> stretch);<span class="comment">//设置行比例系数</span></span><br><span class="line">layout-&gt;<span class="built_in">setColumnStretch</span>(<span class="type">int</span> column, <span class="type">int</span> stretch);<span class="comment">//设置列比例系数</span></span><br></pre></td></tr></table></figure>
+
+<p>布局示意如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">layout-&gt;<span class="built_in">addWidget</span>(&amp;TestBtn1, <span class="number">0</span>, <span class="number">0</span>);<span class="comment">//往网格的不同坐标添加不同的组件</span></span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(&amp;TestBtn2, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(&amp;TestBtn3, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(&amp;TestBtn4, <span class="number">1</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-控件："><a href="#3-控件：" class="headerlink" title="3 控件："></a>3 控件：</h1><h2 id="QLable"><a href="#QLable" class="headerlink" title="QLable"></a>QLable</h2><p>显示数字</p>
+<p>setText ( const QString &amp; )setText参数必须是QString类型才可以 你的变量如果是整形，可以直接转换，比如QString()::number( int num).</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ui-&gt;labelTime-&gt;<span class="built_in">setText</span>(QString::<span class="built_in">number</span>(times));</span><br></pre></td></tr></table></figure>
+
+<h2 id="QLCDNumber："><a href="#QLCDNumber：" class="headerlink" title="QLCDNumber："></a>QLCDNumber：</h2><p>lcd是直接通过方法value来获取当前显示的值，通过方法display来显示</p>
+<p>QLCDNumber有以下几种模式：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xuancailinggan/article/details/qlcdnumber.html#setHexMode">setHexMode</a>()-十六进制</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xuancailinggan/article/details/qlcdnumber.html#setDecMode">setDecMode</a>()-十进制</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xuancailinggan/article/details/qlcdnumber.html#setOctMode">setOctMode</a>()-八进制</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xuancailinggan/article/details/qlcdnumber.html#setBinMode">setBinMode</a>()-二进制</p>
+<p>lcdNum-&gt;setDecMode();</p>
+<h2 id="QTimer"><a href="#QTimer" class="headerlink" title="QTimer"></a>QTimer</h2><p>Q_DECL_OVERRIDE也就是c++的override</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># define Q_DECL_OVERRIDE override</span><br></pre></td></tr></table></figure>
+
+<p>在重写虚函数时会用到，</p>
+<p>作用是防止写错虚函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//头文件在QTimer文件下</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QTimer&gt;</span></span></span><br><span class="line">...</span><br><span class="line">QTimer *m_pTimer;</span><br><span class="line">m_pTimer = <span class="keyword">new</span> <span class="built_in">QTimer</span>(<span class="keyword">this</span>);</span><br><span class="line"><span class="comment">// 设置超时间隔</span></span><br><span class="line">m_pTimer-&gt;<span class="built_in">setInterval</span>(<span class="number">100</span>);</span><br><span class="line">...</span><br><span class="line"><span class="built_in">connect</span>(m_pTimer, <span class="built_in">SIGNAL</span>(<span class="built_in">timeout</span>()), <span class="keyword">this</span>, <span class="built_in">SLOT</span>(<span class="built_in">updateProgress</span>()));</span><br><span class="line">m_pTimer-&gt;<span class="built_in">start</span>(<span class="number">1000</span>);<span class="comment">//这一步会覆盖之前设置的时间间隔</span></span><br></pre></td></tr></table></figure>
+
+<p>start()之后，每秒都会调用update()</p>
+<p>可以通过设置setSingleShot(true)来让定时器只执行一次。也可以使用静态函数QTimer::singleShot()：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QTimer::singleShot(200, this, SLOT(updateCaption()));</span><br></pre></td></tr></table></figure>
+
+<p>QTimer和lable配合显示系统时间</p>
+<p>头文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QTimer&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>构造函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//日期/时间显示</span></span><br><span class="line">QTimer *timer = <span class="keyword">new</span> <span class="built_in">QTimer</span>(<span class="keyword">this</span>);</span><br><span class="line"><span class="built_in">connect</span>(timer,<span class="built_in">SIGNAL</span>(<span class="built_in">timeout</span>()),<span class="keyword">this</span>,<span class="built_in">SLOT</span>(<span class="built_in">timerUpdate</span>()));</span><br><span class="line">timer-&gt;<span class="built_in">start</span>(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>定义成员函数timerUpdate()实现用户界面显示时间：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">userwindow::timerUpdate</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    QDateTime time = QDateTime::<span class="built_in">currentDateTime</span>();</span><br><span class="line"></span><br><span class="line">    QString str = time.<span class="built_in">toString</span>(<span class="string">&quot;yyyy-MM-dd hh:mm:ss dddd&quot;</span>);</span><br><span class="line"></span><br><span class="line">    ui-&gt;dateTime-&gt;<span class="built_in">setText</span>(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-QChart"><a href="#4-QChart" class="headerlink" title="4 QChart"></a>4 QChart</h1><p>.pro文件添加模块</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT +=charts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用charts模板需要加入命名控件或者宏</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Qtcharts</span><br><span class="line">或者一个宏 QT_CHARTS_USE_NAMESPACE</span><br><span class="line"><span class="comment">//头文件</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QChart&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QChartView&gt;</span></span></span><br><span class="line">...</span><br><span class="line">QChart *chart;</span><br><span class="line">QChartView *chartView;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//坐标系</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QValueAxis&gt;</span></span></span><br><span class="line">...</span><br><span class="line">QValueAxis *axisX;</span><br><span class="line">QValueAxis *axisY;</span><br><span class="line">...</span><br><span class="line">axisX-&gt;<span class="built_in">setRange</span>(<span class="number">0</span>, <span class="number">20</span>);    		<span class="comment">//设置范围</span></span><br><span class="line">axisX-&gt;<span class="built_in">setLabelFormat</span>(<span class="string">&quot;%u&quot;</span>);   	<span class="comment">//设置刻度的格式 y轴同理</span></span><br><span class="line">axisX-&gt;<span class="built_in">setTitleText</span>(<span class="string">&quot;X&quot;</span>);           		<span class="comment">//设置描述</span></span><br><span class="line">axisY-&gt;<span class="built_in">setTitleText</span>(<span class="string">&quot;Y&quot;</span>);</span><br><span class="line"><span class="comment">/************************************</span></span><br><span class="line"><span class="comment">    %u 无符号十进制整数</span></span><br><span class="line"><span class="comment">    %s 字符串</span></span><br><span class="line"><span class="comment">    %A 浮点数、十六进制数字和p-记法</span></span><br><span class="line"><span class="comment">    %c 一个字符</span></span><br><span class="line"><span class="comment">    %d 有符号十进制整数</span></span><br><span class="line"><span class="comment">    %e 浮点数、e-记数法</span></span><br><span class="line"><span class="comment">    %E 浮点数、E-记数法</span></span><br><span class="line"><span class="comment">    %f 浮点数、十进制记数法</span></span><br><span class="line"><span class="comment">    %g 根据数值不同自动选择％f或％e．</span></span><br><span class="line"><span class="comment">    %G 根据数值不同自动选择％f或％e.</span></span><br><span class="line"><span class="comment">    %i 有符号十进制数（与％d相同）</span></span><br><span class="line"><span class="comment">    %o 无符号八进制整数</span></span><br><span class="line"><span class="comment">    %p 指针</span></span><br><span class="line"><span class="comment">    %s 字符串</span></span><br><span class="line"><span class="comment">    %x/%X 使用十六进制数字0f的无符号十六进制整数</span></span><br><span class="line"><span class="comment">****************************************/</span></span><br><span class="line"><span class="comment">//标记的个数</span></span><br><span class="line">    axisX-&gt;<span class="built_in">setTickCount</span>(<span class="number">11</span>);           </span><br><span class="line">    axisY-&gt;<span class="built_in">setTickCount</span>(<span class="number">11</span>);</span><br><span class="line"><span class="comment">//次标记的个数</span></span><br><span class="line">	axisX-&gt;<span class="built_in">setMinorTickCount</span>(<span class="number">1</span>);        <span class="comment">//设置每个大格里面小刻度线的数目</span></span><br><span class="line"><span class="comment">//    axisY-&gt;setMinorTickCount(1);</span></span><br><span class="line">	chart-&gt;<span class="built_in">createDefaultAxes</span>(); <span class="comment">//建立默认坐标轴，不需要QValueAxis 默认是4x4大格子</span></span><br><span class="line"><span class="comment">//	chart-&gt;axisY()-&gt;setRange(0, 10);//默认坐标轴限定范围</span></span><br><span class="line">chart-&gt;<span class="built_in">addAxis</span>(axisX, Qt::AlignBottom); <span class="comment">//下：Qt::AlignBottom  上：Qt::AlignTop</span></span><br><span class="line">chart-&gt;<span class="built_in">addAxis</span>(axisY, Qt::AlignLeft);   <span class="comment">//左：Qt::AlignLeft    右：Qt::AlignRight</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chart-&gt;<span class="built_in">setTitle</span>(<span class="string">&quot;曲线图实例&quot;</span>);</span><br><span class="line">chart-&gt;<span class="built_in">setAnimationOptions</span>(QChart::SeriesAnimations);<span class="comment">//设置曲线动画模式</span></span><br><span class="line">chart-&gt;<span class="built_in">legend</span>()-&gt;<span class="built_in">hide</span>(); 							<span class="comment">//隐藏图例</span></span><br><span class="line">chart-&gt;<span class="built_in">addSeries</span>(splineSeries);						<span class="comment">//输入数据</span></span><br><span class="line">chart-&gt;<span class="built_in">setAxisX</span>(axisX, splineSeries);</span><br><span class="line">chart-&gt;<span class="built_in">setAxisY</span>(axisY, splineSeries);</span><br></pre></td></tr></table></figure>
+
+<p>需要将chart添加到chartView</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chartView-&gt;<span class="built_in">show</span>();</span><br><span class="line">chartView-&gt;<span class="built_in">setChart</span>(chart);</span><br><span class="line">chartView-&gt;<span class="built_in">setRenderHint</span>(QPainter::Antialiasing);<span class="comment">//防止图形走样</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="曲线图"><a href="#曲线图" class="headerlink" title="曲线图"></a>曲线图</h2><p>QSplineSeries</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QSplineSeries&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">splineSeries = <span class="keyword">new</span> QSplineSeries;</span><br><span class="line"><span class="comment">//添加数据的两周方式</span></span><br><span class="line">splineSeries-&gt;<span class="built_in">append</span>(<span class="number">10</span>, <span class="number">5</span>);</span><br><span class="line">*splineSeries &lt;&lt; <span class="built_in">QPointF</span>(<span class="number">11</span>, <span class="number">1</span>) &lt;&lt; <span class="built_in">QPointF</span>(<span class="number">13</span>, <span class="number">3</span>) &lt;&lt; <span class="built_in">QPointF</span>(<span class="number">17</span>, <span class="number">6</span>)&lt;&lt; <span class="built_in">QPointF</span>(<span class="number">20</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">//源数据添加到图表上</span></span><br><span class="line">chart-&gt;<span class="built_in">addSeries</span>(splineSeries);<span class="comment">//输入数据</span></span><br><span class="line">chart-&gt;<span class="built_in">setAxisX</span>(axisX, splineSeries);</span><br><span class="line">chart-&gt;<span class="built_in">setAxisY</span>(axisY, splineSeries);</span><br></pre></td></tr></table></figure>
+
+<h2 id="柱状图"><a href="#柱状图" class="headerlink" title="柱状图"></a>柱状图</h2><p>先包含头文件</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QBarSet&gt;</span> </span></span><br></pre></td></tr></table></figure>
+
+<p>QBarSet类表示条形图中的一组条形。<br>一个bar集包含每个类别的一个数据值。<br>假设集合的第一个值属于第一个类别，<br>第二个属于第二个类别，依此类推。<br>如果集合的值小于类别的值，则假设缺失值位于集合的末尾。对于位于集合中间的缺失值，则使用0的数值。<br>没有显示零值集的标签。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;QBarSeries&gt;</span><br></pre></td></tr></table></figure>
+
+<p>QBarSeries类表示的是柱状图数据，需要将相应的QBarSet添加进来</p>
+<p>柱状图关系示意如下:</p>
+<h2 id="饼状图"><a href="#饼状图" class="headerlink" title="饼状图"></a>饼状图</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QCharts/QPieSeries&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>QPieSeries是一块饼图</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QCharts/QPieSlice&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>QPieSlice是饼图上的碎片</p>
+<h1 id="5-QCustomPlot"><a href="#5-QCustomPlot" class="headerlink" title="5 QCustomPlot"></a>5 QCustomPlot</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT       += core gui printsupport</span><br></pre></td></tr></table></figure>
+
+<p>选择项目的.pro文件，添加printsupport，如图，QCustomPlot包含了一些打印的东西，如果没有这一步，程序会报错</p>
+<p>基类为QWidget：提升为<code>QCustomPlot</code></p>
+<p>这里强调一下：Qt提升控件时，通常提升的类名称中，每个单词的首字母必须大写与Qt控件命名规则保持一致，各种第三方控件都采用这种命名格式，否则无法识别，如这里必须写成<code>QCustomPlot</code>而不能写成<code>Qcustomplot</code>或<code>qcustomplot</code></p>
+<h1 id="动态库的调用"><a href="#动态库的调用" class="headerlink" title="动态库的调用"></a>动态库的调用</h1><h2 id="liunx"><a href="#liunx" class="headerlink" title="liunx"></a>liunx</h2><p>详细图例见dll文件</p>
+<p>创建c++库，添加代码生成对应的.so文件</p>
+<p>在debug文件下将.so文件后缀的复制到新建工程的debug文件下</p>
+<p>并将相应的头文件添加到目标工程中</p>
+<p>在.pro里面添加 如下 格式 -L.&#x2F;lib -l(文件名)  因为直接放在debug文件下所以直接 在该文件夹下找</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIBS +=  -L -llibdll</span><br></pre></td></tr></table></figure>
+<h1 id="Linux-下opencv的搭建"><a href="#Linux-下opencv的搭建" class="headerlink" title="Linux 下opencv的搭建"></a>Linux 下opencv的搭建</h1><p>在.pro文件中添加如下内容,根据个人情况,就是你opencv的安裝路勁</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INCLUDEPATH += /usr/local/include \</span><br><span class="line">                /usr/local/include/opencv4 \</span><br><span class="line"></span><br><span class="line">LIBS += /usr/local/lib/libopencv*</span><br></pre></td></tr></table></figure>
+
+<p>有的人是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INCLUDEPATH += /usr/local/include \</span><br><span class="line">                /usr/local/include/opencv \</span><br><span class="line">                /usr/local/include/opencv2</span><br><span class="line"></span><br><span class="line">LIBS += /usr/local/lib/lib*</span><br></pre></td></tr></table></figure>
+
+<p>出现这个错误，只需要在对应的文件中添加头文件<br>#include &lt;opencv2&#x2F;highgui&#x2F;highgui_c.h&gt;</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/home/xtt/prj/Qt/pack/OpenNCC_View/OpenNCC_View/widget.cpp:330: error: ~~‘cvGetWindowHandle’~~ was not declared in this scope</span><br><span class="line">                 if (!cvGetWindowHandle(&quot;OpenNCC&quot;))</span><br><span class="line">                      ^~~~~~~~~~~~~~~~~</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Linux-下qt的打包"><a href="#Linux-下qt的打包" class="headerlink" title="Linux 下qt的打包"></a>Linux 下qt的打包</h1><p>将release 版本下的hi可执行文件拷到你新建的bin文件夹下</p>
+<p>新建一个打包的脚本pack.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">exe=&quot;OpenNCC_View&quot; #需发布的程序名称</span><br><span class="line">des=&quot;/home/xtt/Qt/OpenNCC_View/bin&quot; #新建目录的完整路径</span><br><span class="line">deplist=$(ldd $exe|awk &#x27;&#123;if (match($3,&quot;/&quot;))&#123;printf(&quot;%s &quot;),$3&#125;&#125;&#x27;)</span><br><span class="line">cp $deplist $des</span><br></pre></td></tr></table></figure>
+
+<p>运行脚本 sh pack.sh会在该文件夹下添加一些.so动态库</p>
+<p>然后编写一个部署脚本</p>
+<p>文件名和你的项目名字一致，这里的项目名字是OpenNCC_View，所以部署脚本是OpenNCC_View.sh</p>
+<p>以下是该脚本的内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span>  </span><br><span class="line">appname=`basename $0 | sed s,\.sh$,,`  </span><br><span class="line">dirname=`dirname $0`  </span><br><span class="line">tmp=&quot;$&#123;dirname#?&#125;&quot;  </span><br><span class="line">if [ &quot;$&#123;dirname%$tmp&#125;&quot; != &quot;/&quot; ]; then  </span><br><span class="line">dirname=$PWD/$dirname  </span><br><span class="line">fi  </span><br><span class="line">LD_LIBRARY_PATH=$dirname  </span><br><span class="line">export LD_LIBRARY_PATH  </span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">dirname</span>/<span class="variable">$appname</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>用軟件打包</p>
+<h1 id="Window下打包程序"><a href="#Window下打包程序" class="headerlink" title="Window下打包程序"></a>Window下打包程序</h1><p>Win+r 打开dos命令 cmd</p>
+<p>输入命令：</p>
+<p>cd &#x2F;d H:\QT\Test\release</p>
+<p>必须要加&#x2F;d 不然没办法进入目录</p>
+<p>Qt Quick Application版本:</p>
+<p>windeployqt  Test.exe</p>
+<p>Test.exe 为release版本的exe</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io">JoeNero</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io/2024/11/10/Qt/Qt%E9%9A%8F%E7%AC%94-1/">https://joeforkyou.github.io/2024/11/10/Qt/Qt%E9%9A%8F%E7%AC%94-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/qt/">qt</a></div><div class="post-share"><div class="social-share" data-image="/img/%E7%BE%8E%E5%A5%B3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2024/11/10/Android/Andoird%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6mk%E8%AF%B4%E6%98%8E/" title="Andoird编译文件mk说明"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Andoird编译文件mk说明</div></div><div class="info-2"><div class="info-item-1">1 语法Android.mk 文件必须先定义 LOCAL_PATH 变量： 1LOCAL_PATH :=$(call my-dir) 此变量表示源文件在开发树中的位置。在这行代码中，编译系统提供的宏函数 my-dir 将返回当前目录（Android.mk 文件本身所在的目录）的路径。下一行声明 CLEAR_VARS 变量，其值由编译系统提供。 1include $(CLEAR_VARS) CLEAR_VARS 变量指向一个特殊的 GNU Makefile，后者会清除许多 LOCAL_XXX 变量，例如 LOCAL_MODULE、LOCAL_SRC_FILES 和 LOCAL_STATIC_LIBRARIES。请注意，GNU Makefile 不会清除 LOCAL_PATH。此变量必须保留其值，因为系统在单一 GNU Make 执行环境（其中的所有变量都是全局变量）中解析所有编译控制文件。在描述每个模块之前，必须声明（重新声明）此变量。 1LOCAL_MODULE := hello-jni 每个模块名称必须唯一，且不含任何空格。编译系统在生成最终共享库文件时，会对您分配给...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">18</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/JoeForkYou"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">wow!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-linux-%E4%B8%8B%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">1.</span> <span class="toc-text">1 linux 下注意点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2 布局管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-QGridLayout%E7%BD%91%E6%A0%BC%E5%B8%83%E5%B1%80"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 QGridLayout网格布局</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%8E%A7%E4%BB%B6%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">3 控件：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#QLable"><span class="toc-number">3.1.</span> <span class="toc-text">QLable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QLCDNumber%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">QLCDNumber：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QTimer"><span class="toc-number">3.3.</span> <span class="toc-text">QTimer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-QChart"><span class="toc-number">4.</span> <span class="toc-text">4 QChart</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B2%E7%BA%BF%E5%9B%BE"><span class="toc-number">4.1.</span> <span class="toc-text">曲线图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%B1%E7%8A%B6%E5%9B%BE"><span class="toc-number">4.2.</span> <span class="toc-text">柱状图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A5%BC%E7%8A%B6%E5%9B%BE"><span class="toc-number">4.3.</span> <span class="toc-text">饼状图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-QCustomPlot"><span class="toc-number">5.</span> <span class="toc-text">5 QCustomPlot</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%BA%93%E7%9A%84%E8%B0%83%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">动态库的调用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#liunx"><span class="toc-number">6.1.</span> <span class="toc-text">liunx</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E4%B8%8Bopencv%E7%9A%84%E6%90%AD%E5%BB%BA"><span class="toc-number">7.</span> <span class="toc-text">Linux 下opencv的搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E4%B8%8Bqt%E7%9A%84%E6%89%93%E5%8C%85"><span class="toc-number">8.</span> <span class="toc-text">Linux 下qt的打包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Window%E4%B8%8B%E6%89%93%E5%8C%85%E7%A8%8B%E5%BA%8F"><span class="toc-number">9.</span> <span class="toc-text">Window下打包程序</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Qt/Qt%E9%9A%8F%E7%AC%94-1/" title="Qt随笔【一】">Qt随笔【一】</a><time datetime="2024-11-10T08:45:34.000Z" title="Created 2024-11-10 16:45:34">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Android/Andoird%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6mk%E8%AF%B4%E6%98%8E/" title="Andoird编译文件mk说明">Andoird编译文件mk说明</a><time datetime="2024-11-10T08:39:29.000Z" title="Created 2024-11-10 16:39:29">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/%E6%90%AD%E5%BB%BA/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" title="hexo博客搭建">hexo博客搭建</a><time datetime="2024-11-10T06:58:32.000Z" title="Created 2024-11-10 14:58:32">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Android/mtk-fd%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E/" title="mtk_fd参数说明">mtk_fd参数说明</a><time datetime="2024-11-10T06:49:47.000Z" title="Created 2024-11-10 14:49:47">2024-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/10/Python/pyton%E5%9F%BA%E7%A1%80%E9%80%9F%E9%80%9A/" title="pyton基础速通">pyton基础速通</a><time datetime="2024-11-10T06:43:26.000Z" title="Created 2024-11-10 14:43:26">2024-11-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>
