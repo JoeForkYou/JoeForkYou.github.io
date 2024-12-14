@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>CPP生成so</title>
+      <link href="/2024/12/14/CPP/CPP%E7%94%9F%E6%88%90so/"/>
+      <url>/2024/12/14/CPP/CPP%E7%94%9F%E6%88%90so/</url>
+      
+        <content type="html"><![CDATA[<p>在C++中生成共享库（.so文件）并使用它，涉及到以下几个步骤。假设我们要创建一个简单的共享库并在一个主程序中调用它。</p><h1 id="1-创建共享库"><a href="#1-创建共享库" class="headerlink" title="1: 创建共享库"></a>1: 创建共享库</h1><ol><li><strong>创建头文件</strong>（例如 <code>example.h</code>）:</li></ol><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> EXAMPLE_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> EXAMPLE_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">hello</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// EXAMPLE_H</span></span></span><br></pre></td></tr></table></figure><ol start="2"><li><strong>创建实现文件</strong>（例如 <code>example.cpp</code>）:</li></ol><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;example.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello, World!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ol start="3"><li><strong>编译生成共享库</strong>:</li></ol><p>使用以下命令编译 <code>example.cpp</code> 为共享库：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -fPIC -shared example.cpp -o libexample.so</span><br></pre></td></tr></table></figure><ul><li><code>-fPIC</code> 表示生成位置无关代码（Position Independent Code），适合共享库。</li><li><code>-shared</code> 指定生成共享库。</li></ul><h1 id="2-使用共享库"><a href="#2-使用共享库" class="headerlink" title="2: 使用共享库"></a>2: 使用共享库</h1><ol><li><strong>创建主程序文件</strong>（例如 <code>main.cpp</code>）:</li></ol><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;example.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">hello</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ol start="2"><li><strong>编译并链接共享库</strong>:</li></ol><p>使用以下命令编译 <code>main.cpp</code> 并链接到生成的共享库：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ main.cpp -L. -lexample -o main</span><br></pre></td></tr></table></figure><ul><li><code>-L.</code> 指定当前目录为查找库的目录。</li><li><code>-lexample</code> 指定链接名为 <code>libexample.so</code> 的库（省略 <code>lib</code> 和 <code>.so</code>）。</li></ul><ol start="3"><li><strong>运行程序</strong>:</li></ol><p>在运行时，可能需要设置 <code>LD_LIBRARY_PATH</code> 环境变量，以便程序能够找到共享库。例如：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=.:<span class="variable">$LD_LIBRARY_PATH</span></span><br><span class="line">./main</span><br></pre></td></tr></table></figure><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过上述步骤，你可以成功创建并使用一个简单的共享库。在实际应用中，可能会有更多的复杂性，比如处理多个源文件，或者使用构建工具（如 CMake）来管理构建流程。希望这个示例对你有所帮助！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> cpp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> cpp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>字符串包含</title>
       <link href="/2024/12/14/CPP/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB/"/>
       <url>/2024/12/14/CPP/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB/</url>
