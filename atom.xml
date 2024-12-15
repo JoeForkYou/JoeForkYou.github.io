@@ -6,7 +6,7 @@
   <link href="https://joeforkyou.github.io/atom.xml" rel="self"/>
   
   <link href="https://joeforkyou.github.io/"/>
-  <updated>2024-12-15T02:31:32.216Z</updated>
+  <updated>2024-12-15T02:39:51.275Z</updated>
   <id>https://joeforkyou.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://joeforkyou.github.io/2024/12/15/Android/AndroidBp/"/>
     <id>https://joeforkyou.github.io/2024/12/15/Android/AndroidBp/</id>
     <published>2024-12-15T02:30:39.000Z</published>
-    <updated>2024-12-15T02:31:32.216Z</updated>
+    <updated>2024-12-15T02:39:51.275Z</updated>
     
     <content type="html"><![CDATA[<p>Android.bp 是 Android Build System 中使用的一种构建描述文件格式，类似于 Makefile，但以更简洁的方式定义构建模块。以下是一个基本的 Android.bp 文件示例，展示了其基本语法和用法。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"># 定义一个库模块</span><br><span class="line">cc_library &#123;</span><br><span class="line">    name: &quot;my_library&quot;,  # 模块名称</span><br><span class="line">    srcs: [</span><br><span class="line">        &quot;file1.cpp&quot;,      # 源文件</span><br><span class="line">        &quot;file2.cpp&quot;,</span><br><span class="line">    ],</span><br><span class="line">    cflags: [            # 编译选项</span><br><span class="line">        &quot;-Wall&quot;,</span><br><span class="line">        &quot;-Werror&quot;,</span><br><span class="line">    ],</span><br><span class="line">    shared_libs: [      # 依赖的共享库</span><br><span class="line">        &quot;liblog&quot;,       # 依赖的库名称</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 定义一个可执行程序模块</span><br><span class="line">cc_binary &#123;</span><br><span class="line">    name: &quot;my_executable&quot;,  # 执行文件名称</span><br><span class="line">    srcs: [</span><br><span class="line">        &quot;main.cpp&quot;,           # 主源文件</span><br><span class="line">    ],</span><br><span class="line">    static_libs: [</span><br><span class="line">        &quot;my_library&quot;,        # 依赖的静态库</span><br><span class="line">    ],</span><br><span class="line">    cflags: [</span><br><span class="line">        &quot;-O2&quot;,               # 优化选项</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 定义一个测试模块</span><br><span class="line">cc_test &#123;</span><br><span class="line">    name: &quot;my_library_test&quot;,  # 测试模块名称</span><br><span class="line">    srcs: [</span><br><span class="line">        &quot;my_library_test.cpp&quot;,  # 测试源文件</span><br><span class="line">    ],</span><br><span class="line">    static_libs: [</span><br><span class="line">        &quot;my_library&quot;,           # 被测试的库</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ol><li><strong>模块类型</strong>：可以定义多种类型的模块，比如 <code>cc_library</code>（C++库），<code>cc_binary</code>（可执行程序），<code>cc_test</code>（测试）等。</li><li><strong>name</strong>：每个模块都有一个唯一的名称。</li><li><strong>srcs</strong>：指定源文件列表，可以是相对路径。</li><li><strong>cflags</strong>：编译标志，用于设置编译时的选项。</li><li><strong>shared_libs&#x2F;static_libs</strong>：分别指定依赖的共享库和静态库。</li></ol><p>了解这些基本组件后，你可以根据自己的项目需求，进一步扩展和修改 Android.bp 文件。</p>]]></content>
     
@@ -34,10 +34,10 @@
     
     
     
-    <category term="cpp" scheme="https://joeforkyou.github.io/categories/cpp/"/>
+    <category term="Android" scheme="https://joeforkyou.github.io/categories/Android/"/>
     
     
-    <category term="cpp" scheme="https://joeforkyou.github.io/tags/cpp/"/>
+    <category term="Android" scheme="https://joeforkyou.github.io/tags/Android/"/>
     
   </entry>
   
