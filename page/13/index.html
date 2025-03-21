@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="JoeNero的博客">
+<meta property="og:url" content="https://joeforkyou.github.io/page/13/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg">
+<meta property="article:author" content="JoeNero">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="https://joeforkyou.github.io/page/13/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"IZ845G3SQG","apiKey":"381e98702820650923216a5f47f18d71","indexName":"movie","hitsPerPage":6,"languages":{"input_placeholder":"Search for Posts","hits_empty":"No results found for: ${query}","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JoeNero的博客',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="JoeNero的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">JoeNero的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/10/CPP/STL/" title="STL速学">STL速学</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-09T16:39:08.000Z" title="Created 2024-11-10 00:39:08">2024-11-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/cpp/">cpp</a></span></div><div class="content">1.容器1.1 arrayarray保存在栈中 1234567std::array&lt;int, 4&gt; arr= &#123;1,2,3,4&#125;;int len = 4;std::array&lt;int, len&gt; arr = &#123;1,2,3,4&#125;; // 非法, 数组大小参数必须是常量表达式const int len = 4;std::array&lt;int, len&gt; arr = &#123;1,2,3,4&#125;; // 正确写法  1.2 vector不同的编译器实现的扩容方式不一样，vector 在VS2015中以1.5倍扩容，GCC以2倍扩容。 vector保存在堆中 12345vector&lt;vector&lt;int&gt;&gt; v;v.size();		//返回行数v[0].size();	//返回列数     1.3 listlist 是双向循环链表 记住！！！ List的插入、删除或者拼合操作不会造成原有迭代器的失效。 List不能用STL...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/21/nodic/zephyr/architecture/devicetree/" title="Zephyr 设备树">Zephyr 设备树</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-21T02:00:00.000Z" title="Created 2023-12-21 10:00:00">2023-12-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/">nodic</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/zephyr/">zephyr</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/zephyr/architecture/">architecture</a></span></div><div class="content">Zephyr 设备树版本信息 版本：V1.0 更新时间：2025年03月20日 23:15  设备树（Device Tree）是 Zephyr RTOS 用于描述硬件配置的机制。它提供了一种统一的方式来描述系统硬件，使得硬件配置与软件代码分离，提高了代码的可移植性和可维护性。 设备树概述什么是设备树设备树是一种描述硬件的数据结构，它以树形结构表示硬件设备及其属性。在 Zephyr 中，设备树用于：  描述硬件配置 生成设备驱动的初始化代码 配置中断和引脚复用 定义内存映射  设备树的优势 硬件描述与软件分离：便于硬件配置的修改和维护 跨平台兼容性：同一套代码可以适用于不同的硬件平台 动态配置：支持运行时修改设备配置 标准化：采用行业标准的描述方式，提高可读性和互操作性  设备树语法基本结构设备树文件（.dts）的基本结构如下： 123456789101112131415161718/dts-v1/;/ &#123;    model = &quot;Example Board&quot;;    compatible = &quot;example,board&quot;;  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/21/nodic/zephyr/README/" title="Zephyr RTOS 学习指南">Zephyr RTOS 学习指南</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-21T02:00:00.000Z" title="Created 2023-12-21 10:00:00">2023-12-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/">nodic</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/zephyr/">zephyr</a></span></div><div class="content">Zephyr RTOS 学习指南版本信息 版本：V1.0 更新时间：2025年03月20日 22:09  目录结构 快速入门  环境搭建 Hello World 示例 基本概念   系统架构  内核架构 硬件支持 设备树 驱动模型   核心模块  内核模块 线程管理 内存管理 中断处理 定时器   驱动系统 GPIO UART SPI I2C   网络协议栈 文件系统 电源管理   开发指南  应用开发流程 驱动开发指南 调试技巧 测试框架 贡献指南   示例代码  基础示例 网络示例 传感器示例 蓝牙示例   硬件支持  支持的开发板 添加新板子 硬件抽象层   工具链  West 工具 配置系统 构建系统 调试工具   常见问题  编译问题 运行问题 开发问题    文档说明本文档旨在帮助开发者快速上手 Zephyr RTOS，涵盖了从入门到进阶的完整学习路径。基于 Zephyr v2.9.1...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/21/nodic/zephyr/development/application/" title="Zephyr 应用程序开发">Zephyr 应用程序开发</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-21T02:00:00.000Z" title="Created 2023-12-21 10:00:00">2023-12-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/">nodic</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/zephyr/">zephyr</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/zephyr/development/">development</a></span></div><div class="content">版本信息 版本：V1.0 更新时间：2025年03月21日 02:15  Zephyr 应用程序开发本文档详细介绍了 Zephyr RTOS 应用程序的开发过程，包括应用程序结构、配置系统、构建系统以及实际示例。 应用程序结构基本结构一个典型的 Zephyr 应用程序目录结构如下： 1234567891011121314151617app/├── CMakeLists.txt           # CMake 构建脚本├── prj.conf                 # 项目配置文件├── app.overlay             # 设备树覆盖文件（可选）├── src/                    # 源代码目录│   ├── main.c             # 主程序│   ├── app_version.h      # 版本信息│   └── ...               # 其他源文件├── include/               # 头文件目录│   ├── app_config.h      # 应用配置头文件│  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/21/nodic/zephyr/examples/basic/" title="Zephyr 基础示例">Zephyr 基础示例</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-21T02:00:00.000Z" title="Created 2023-12-21 10:00:00">2023-12-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/">nodic</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/zephyr/">zephyr</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/zephyr/examples/">examples</a></span></div><div class="content">Zephyr 基础示例本文档提供了 Zephyr RTOS 的基础示例代码，包括 Hello World、LED 控制、按键输入、定时器使用和多线程编程等内容。这些示例适合初学者快速上手 Zephyr 开发。 Hello World这是最基本的 Zephyr 应用程序，展示了如何创建一个简单的 Zephyr 项目并输出 “Hello World” 消息。 源代码src&#x2F;main.c: 12345678910111213/* * Copyright (c) 2023 Your Name * * SPDX-License-Identifier: Apache-2.0 */#include &lt;zephyr/kernel.h&gt;#include &lt;zephyr/sys/printk.h&gt;void main(void)&#123;    printk(&quot;Hello World! %s\n&quot;, CONFIG_BOARD);&#125;  prj.conf: 1# 空配置文件，Hello World 不需要特殊配置  构建和运行12west...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/21/nodic/zephyr/quick_start/README/" title="Zephyr RTOS 快速入门指南">Zephyr RTOS 快速入门指南</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-21T02:00:00.000Z" title="Created 2023-12-21 10:00:00">2023-12-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/">nodic</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/nodic/zephyr/">zephyr</a></span></div><div class="content">Zephyr RTOS 快速入门本章节将帮助您快速上手 Zephyr RTOS 开发。 环境搭建系统要求Zephyr 开发环境支持以下操作系统：  Windows 10 或更新版本（推荐使用 WSL2） macOS 10.15 或更新版本 Ubuntu 18.04 或更新版本 其他 Linux 发行版  安装工具链 安装依赖工具 12345# Ubuntu/Debiansudo apt install --no-install-recommends git cmake ninja-build gperfsudo apt install ccache dfu-util device-tree-compiler wgetsudo apt install python3-dev python3-pip python3-setuptools python3-tk python3-wheel xz-utils filesudo apt install make gcc gcc-multilib g++-multilib libsdl2-dev  安装 West 工具 123pip3...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/12/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/#content-inner">12</a><span class="page-number current">13</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/JoeForkYou"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">wow!</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/drivers/" title="drivers">drivers</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/filesystem/" title="filesystem">filesystem</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/hardware/" title="hardware">hardware</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/kernel/" title="kernel">kernel</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/networking/" title="networking">networking</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            <a class="card-more-btn" href="/categories/" title="View More">
+      <i class="fas fa-angle-right"></i></a>
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/3rd/"><span class="card-category-list-name">3rd</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/"><span class="card-category-list-name">Android</span><span class="card-category-list-count">13</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/APP/"><span class="card-category-list-name">APP</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/GMS/"><span class="card-category-list-name">GMS</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/GMS/ITS/"><span class="card-category-list-name">ITS</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/GMS/cts/"><span class="card-category-list-name">cts</span><span class="card-category-list-count">3</span></a></li></ul></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/camera/"><span class="card-category-list-name">camera</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/cpp/"><span class="card-category-list-name">cpp</span><span class="card-category-list-count">13</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/devicetree/" style="font-size: 1.1em; color: #999">devicetree</a> <a href="/tags/cpp/" style="font-size: 1.45em; color: #99a7ba">cpp</a> <a href="/tags/APP/" style="font-size: 1.15em; color: #999b9e">APP</a> <a href="/tags/ITS/" style="font-size: 1.1em; color: #999">ITS</a> <a href="/tags/openGrok/" style="font-size: 1.1em; color: #999">openGrok</a> <a href="/tags/%E6%A4%8D%E7%89%A9/" style="font-size: 1.1em; color: #999">植物</a> <a href="/tags/camera/" style="font-size: 1.4em; color: #99a5b6">camera</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/cts/" style="font-size: 1.2em; color: #999da3">cts</a> <a href="/tags/hexo/" style="font-size: 1.1em; color: #999">hexo</a> <a href="/tags/GMS/" style="font-size: 1.25em; color: #999fa7">GMS</a> <a href="/tags/hal/" style="font-size: 1.15em; color: #999b9e">hal</a> <a href="/tags/Android/" style="font-size: 1.45em; color: #99a7ba">Android</a> <a href="/tags/development/" style="font-size: 1.1em; color: #999">development</a> <a href="/tags/meta/" style="font-size: 1.1em; color: #999">meta</a> <a href="/tags/3rd/" style="font-size: 1.1em; color: #999">3rd</a> <a href="/tags/examples/" style="font-size: 1.1em; color: #999">examples</a> <a href="/tags/RTOS/" style="font-size: 1.15em; color: #999b9e">RTOS</a> <a href="/tags/zephyr/" style="font-size: 1.5em; color: #99a9bf">zephyr</a> <a href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" style="font-size: 1.35em; color: #99a3b1">传感器</a> <a href="/tags/qt/" style="font-size: 1.1em; color: #999">qt</a> <a href="/tags/linux/" style="font-size: 1.25em; color: #999fa7">linux</a> <a href="/tags/nodic/" style="font-size: 1.25em; color: #999fa7">nodic</a> <a href="/tags/acdk/" style="font-size: 1.1em; color: #999">acdk</a> <a href="/tags/embedded/" style="font-size: 1.3em; color: #99a1ac">embedded</a> <a href="/tags/python/" style="font-size: 1.3em; color: #99a1ac">python</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
+      
+    </div>
+    <ul class="card-archive-list">
+  
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2025/03/">
+          <span class="card-archive-list-date">March 2025</span>
+          <span class="card-archive-list-count">72</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/12/">
+          <span class="card-archive-list-date">December 2024</span>
+          <span class="card-archive-list-count">5</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/11/">
+          <span class="card-archive-list-date">November 2024</span>
+          <span class="card-archive-list-count">44</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/12/">
+          <span class="card-archive-list-date">December 2023</span>
+          <span class="card-archive-list-count">5</span>
+        </a>
+      </li>
+    </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">126</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-03-21T13:58:27.625Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["Welcome to Joe🥝のTiny Home!","Hope you have a nice day!🍭🍭🍭"])
+  } else {
+    document.getElementById("subtitle").textContent = "Welcome to Joe🥝のTiny Home!"
+  }
+}
+typedJSFn.run(subtitleType)</script><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true});</script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>

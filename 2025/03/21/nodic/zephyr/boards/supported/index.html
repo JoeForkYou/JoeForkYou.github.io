@@ -1,0 +1,699 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Zephyr 支持的开发板 | JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Zephyr 支持的开发板版本信息 版本：V1.0 更新时间：2025年03月21日 01:00  本文档详细介绍了 Zephyr RTOS 支持的主要开发板、它们的硬件特性对比以及开发板选择指南。 主要开发板列表ARM Cortex-M 系列Nordic Semiconductor nRF52840 DK (nrf52840dk_nrf52840)  处理器: ARM Cortex-M4F @">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zephyr 支持的开发板">
+<meta property="og:url" content="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/boards/supported/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:description" content="Zephyr 支持的开发板版本信息 版本：V1.0 更新时间：2025年03月21日 01:00  本文档详细介绍了 Zephyr RTOS 支持的主要开发板、它们的硬件特性对比以及开发板选择指南。 主要开发板列表ARM Cortex-M 系列Nordic Semiconductor nRF52840 DK (nrf52840dk_nrf52840)  处理器: ARM Cortex-M4F @">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg">
+<meta property="article:published_time" content="2025-03-20T17:00:42.000Z">
+<meta property="article:modified_time" content="2025-03-21T13:20:24.682Z">
+<meta property="article:author" content="JoeNero">
+<meta property="article:tag" content="zephyr">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/boards/supported/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"IZ845G3SQG","apiKey":"381e98702820650923216a5f47f18d71","indexName":"movie","hitsPerPage":6,"languages":{"input_placeholder":"Search for Posts","hits_empty":"No results found for: ${query}","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Zephyr 支持的开发板',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="JoeNero的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Zephyr 支持的开发板</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Zephyr 支持的开发板</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-03-20T17:00:42.000Z" title="Created 2025-03-21 01:00:42">2025-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-03-21T13:20:24.682Z" title="Updated 2025-03-21 21:20:24">2025-03-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/zephyr/">zephyr</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Zephyr-支持的开发板"><a href="#Zephyr-支持的开发板" class="headerlink" title="Zephyr 支持的开发板"></a>Zephyr 支持的开发板</h1><h2 id="版本信息"><a href="#版本信息" class="headerlink" title="版本信息"></a>版本信息</h2><ul>
+<li>版本：V1.0</li>
+<li>更新时间：2025年03月21日 01:00</li>
+</ul>
+<p>本文档详细介绍了 Zephyr RTOS 支持的主要开发板、它们的硬件特性对比以及开发板选择指南。</p>
+<h2 id="主要开发板列表"><a href="#主要开发板列表" class="headerlink" title="主要开发板列表"></a>主要开发板列表</h2><h3 id="ARM-Cortex-M-系列"><a href="#ARM-Cortex-M-系列" class="headerlink" title="ARM Cortex-M 系列"></a>ARM Cortex-M 系列</h3><h4 id="Nordic-Semiconductor"><a href="#Nordic-Semiconductor" class="headerlink" title="Nordic Semiconductor"></a>Nordic Semiconductor</h4><ol>
+<li><p><strong>nRF52840 DK (nrf52840dk_nrf52840)</strong></p>
+<ul>
+<li>处理器: ARM Cortex-M4F @ 64 MHz</li>
+<li>闪存: 1 MB</li>
+<li>RAM: 256 KB</li>
+<li>特性: BLE 5.0, NFC, USB, 多种无线协议</li>
+</ul>
+</li>
+<li><p><strong>nRF52 DK (nrf52dk_nrf52832)</strong></p>
+<ul>
+<li>处理器: ARM Cortex-M4F @ 64 MHz</li>
+<li>闪存: 512 KB</li>
+<li>RAM: 64 KB</li>
+<li>特性: BLE 5.0, NFC</li>
+</ul>
+</li>
+<li><p><strong>nRF5340 DK (nrf5340dk_nrf5340)</strong></p>
+<ul>
+<li>处理器: ARM Cortex-M33 (应用核 + 网络核)</li>
+<li>闪存: 1 MB (应用核) + 256 KB (网络核)</li>
+<li>RAM: 512 KB (应用核) + 64 KB (网络核)</li>
+<li>特性: BLE 5.2, NFC, 安全启动</li>
+</ul>
+</li>
+</ol>
+<h4 id="STMicroelectronics"><a href="#STMicroelectronics" class="headerlink" title="STMicroelectronics"></a>STMicroelectronics</h4><ol>
+<li><p><strong>STM32F4 Discovery (stm32f4_disco)</strong></p>
+<ul>
+<li>处理器: ARM Cortex-M4F @ 168 MHz</li>
+<li>闪存: 1 MB</li>
+<li>RAM: 192 KB</li>
+<li>特性: 加速度计, 音频 DAC</li>
+</ul>
+</li>
+<li><p><strong>STM32F746G Discovery (stm32f746g_disco)</strong></p>
+<ul>
+<li>处理器: ARM Cortex-M7 @ 216 MHz</li>
+<li>闪存: 1 MB</li>
+<li>RAM: 320 KB</li>
+<li>特性: LCD 触摸屏, 摄像头接口, 以太网</li>
+</ul>
+</li>
+<li><p><strong>STM32 Nucleo-F401RE (nucleo_f401re)</strong></p>
+<ul>
+<li>处理器: ARM Cortex-M4F @ 84 MHz</li>
+<li>闪存: 512 KB</li>
+<li>RAM: 96 KB</li>
+<li>特性: Arduino 兼容接口</li>
+</ul>
+</li>
+</ol>
+<h4 id="NXP"><a href="#NXP" class="headerlink" title="NXP"></a>NXP</h4><ol>
+<li><p><strong>FRDM-K64F (frdm_k64f)</strong></p>
+<ul>
+<li>处理器: ARM Cortex-M4F @ 120 MHz</li>
+<li>闪存: 1 MB</li>
+<li>RAM: 256 KB</li>
+<li>特性: 以太网, SD 卡插槽, 加速度计</li>
+</ul>
+</li>
+<li><p><strong>MIMXRT1050-EVK (mimxrt1050_evk)</strong></p>
+<ul>
+<li>处理器: ARM Cortex-M7 @ 600 MHz</li>
+<li>闪存: 外部 QSPI 闪存</li>
+<li>RAM: 512 KB SRAM + 外部 SDRAM</li>
+<li>特性: LCD 接口, 以太网, USB</li>
+</ul>
+</li>
+</ol>
+<h4 id="Espressif"><a href="#Espressif" class="headerlink" title="Espressif"></a>Espressif</h4><ol>
+<li><p><strong>ESP32 DevKitC (esp32)</strong></p>
+<ul>
+<li>处理器: Xtensa LX6 双核 @ 240 MHz</li>
+<li>闪存: 外部 4 MB</li>
+<li>RAM: 520 KB SRAM</li>
+<li>特性: WiFi, BLE, 丰富的外设</li>
+</ul>
+</li>
+<li><p><strong>ESP32-C3 DevKitM (esp32c3_devkitm)</strong></p>
+<ul>
+<li>处理器: RISC-V 单核 @ 160 MHz</li>
+<li>闪存: 外部 4 MB</li>
+<li>RAM: 400 KB SRAM</li>
+<li>特性: WiFi, BLE 5.0</li>
+</ul>
+</li>
+</ol>
+<h3 id="x86-系列"><a href="#x86-系列" class="headerlink" title="x86 系列"></a>x86 系列</h3><ol>
+<li><p><strong>UP Squared (up_squared)</strong></p>
+<ul>
+<li>处理器: Intel Apollo Lake</li>
+<li>内存: 取决于配置</li>
+<li>特性: 完整 x86 平台, PCIe, SATA</li>
+</ul>
+</li>
+<li><p><strong>MinnowBoard (minnowboard)</strong></p>
+<ul>
+<li>处理器: Intel Atom E3800 系列</li>
+<li>内存: 取决于配置</li>
+<li>特性: UEFI, PCIe, SATA</li>
+</ul>
+</li>
+</ol>
+<h3 id="RISC-V-系列"><a href="#RISC-V-系列" class="headerlink" title="RISC-V 系列"></a>RISC-V 系列</h3><ol>
+<li><p><strong>SiFive HiFive1 Rev B (hifive1_revb)</strong></p>
+<ul>
+<li>处理器: SiFive Freedom E310 @ 320 MHz</li>
+<li>闪存: 16 MB</li>
+<li>RAM: 16 KB</li>
+<li>特性: Arduino 兼容接口</li>
+</ul>
+</li>
+<li><p><strong>Microchip PolarFire SoC Icicle Kit (mpfs_icicle)</strong></p>
+<ul>
+<li>处理器: SiFive U54 四核 RISC-V @ 667 MHz</li>
+<li>内存: 取决于配置</li>
+<li>特性: FPGA, PCIe, GbE</li>
+</ul>
+</li>
+</ol>
+<h2 id="硬件特性对比"><a href="#硬件特性对比" class="headerlink" title="硬件特性对比"></a>硬件特性对比</h2><h3 id="处理能力"><a href="#处理能力" class="headerlink" title="处理能力"></a>处理能力</h3><table>
+<thead>
+<tr>
+<th>开发板</th>
+<th>处理器</th>
+<th>频率</th>
+<th>性能指标 (CoreMark)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nRF52840 DK</td>
+<td>Cortex-M4F</td>
+<td>64 MHz</td>
+<td>~200</td>
+</tr>
+<tr>
+<td>STM32F746G Discovery</td>
+<td>Cortex-M7</td>
+<td>216 MHz</td>
+<td>~1000</td>
+</tr>
+<tr>
+<td>MIMXRT1050-EVK</td>
+<td>Cortex-M7</td>
+<td>600 MHz</td>
+<td>~3000</td>
+</tr>
+<tr>
+<td>ESP32 DevKitC</td>
+<td>Xtensa LX6 双核</td>
+<td>240 MHz</td>
+<td>~1500</td>
+</tr>
+<tr>
+<td>UP Squared</td>
+<td>Intel Apollo Lake</td>
+<td>1.8 GHz</td>
+<td>~10000</td>
+</tr>
+</tbody></table>
+<h3 id="内存资源"><a href="#内存资源" class="headerlink" title="内存资源"></a>内存资源</h3><table>
+<thead>
+<tr>
+<th>开发板</th>
+<th>闪存</th>
+<th>RAM</th>
+<th>外部存储</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nRF52840 DK</td>
+<td>1 MB</td>
+<td>256 KB</td>
+<td>可选外部 QSPI 闪存</td>
+</tr>
+<tr>
+<td>STM32F746G Discovery</td>
+<td>1 MB</td>
+<td>320 KB</td>
+<td>SDRAM, QSPI 闪存</td>
+</tr>
+<tr>
+<td>FRDM-K64F</td>
+<td>1 MB</td>
+<td>256 KB</td>
+<td>SD 卡插槽</td>
+</tr>
+<tr>
+<td>ESP32 DevKitC</td>
+<td>外部 4 MB</td>
+<td>520 KB</td>
+<td>支持 SD 卡</td>
+</tr>
+<tr>
+<td>HiFive1 Rev B</td>
+<td>16 MB</td>
+<td>16 KB</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<h3 id="通信接口"><a href="#通信接口" class="headerlink" title="通信接口"></a>通信接口</h3><table>
+<thead>
+<tr>
+<th>开发板</th>
+<th>UART</th>
+<th>SPI</th>
+<th>I2C</th>
+<th>USB</th>
+<th>以太网</th>
+<th>无线</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nRF52840 DK</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+<td>BLE 5.0, 802.15.4</td>
+</tr>
+<tr>
+<td>STM32F746G Discovery</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+</tr>
+<tr>
+<td>FRDM-K64F</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ESP32 DevKitC</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+<td>-</td>
+<td>WiFi, BLE</td>
+</tr>
+<tr>
+<td>UP Squared</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>可选 WiFi</td>
+</tr>
+</tbody></table>
+<h3 id="外设支持"><a href="#外设支持" class="headerlink" title="外设支持"></a>外设支持</h3><table>
+<thead>
+<tr>
+<th>开发板</th>
+<th>GPIO</th>
+<th>ADC</th>
+<th>DAC</th>
+<th>PWM</th>
+<th>显示接口</th>
+<th>摄像头</th>
+<th>其他传感器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nRF52840 DK</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+<td>✓</td>
+<td>-</td>
+<td>-</td>
+<td>温度</td>
+</tr>
+<tr>
+<td>STM32F746G Discovery</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>LCD 触摸屏</td>
+<td>✓</td>
+<td>加速度计</td>
+</tr>
+<tr>
+<td>FRDM-K64F</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+<td>-</td>
+<td>加速度计, 磁力计</td>
+</tr>
+<tr>
+<td>ESP32 DevKitC</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>可扩展</td>
+<td>可扩展</td>
+<td>温度</td>
+</tr>
+<tr>
+<td>UP Squared</td>
+<td>✓</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>HDMI, DP</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id="调试支持"><a href="#调试支持" class="headerlink" title="调试支持"></a>调试支持</h3><table>
+<thead>
+<tr>
+<th>开发板</th>
+<th>调试接口</th>
+<th>调试工具</th>
+<th>串口</th>
+<th>JTAG&#x2F;SWD</th>
+<th>追踪</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nRF52840 DK</td>
+<td>J-Link OB</td>
+<td>J-Link</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>STM32F746G Discovery</td>
+<td>ST-LINK&#x2F;V2-1</td>
+<td>ST-LINK</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>FRDM-K64F</td>
+<td>OpenSDA</td>
+<td>CMSIS-DAP</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ESP32 DevKitC</td>
+<td>UART</td>
+<td>ESP-Prog</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+</tr>
+<tr>
+<td>HiFive1 Rev B</td>
+<td>FTDI</td>
+<td>OpenOCD</td>
+<td>✓</td>
+<td>✓</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h2 id="开发板选择指南"><a href="#开发板选择指南" class="headerlink" title="开发板选择指南"></a>开发板选择指南</h2><h3 id="根据应用场景选择"><a href="#根据应用场景选择" class="headerlink" title="根据应用场景选择"></a>根据应用场景选择</h3><ol>
+<li><p><strong>IoT 和无线应用</strong></p>
+<ul>
+<li><strong>推荐</strong>: nRF52840 DK, ESP32 DevKitC</li>
+<li><strong>优势</strong>: 集成无线功能, 低功耗, 丰富的协议栈</li>
+</ul>
+</li>
+<li><p><strong>实时控制系统</strong></p>
+<ul>
+<li><strong>推荐</strong>: STM32F746G Discovery, MIMXRT1050-EVK</li>
+<li><strong>优势</strong>: 高性能处理器, 丰富的外设, 实时响应</li>
+</ul>
+</li>
+<li><p><strong>网关和边缘计算</strong></p>
+<ul>
+<li><strong>推荐</strong>: UP Squared, ESP32 DevKitC</li>
+<li><strong>优势</strong>: 高性能, 多种通信接口, 丰富的存储选项</li>
+</ul>
+</li>
+<li><p><strong>入门和教育</strong></p>
+<ul>
+<li><strong>推荐</strong>: STM32 Nucleo-F401RE, FRDM-K64F</li>
+<li><strong>优势</strong>: 价格适中, 资源丰富, 社区支持好</li>
+</ul>
+</li>
+<li><p><strong>工业控制</strong></p>
+<ul>
+<li><strong>推荐</strong>: MIMXRT1050-EVK, STM32F746G Discovery</li>
+<li><strong>优势</strong>: 高可靠性, 丰富的接口, 实时性能</li>
+</ul>
+</li>
+</ol>
+<h3 id="根据开发经验选择"><a href="#根据开发经验选择" class="headerlink" title="根据开发经验选择"></a>根据开发经验选择</h3><ol>
+<li><p><strong>初学者</strong></p>
+<ul>
+<li><strong>推荐</strong>: STM32 Nucleo 系列, FRDM-K64F</li>
+<li><strong>原因</strong>: 文档丰富, 示例代码多, 社区支持好</li>
+</ul>
+</li>
+<li><p><strong>有经验的开发者</strong></p>
+<ul>
+<li><strong>推荐</strong>: nRF52840 DK, ESP32 DevKitC</li>
+<li><strong>原因</strong>: 功能强大, 灵活性高, 可实现复杂应用</li>
+</ul>
+</li>
+<li><p><strong>专业嵌入式工程师</strong></p>
+<ul>
+<li><strong>推荐</strong>: MIMXRT1050-EVK, UP Squared</li>
+<li><strong>原因</strong>: 高性能, 丰富的配置选项, 适合复杂系统</li>
+</ul>
+</li>
+</ol>
+<h3 id="根据项目约束选择"><a href="#根据项目约束选择" class="headerlink" title="根据项目约束选择"></a>根据项目约束选择</h3><ol>
+<li><p><strong>成本敏感</strong></p>
+<ul>
+<li><strong>推荐</strong>: STM32 Nucleo 系列, ESP32-C3 DevKitM</li>
+<li><strong>优势</strong>: 价格适中, 性价比高</li>
+</ul>
+</li>
+<li><p><strong>功耗敏感</strong></p>
+<ul>
+<li><strong>推荐</strong>: nRF52840 DK, nRF5340 DK</li>
+<li><strong>优势</strong>: 低功耗设计, 多种省电模式</li>
+</ul>
+</li>
+<li><p><strong>尺寸受限</strong></p>
+<ul>
+<li><strong>推荐</strong>: ESP32-C3 DevKitM, STM32 Nucleo-32 系列</li>
+<li><strong>优势</strong>: 小尺寸, 高集成度</li>
+</ul>
+</li>
+<li><p><strong>高性能需求</strong></p>
+<ul>
+<li><strong>推荐</strong>: MIMXRT1050-EVK, UP Squared</li>
+<li><strong>优势</strong>: 高频率处理器, 大内存</li>
+</ul>
+</li>
+</ol>
+<h2 id="开发板获取方式"><a href="#开发板获取方式" class="headerlink" title="开发板获取方式"></a>开发板获取方式</h2><ol>
+<li><p><strong>官方渠道</strong></p>
+<ul>
+<li>制造商官网</li>
+<li>授权分销商</li>
+</ul>
+</li>
+<li><p><strong>电子元件分销商</strong></p>
+<ul>
+<li>Mouser Electronics</li>
+<li>Digi-Key</li>
+<li>Element14 &#x2F; Newark</li>
+<li>RS Components</li>
+</ul>
+</li>
+<li><p><strong>在线零售商</strong></p>
+<ul>
+<li>Amazon</li>
+<li>Adafruit</li>
+<li>SparkFun</li>
+<li>Seeed Studio</li>
+</ul>
+</li>
+</ol>
+<h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><ol>
+<li><p><strong>环境准备</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Zephyr SDK</span></span><br><span class="line">wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.1/zephyr-sdk-0.16.1_linux-x86_64.tar.gz</span><br><span class="line">tar xvf zephyr-sdk-0.16.1_linux-x86_64.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zephyr-sdk-0.16.1</span><br><span class="line">./setup.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取 Zephyr 源码</span></span><br><span class="line">west init -m https://github.com/zephyrproject-rtos/zephyr --mr v2.9.1 zephyrproject</span><br><span class="line"><span class="built_in">cd</span> zephyrproject</span><br><span class="line">west update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>构建示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 针对特定开发板构建 Hello World 示例</span></span><br><span class="line"><span class="built_in">cd</span> zephyrproject/zephyr</span><br><span class="line">west build -b nrf52840dk_nrf52840 samples/hello_world</span><br><span class="line"></span><br><span class="line"><span class="comment"># 烧录到开发板</span></span><br><span class="line">west flash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>调试</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动调试会话</span></span><br><span class="line">west debug</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Zephyr RTOS 支持广泛的硬件平台，从低功耗微控制器到高性能处理器。选择合适的开发板对于项目成功至关重要。在选择时，应考虑：</p>
+<ol>
+<li>应用需求（处理能力、内存、通信接口）</li>
+<li>开发经验和可用资源</li>
+<li>项目约束（成本、功耗、尺寸）</li>
+<li>工具链和调试支持</li>
+</ol>
+<p>通过本文档提供的信息，您可以更好地了解各种开发板的特点，并为您的项目选择最合适的硬件平台。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io">JoeNero</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/boards/supported/">https://joeforkyou.github.io/2025/03/21/nodic/zephyr/boards/supported/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/zephyr/">zephyr</a></div><div class="post-share"><div class="social-share" data-image="/img/%E7%BE%8E%E5%A5%B3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/21/nodic/zephyr/config/README/" title="Zephyr 系统配置指南"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Zephyr 系统配置指南</div></div><div class="info-2"><div class="info-item-1">Zephyr 系统配置指南版本信息 版本：V1.0 更新时间：2025年03月21日 01:15  1. 配置系统概述1.1 配置文件层次12345678项目目录/├── prj.conf           # 项目配置├── boards/│   └── xxx.conf      # 板级配置├── arch/│   └── xxx.conf      # 架构配置└── soc/    └── xxx.conf      # SoC配置  1.2 配置优先级 命令行配置 (-DCONFIG_XXX&#x3D;Y) 项目配置 (prj.conf) 应用程序覆盖配置 (app.overlay) 板级配置 (boards&#x2F;xxx.conf) SoC配置 (soc&#x2F;xxx.conf) 架构配置 (arch&#x2F;xxx.conf) 默认配置 (Kconfig默认值)  2. 项目配置2.1 基本配置 (prj.conf)12345678910111213141516171819202122#...</div></div></div></a><a class="pagination-related" href="/2025/03/21/nodic/zephyr/boards/porting/" title="添加新板子到 Zephyr"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">添加新板子到 Zephyr</div></div><div class="info-2"><div class="info-item-1">添加新板子到 Zephyr版本信息 版本：V1.0 更新时间：2025年03月21日 00:45  本文档详细介绍了如何将新的开发板添加到 Zephyr RTOS 中，包括移植流程、设备树配置、驱动适配和调试方法。 移植流程概述 准备工作  收集硬件文档 确定 SoC 和 CPU 架构 检查现有的类似板子支持   创建板级支持包 (BSP)  添加新的板子目录 创建基本配置文件   配置设备树  定义板子特定的设备树 配置引脚复用和外设   适配驱动程序  确认所需驱动的可用性 修改或创建新的驱动程序   实现板级初始化  配置时钟系统 设置中断控制器 初始化关键外设   配置构建系统  更新 CMakeLists.txt 设置 Kconfig 选项   测试和调试  编译基本示例 使用调试工具验证功能   文档和示例  编写板级文档 创建板子特定的示例代码    详细步骤1. 准备工作 收集硬件文档  处理器数据手册 开发板原理图 引脚分配表   确定 SoC 和 CPU 架构 12345# 检查 Zephyr 支持的架构ls zephyr/arch# 检查 SoC 支持ls...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/20/zephyer/zephyer1/" title="【Zephyr】【一】Zephyr RTOS 示例代码集"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-20</div><div class="info-item-2">【Zephyr】【一】Zephyr RTOS 示例代码集</div></div><div class="info-2"><div class="info-item-1">Zephyr RTOS 示例代码集1. 基础示例1.0 基础配置每个示例都需要一个 prj.conf 文件来配置项目。以下是各个示例所需的配置： 基础示例 prj.conf1234567891011# 控制台输出CONFIG_PRINTK=yCONFIG_SERIAL=yCONFIG_UART_CONSOLE=y# 日志系统CONFIG_LOG=yCONFIG_LOG_DEFAULT_LEVEL=3# 内核配置CONFIG_KERNEL_BIN_NAME=&quot;app&quot;  线程示例 prj.conf123456789# 基础配置CONFIG_PRINTK=yCONFIG_SERIAL=yCONFIG_UART_CONSOLE=y# 线程配置CONFIG_THREAD_NAME=yCONFIG_THREAD_MONITOR=yCONFIG_THREAD_STACK_INFO=y  1.1 Hello...</div></div></div></a><a class="pagination-related" href="/2025/03/20/zephyer/zephyr2/" title="【Zephyr】【二】Zephyr RTOS 系统架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-20</div><div class="info-item-2">【Zephyr】【二】Zephyr RTOS 系统架构</div></div><div class="info-2"><div class="info-item-1"> mermaid.initialize({startOnLoad:true});  Zephyr RTOS 系统架构整体架构 graph TB     subgraph "应用层"         App1[应用1]         App2[应用2]         App3[应用3]     end     subgraph "系统服务层"         FS[文件系统]         Net[网络协议栈]         Shell[命令行界面]     end     subgraph "内核层"         Sched[调度器]         Mem[内存管理]         IPC[进程间通信]         Time[时间管理]     end     subgraph "硬件抽象层"         GPIO[GPIO驱动]         UART[串口驱动]         SPI[SPI驱动]         I2C[I2C驱动]     end     App1 & App2 & App3 --> FS & Net & Shell    ...</div></div></div></a><a class="pagination-related" href="/2023/12/21/nodic/zephyr/architecture/devicetree/" title="Zephyr 设备树"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-21</div><div class="info-item-2">Zephyr 设备树</div></div><div class="info-2"><div class="info-item-1">Zephyr 设备树版本信息 版本：V1.0 更新时间：2025年03月20日 23:15  设备树（Device Tree）是 Zephyr RTOS 用于描述硬件配置的机制。它提供了一种统一的方式来描述系统硬件，使得硬件配置与软件代码分离，提高了代码的可移植性和可维护性。 设备树概述什么是设备树设备树是一种描述硬件的数据结构，它以树形结构表示硬件设备及其属性。在 Zephyr 中，设备树用于：  描述硬件配置 生成设备驱动的初始化代码 配置中断和引脚复用 定义内存映射  设备树的优势 硬件描述与软件分离：便于硬件配置的修改和维护 跨平台兼容性：同一套代码可以适用于不同的硬件平台 动态配置：支持运行时修改设备配置 标准化：采用行业标准的描述方式，提高可读性和互操作性  设备树语法基本结构设备树文件（.dts）的基本结构如下： 123456789101112131415161718/dts-v1/;/ &#123;    model = &quot;Example Board&quot;;    compatible = &quot;example,board&quot;;  ...</div></div></div></a><a class="pagination-related" href="/2025/03/20/nodic/zephyr/architecture/README/" title="Zephyr RTOS 系统架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-20</div><div class="info-item-2">Zephyr RTOS 系统架构</div></div><div class="info-2"><div class="info-item-1">Zephyr RTOS 系统架构版本信息 版本：V1.0 更新时间：2025年03月20日 22:30  Zephyr RTOS 是一个模块化、可扩展的实时操作系统，设计用于资源受限的嵌入式系统。本章节将介绍 Zephyr 的整体系统架构。 目录 内核架构 硬件支持 设备树 驱动模型  架构概览Zephyr 的系统架构主要包括以下几个部分：  微内核  提供基本的线程管理、同步原语和内存管理 支持抢占式多任务和协作式多任务 实现了实时调度器   硬件抽象层 (HAL)  提供统一的硬件访问接口 支持多种 CPU 架构和开发板   设备驱动框架  统一的驱动模型 支持动态加载和卸载驱动   网络协议栈  支持多种网络协议，如 TCP&#x2F;IP、Bluetooth、IEEE 802.15.4   文件系统  支持多种文件系统，如 FAT、LittleFS   电源管理  提供低功耗模式和动态频率调节   安全子系统  提供加密、认证和安全启动等功能    模块化设计Zephyr 采用高度模块化的设计，主要体现在：  内核模块化  核心功能和可选功能分离 通过 Kconfig...</div></div></div></a><a class="pagination-related" href="/2023/12/21/nodic/zephyr/README/" title="Zephyr RTOS 学习指南"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-21</div><div class="info-item-2">Zephyr RTOS 学习指南</div></div><div class="info-2"><div class="info-item-1">Zephyr RTOS 学习指南版本信息 版本：V1.0 更新时间：2025年03月20日 22:09  目录结构 快速入门  环境搭建 Hello World 示例 基本概念   系统架构  内核架构 硬件支持 设备树 驱动模型   核心模块  内核模块 线程管理 内存管理 中断处理 定时器   驱动系统 GPIO UART SPI I2C   网络协议栈 文件系统 电源管理   开发指南  应用开发流程 驱动开发指南 调试技巧 测试框架 贡献指南   示例代码  基础示例 网络示例 传感器示例 蓝牙示例   硬件支持  支持的开发板 添加新板子 硬件抽象层   工具链  West 工具 配置系统 构建系统 调试工具   常见问题  编译问题 运行问题 开发问题    文档说明本文档旨在帮助开发者快速上手 Zephyr RTOS，涵盖了从入门到进阶的完整学习路径。基于 Zephyr v2.9.1...</div></div></div></a><a class="pagination-related" href="/2025/03/20/nodic/zephyr/architecture/hardware/" title="Zephyr 硬件支持"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-20</div><div class="info-item-2">Zephyr 硬件支持</div></div><div class="info-2"><div class="info-item-1">Zephyr 硬件支持版本信息 版本：V1.0 更新时间：2025年03月20日 23:00  Zephyr RTOS 提供了广泛的硬件平台支持，包括多种 CPU 架构和开发板。本文档将详细介绍 Zephyr 的硬件支持架构。 支持的硬件架构ARM 架构 Cortex-M 系列  Cortex-M0&#x2F;M0+ Cortex-M3 Cortex-M4 Cortex-M7 Cortex-M23 Cortex-M33   Cortex-R 系列  Cortex-R5 Cortex-R7   Cortex-A 系列  Cortex-A53 Cortex-A72    x86 架构 Intel IA-32  Intel Quark Intel Atom   x86_64  支持现代 x86_64 处理器    RISC-V RV32  RV32I RV32IM RV32IMC RV32IMAC   RV64  RV64I RV64IM RV64IMAC    其他架构 Xtensa  ESP32 ESP32-S2 ESP32-S3   ARC  EM 系列 HS...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/JoeForkYou"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">wow!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Zephyr-%E6%94%AF%E6%8C%81%E7%9A%84%E5%BC%80%E5%8F%91%E6%9D%BF"><span class="toc-number">1.</span> <span class="toc-text">Zephyr 支持的开发板</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">版本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%97%E8%A1%A8"><span class="toc-number">1.2.</span> <span class="toc-text">主要开发板列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ARM-Cortex-M-%E7%B3%BB%E5%88%97"><span class="toc-number">1.2.1.</span> <span class="toc-text">ARM Cortex-M 系列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Nordic-Semiconductor"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">Nordic Semiconductor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#STMicroelectronics"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">STMicroelectronics</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NXP"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">NXP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Espressif"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">Espressif</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x86-%E7%B3%BB%E5%88%97"><span class="toc-number">1.2.2.</span> <span class="toc-text">x86 系列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RISC-V-%E7%B3%BB%E5%88%97"><span class="toc-number">1.2.3.</span> <span class="toc-text">RISC-V 系列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E7%89%B9%E6%80%A7%E5%AF%B9%E6%AF%94"><span class="toc-number">1.3.</span> <span class="toc-text">硬件特性对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E8%83%BD%E5%8A%9B"><span class="toc-number">1.3.1.</span> <span class="toc-text">处理能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%B5%84%E6%BA%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">内存资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.3.3.</span> <span class="toc-text">通信接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E8%AE%BE%E6%94%AF%E6%8C%81"><span class="toc-number">1.3.4.</span> <span class="toc-text">外设支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%94%AF%E6%8C%81"><span class="toc-number">1.3.5.</span> <span class="toc-text">调试支持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9%E6%8C%87%E5%8D%97"><span class="toc-number">1.4.</span> <span class="toc-text">开发板选择指南</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E9%80%89%E6%8B%A9"><span class="toc-number">1.4.1.</span> <span class="toc-text">根据应用场景选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C%E9%80%89%E6%8B%A9"><span class="toc-number">1.4.2.</span> <span class="toc-text">根据开发经验选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E9%A1%B9%E7%9B%AE%E7%BA%A6%E6%9D%9F%E9%80%89%E6%8B%A9"><span class="toc-number">1.4.3.</span> <span class="toc-text">根据项目约束选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF%E8%8E%B7%E5%8F%96%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">开发板获取方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"><span class="toc-number">1.6.</span> <span class="toc-text">开始使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/drivers/" title="drivers">drivers</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/filesystem/" title="filesystem">filesystem</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/hardware/" title="hardware">hardware</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/kernel/" title="kernel">kernel</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/networking/" title="networking">networking</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true});</script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>

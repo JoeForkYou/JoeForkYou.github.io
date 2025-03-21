@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="JoeNero的博客">
+<meta property="og:url" content="https://joeforkyou.github.io/page/9/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg">
+<meta property="article:author" content="JoeNero">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="https://joeforkyou.github.io/page/9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"IZ845G3SQG","apiKey":"381e98702820650923216a5f47f18d71","indexName":"movie","hitsPerPage":6,"languages":{"input_placeholder":"Search for Posts","hits_empty":"No results found for: ${query}","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JoeNero的博客',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="JoeNero的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">JoeNero的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/24/CPP/CPP%E5%9F%BA%E7%A1%80_3_%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81%E5%B0%81%E8%A3%85/" title="【CPP基础】【三】【继承多态封装】">【CPP基础】【三】【继承多态封装】</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-24T05:33:54.000Z" title="Created 2024-11-24 13:33:54">2024-11-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/cpp/">cpp</a></span></div><div class="content">在C++中，继承、多态和封装是面向对象编程的三大基本特性。下面我将分别介绍这三者，并给出相应的示例。 1. 封装（Encapsulation）封装是指将数据（成员变量）和操作数据的方法（成员函数）放在一起，形成一个类，通过访问控制来限制对类内部数据的直接访问，从而保护数据的完整性。 示例： 123456789101112131415161718192021222324252627282930313233343536#include &lt;iostream&gt;using namespace std;class BankAccount &#123;private:    double balance; // 私有成员变量public:    BankAccount(double initialBalance) &#123;        balance = initialBalance;    &#125;    void deposit(double amount) &#123;        if (amount &gt; 0) &#123;           ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/18/Android/Kernel%E5%8A%A0%E6%97%B6%E9%97%B4%E6%88%B3/" title="Kernel加时间戳">Kernel加时间戳</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-18T14:23:59.000Z" title="Created 2024-11-18 22:23:59">2024-11-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content"> 添加对应的头文件和包装函数: 123456789#include &lt;linux/ktime.h&gt;long long thermal_get_current_time_ms(void)&#123;    long long temp;    struct timespec64 t;    ktime_get_ts64(&amp;t);    temp = (((long long) t.tv_sec) * 1000000 + (long)t.tv_nsec/1000);    return (temp/1000);&#125;  c中static 受到编译器的影响 禁止使用long long类型.所以debug的时候还是去掉static的申明. 1234567long long time_diff,start_timestamp,end_timestamp;start_timestamp = thermal_get_current_time_ms();end_timestamp = thermal_get_current_time_ms();time_diff =...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/17/CPP/CPP%E5%9F%BA%E7%A1%80_2_%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F_1/" title="【CPP基础】【二】【设计模式】">【CPP基础】【二】【设计模式】</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-17T13:58:49.000Z" title="Created 2024-11-17 21:58:49">2024-11-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/cpp/">cpp</a></span></div><div class="content">...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/17/CPP/CPP%E5%9F%BA%E7%A1%80_1/" title="【CPP基础】【一】">【CPP基础】【一】</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-17T12:06:49.000Z" title="Created 2024-11-17 20:06:49">2024-11-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/cpp/">cpp</a></span></div><div class="content">概述这是对c++的泛式编程的梳理c++的基础就那边点,无非就是流程控制和对象继承等剩下的就是STL的内容。所以我觉得还是有必要深究下来，一来就是我这个人的性格是这样的.学习链接:https://www.learncpp.com/ 基本数据类型 整型: int, long, long long 浮点型: float, double, long double 字符型: char, wchar_t 布尔型: bool 指针型: pointer, reference 数组型: array 枚举型: enum 结构体型: struct 类型: class     类型 关键字    布尔型 bool   字符型 char   整型 int   浮点型 float   双浮点型 double   无类型 void   宽字符型 wchar_t   补充表格    类型 位 范围    char 1字节 -128~127   unsigned char 1字节 0~255   signed char 1字节 -128~127   int 4字节 -2^31~2^31-1   unsigned...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/14/CPP/cpp%E6%A0%87%E5%87%86/" title="cpp标准">cpp标准</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-14T14:47:09.000Z" title="Created 2024-11-14 22:47:09">2024-11-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/cpp/">cpp</a></span></div><div class="content">1 概述‌C++标准‌是C++编程语言的规范，由国际标准化组织（ISO）制定。C++标准的发展历程可以追溯到1998年,当时ISO&#x2F;IEC...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/11/Python/uiautomator2%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95camera_1/" title="【uiautomator】自动化测试camera【一】">【uiautomator】自动化测试camera【一】</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-11T14:46:49.000Z" title="Created 2024-11-11 22:46:49">2024-11-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">1 概述本文档是自己写andorid camera自动化测试的随笔测试机器为OPPO Find x7测试Apk为oppo的系统相机. 2 准备工作我电脑是有装conda环境的,所以我直接用conda创建虚拟环境专门用于相关的测试.官网下的巨慢，直接去清华大学的镜像源下载速度快很多.https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/下载对应的系统版本即可linux对应sh文件.windows直接双击exe文件安装即可.我不是很喜欢直接破坏本机电脑的python环境,所以我创建了一个新的虚拟环境. 这种包管理更为安全，pip炸了就炸了 打不了删了重新建一个 123456789conda create -n py3 python=3.7  #创建python3.7的虚拟环境conda activate  py3             #激活虚拟环境#conda deactivate               #退出虚拟环境conda info --envs               #查看虚拟环境# conda...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/10/Android/AndroidCamera%E6%9E%B6%E6%9E%84/" title="AndroidCamera架构">AndroidCamera架构</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-10T10:53:19.000Z" title="Created 2024-11-10 18:53:19">2024-11-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/camera/">camera</a></span></div><div class="content">分层：将各层的接口和实现分开Camera架构 APP所在位置    架构最顶层作用    负责跟用户交互流程    接受到用户上的UI操作    将UI操作通过request操作下发    接收到底层返回的信息并反馈给用户 CameraFramework&#x2F;ServiceCameraFramework    作用        以jar包的形式运行在APP进程中    流程        暴露接口供app调用        接收app的请求        通过调用Camera AIDL跨进程接口将请求发送到camera service进行处理        将相关的结果返回至appCamera Service    作用        封装Camera AIDL跨进程接口        独立进程 Android 系统启动初期运行起来 Provider内部加载Camera Hal Module    遵循谷歌制定的标准Camera Hal3接口    由OEM&#x2F;ODM实现Module DriverCameraSensor...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/10/Linux/linux%E5%AE%89%E8%A3%85%E5%AE%8C%E5%90%8E%E6%93%8D%E4%BD%9C/" title="linux安装完后操作">linux安装完后操作</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-10T09:15:42.000Z" title="Created 2024-11-10 17:15:42">2024-11-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/linux/">linux</a></span></div><div class="content">1 基础操作ftp工具下载: 12sudo apt-get install filezillasudo apt-get install filezilla-locales #工具包 dpkg 警告 1sudo apt-get --reinstall install `dpkg --get-selections | grep &#x27;[[:space:]]install&#x27; | cut -f1` 这些错误是说add-apt-repository的远程仓库没有这个文件，这个IP也是ping不通的。 添加的仓库保存在 &#x2F;etc&#x2F;apt&#x2F;sources.list.d目录下。删除对应的错误仓库文件即可 阿里镜像源  deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/10/Qt/Qt%E9%9A%8F%E7%AC%94_1/" title="Qt随笔【一】">Qt随笔【一】</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-10T08:45:34.000Z" title="Created 2024-11-10 16:45:34">2024-11-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/qt/">qt</a></span></div><div class="content">1 linux 下注意点找不到mysql.h文件 sudo apt-get install libmysqlclient-dev 编译太慢,更改 -j 4       4为线程 &lt;&#x3D; cpu的线程 缺少:-1: error: 找不到 -lGLsudo apt-get install libgl1-mesa-dev 使用以下模块需要 实现下载这个 qt会自动查找 sudo apt-get install qtmultimedia5-dev 如果不行则加: sudo apt-get install libpul se-dev 视频相关控件需要安装如下内容 1apt-get install libpulse-dev  1QT       += multimedia libusbzhic库 12sudo apt-get install libusb-devsudo apt-get install libusb-1.0-0-dev  2 布局管理2.1 QGridLayout网格布局12layout-&gt;setRowStretch(int row, int...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/11/10/Android/Andoird%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6mk%E8%AF%B4%E6%98%8E/" title="Andoird编译文件mk说明">Andoird编译文件mk说明</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-11-10T08:39:29.000Z" title="Created 2024-11-10 16:39:29">2024-11-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">1 语法Android.mk 文件必须先定义 LOCAL_PATH 变量： 1LOCAL_PATH :=$(call my-dir) 此变量表示源文件在开发树中的位置。在这行代码中，编译系统提供的宏函数 my-dir 将返回当前目录（Android.mk 文件本身所在的目录）的路径。下一行声明 CLEAR_VARS 变量，其值由编译系统提供。 1include $(CLEAR_VARS) CLEAR_VARS 变量指向一个特殊的 GNU Makefile，后者会清除许多 LOCAL_XXX 变量，例如 LOCAL_MODULE、LOCAL_SRC_FILES 和 LOCAL_STATIC_LIBRARIES。请注意，GNU Makefile 不会清除 LOCAL_PATH。此变量必须保留其值，因为系统在单一 GNU Make 执行环境（其中的所有变量都是全局变量）中解析所有编译控制文件。在描述每个模块之前，必须声明（重新声明）此变量。 1LOCAL_MODULE := hello-jni 每个模块名称必须唯一，且不含任何空格。编译系统在生成最终共享库文件时，会对您分配给...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/8/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#content-inner">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/#content-inner">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/#content-inner">13</a><a class="extend next" rel="next" href="/page/10/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/JoeForkYou"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">wow!</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/drivers/" title="drivers">drivers</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/filesystem/" title="filesystem">filesystem</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/hardware/" title="hardware">hardware</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/kernel/" title="kernel">kernel</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/networking/" title="networking">networking</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            <a class="card-more-btn" href="/categories/" title="View More">
+      <i class="fas fa-angle-right"></i></a>
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/3rd/"><span class="card-category-list-name">3rd</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/"><span class="card-category-list-name">Android</span><span class="card-category-list-count">13</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/APP/"><span class="card-category-list-name">APP</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/GMS/"><span class="card-category-list-name">GMS</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/GMS/ITS/"><span class="card-category-list-name">ITS</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/GMS/cts/"><span class="card-category-list-name">cts</span><span class="card-category-list-count">3</span></a></li></ul></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/camera/"><span class="card-category-list-name">camera</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/cpp/"><span class="card-category-list-name">cpp</span><span class="card-category-list-count">13</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/devicetree/" style="font-size: 1.1em; color: #999">devicetree</a> <a href="/tags/cpp/" style="font-size: 1.45em; color: #99a7ba">cpp</a> <a href="/tags/APP/" style="font-size: 1.15em; color: #999b9e">APP</a> <a href="/tags/ITS/" style="font-size: 1.1em; color: #999">ITS</a> <a href="/tags/openGrok/" style="font-size: 1.1em; color: #999">openGrok</a> <a href="/tags/%E6%A4%8D%E7%89%A9/" style="font-size: 1.1em; color: #999">植物</a> <a href="/tags/camera/" style="font-size: 1.4em; color: #99a5b6">camera</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/cts/" style="font-size: 1.2em; color: #999da3">cts</a> <a href="/tags/hexo/" style="font-size: 1.1em; color: #999">hexo</a> <a href="/tags/GMS/" style="font-size: 1.25em; color: #999fa7">GMS</a> <a href="/tags/hal/" style="font-size: 1.15em; color: #999b9e">hal</a> <a href="/tags/Android/" style="font-size: 1.45em; color: #99a7ba">Android</a> <a href="/tags/development/" style="font-size: 1.1em; color: #999">development</a> <a href="/tags/meta/" style="font-size: 1.1em; color: #999">meta</a> <a href="/tags/3rd/" style="font-size: 1.1em; color: #999">3rd</a> <a href="/tags/examples/" style="font-size: 1.1em; color: #999">examples</a> <a href="/tags/RTOS/" style="font-size: 1.15em; color: #999b9e">RTOS</a> <a href="/tags/zephyr/" style="font-size: 1.5em; color: #99a9bf">zephyr</a> <a href="/tags/%E4%BC%A0%E6%84%9F%E5%99%A8/" style="font-size: 1.35em; color: #99a3b1">传感器</a> <a href="/tags/qt/" style="font-size: 1.1em; color: #999">qt</a> <a href="/tags/linux/" style="font-size: 1.25em; color: #999fa7">linux</a> <a href="/tags/nodic/" style="font-size: 1.25em; color: #999fa7">nodic</a> <a href="/tags/acdk/" style="font-size: 1.1em; color: #999">acdk</a> <a href="/tags/embedded/" style="font-size: 1.3em; color: #99a1ac">embedded</a> <a href="/tags/python/" style="font-size: 1.3em; color: #99a1ac">python</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
+      
+    </div>
+    <ul class="card-archive-list">
+  
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2025/03/">
+          <span class="card-archive-list-date">March 2025</span>
+          <span class="card-archive-list-count">72</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/12/">
+          <span class="card-archive-list-date">December 2024</span>
+          <span class="card-archive-list-count">5</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/11/">
+          <span class="card-archive-list-date">November 2024</span>
+          <span class="card-archive-list-count">44</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/12/">
+          <span class="card-archive-list-date">December 2023</span>
+          <span class="card-archive-list-count">5</span>
+        </a>
+      </li>
+    </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">126</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-03-21T13:58:27.625Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["Welcome to Joe🥝のTiny Home!","Hope you have a nice day!🍭🍭🍭"])
+  } else {
+    document.getElementById("subtitle").textContent = "Welcome to Joe🥝のTiny Home!"
+  }
+}
+typedJSFn.run(subtitleType)</script><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true});</script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>

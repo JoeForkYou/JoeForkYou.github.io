@@ -1,0 +1,369 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>build_system | JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Zephyr 构建系统本文档详细介绍了 Zephyr RTOS 的构建系统，包括 CMake 构建流程、West 命令工具、构建配置选项以及自定义构建方法。 CMake 构建流程Zephyr 使用 CMake 作为其主要构建系统，结合 Ninja 或 Make 作为构建工具。 构建系统架构Zephyr 的构建系统由以下几个主要部分组成：  CMake 脚本：定义构建逻辑和目标 Kconfig 系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="build_system">
+<meta property="og:url" content="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/toolchain/build_system/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:description" content="Zephyr 构建系统本文档详细介绍了 Zephyr RTOS 的构建系统，包括 CMake 构建流程、West 命令工具、构建配置选项以及自定义构建方法。 CMake 构建流程Zephyr 使用 CMake 作为其主要构建系统，结合 Ninja 或 Make 作为构建工具。 构建系统架构Zephyr 的构建系统由以下几个主要部分组成：  CMake 脚本：定义构建逻辑和目标 Kconfig 系统">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg">
+<meta property="article:published_time" content="2025-03-21T12:49:56.000Z">
+<meta property="article:modified_time" content="2025-03-21T13:20:53.524Z">
+<meta property="article:author" content="JoeNero">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/toolchain/build_system/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"IZ845G3SQG","apiKey":"381e98702820650923216a5f47f18d71","indexName":"movie","hitsPerPage":6,"languages":{"input_placeholder":"Search for Posts","hits_empty":"No results found for: ${query}","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'build_system',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="JoeNero的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">build_system</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">build_system</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-03-21T13:20:53.524Z" title="Updated 2025-03-21 21:20:53">2025-03-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Zephyr-构建系统"><a href="#Zephyr-构建系统" class="headerlink" title="Zephyr 构建系统"></a>Zephyr 构建系统</h1><p>本文档详细介绍了 Zephyr RTOS 的构建系统，包括 CMake 构建流程、West 命令工具、构建配置选项以及自定义构建方法。</p>
+<h2 id="CMake-构建流程"><a href="#CMake-构建流程" class="headerlink" title="CMake 构建流程"></a>CMake 构建流程</h2><p>Zephyr 使用 CMake 作为其主要构建系统，结合 Ninja 或 Make 作为构建工具。</p>
+<h3 id="构建系统架构"><a href="#构建系统架构" class="headerlink" title="构建系统架构"></a>构建系统架构</h3><p>Zephyr 的构建系统由以下几个主要部分组成：</p>
+<ol>
+<li><strong>CMake 脚本</strong>：定义构建逻辑和目标</li>
+<li><strong>Kconfig 系统</strong>：管理配置选项</li>
+<li><strong>设备树</strong>：描述硬件配置</li>
+<li><strong>West</strong>：元构建工具，简化命令行操作</li>
+</ol>
+<h3 id="基本构建流程"><a href="#基本构建流程" class="headerlink" title="基本构建流程"></a>基本构建流程</h3><p>Zephyr 应用程序的构建流程如下：</p>
+<ol>
+<li><p><strong>配置阶段</strong></p>
+<ul>
+<li>处理 Kconfig 选项</li>
+<li>解析设备树源文件</li>
+<li>生成构建系统缓存</li>
+</ul>
+</li>
+<li><p><strong>生成阶段</strong></p>
+<ul>
+<li>生成构建规则</li>
+<li>创建构建目标</li>
+</ul>
+</li>
+<li><p><strong>构建阶段</strong></p>
+<ul>
+<li>编译源代码</li>
+<li>链接目标文件</li>
+<li>生成最终二进制文件</li>
+</ul>
+</li>
+</ol>
+<h3 id="CMake-脚本结构"><a href="#CMake-脚本结构" class="headerlink" title="CMake 脚本结构"></a>CMake 脚本结构</h3><p>Zephyr 项目的 CMake 脚本组织结构：</p>
+<ul>
+<li><strong>zephyr&#x2F;CMakeLists.txt</strong>：主 CMake 文件</li>
+<li>**zephyr&#x2F;cmake&#x2F;**：构建系统模块</li>
+<li><strong>zephyr&#x2F;modules&#x2F;*&#x2F;CMakeLists.txt</strong>：模块构建脚本</li>
+<li><strong>app&#x2F;CMakeLists.txt</strong>：应用程序 CMake 文件</li>
+</ul>
+<h3 id="应用程序-CMakeLists-txt"><a href="#应用程序-CMakeLists-txt" class="headerlink" title="应用程序 CMakeLists.txt"></a>应用程序 CMakeLists.txt</h3><p>一个典型的 Zephyr 应用程序 CMakeLists.txt 文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置最低 CMake 版本</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>.<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找 Zephyr 包</span></span><br><span class="line"><span class="keyword">find_package</span>(Zephyr REQUIRED HINTS $ENV&#123;ZEPHYR_BASE&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置项目名称</span></span><br><span class="line"><span class="keyword">project</span>(my_zephyr_app)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加应用程序源文件</span></span><br><span class="line"><span class="keyword">target_sources</span>(app PRIVATE src/main.c)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加包含目录</span></span><br><span class="line"><span class="keyword">target_include_directories</span>(app PRIVATE <span class="keyword">include</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="West-命令工具"><a href="#West-命令工具" class="headerlink" title="West 命令工具"></a>West 命令工具</h2><p>West 是 Zephyr 的元工具，用于管理多仓库项目和简化构建命令。</p>
+<h3 id="West-基本命令"><a href="#West-基本命令" class="headerlink" title="West 基本命令"></a>West 基本命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化 Zephyr 工作区</span></span><br><span class="line">west init -m https://github.com/zephyrproject-rtos/zephyr --mr v2.9.1 zephyrproject</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新所有项目</span></span><br><span class="line">west update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有项目</span></span><br><span class="line">west list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建应用程序</span></span><br><span class="line">west build -b &lt;board&gt; &lt;app_directory&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 烧录应用程序</span></span><br><span class="line">west flash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行应用程序</span></span><br><span class="line">west debug</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理构建目录</span></span><br><span class="line">west build -t clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="West-构建命令"><a href="#West-构建命令" class="headerlink" title="West 构建命令"></a>West 构建命令</h3><p>West 构建命令的完整语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">west build [-h] [-b BOARD] [-d BUILD_DIR]</span><br><span class="line">           [-t TARGET] [-p] [-c] [--cmake-only]</span><br><span class="line">           [--sysbuild | --no-sysbuild]</span><br><span class="line">           [--pristine | --pristine=always | --pristine=auto | --pristine=never]</span><br><span class="line">           [--context CONTEXT] [--force]</span><br><span class="line">           [source_dir] [-- [cmake_opt [cmake_opt ...]]]</span><br></pre></td></tr></table></figure>
+
+<p>主要选项：</p>
+<ul>
+<li><strong>-b, –board BOARD</strong>：指定目标板子</li>
+<li><strong>-d, –build-dir BUILD_DIR</strong>：指定构建目录</li>
+<li><strong>-t, –target TARGET</strong>：指定构建目标</li>
+<li><strong>-p, –pristine</strong>：清理构建目录</li>
+<li><strong>-c, –cmake</strong>：重新运行 CMake</li>
+<li><strong>–sysbuild</strong>：使用系统构建</li>
+<li>**– [cmake_opt …]**：传递额外的 CMake 选项</li>
+</ul>
+<h3 id="West-配置"><a href="#West-配置" class="headerlink" title="West 配置"></a>West 配置</h3><p>West 配置存储在 <code>.west/config</code> 文件中，可以使用以下命令进行管理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置配置选项</span></span><br><span class="line">west config build.board nrf52840dk_nrf52840</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取配置选项</span></span><br><span class="line">west config build.board</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除配置选项</span></span><br><span class="line">west config --delete build.board</span><br></pre></td></tr></table></figure>
+
+<p>常用配置选项：</p>
+<ul>
+<li><strong>build.board</strong>：默认板子</li>
+<li><strong>build.dir</strong>：默认构建目录</li>
+<li><strong>build.generator</strong>：CMake 生成器（Ninja 或 Make）</li>
+<li><strong>build.pristine</strong>：构建前是否清理</li>
+</ul>
+<h2 id="构建配置选项"><a href="#构建配置选项" class="headerlink" title="构建配置选项"></a>构建配置选项</h2><p>Zephyr 提供了多种方式配置构建过程：</p>
+<h3 id="Kconfig-配置"><a href="#Kconfig-配置" class="headerlink" title="Kconfig 配置"></a>Kconfig 配置</h3><p>Kconfig 用于配置软件选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># prj.conf</span><br><span class="line">CONFIG_GPIO=y</span><br><span class="line">CONFIG_SERIAL=y</span><br><span class="line">CONFIG_UART_INTERRUPT_DRIVEN=y</span><br></pre></td></tr></table></figure>
+
+<p>可以通过以下方式指定 Kconfig 配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用默认的 prj.conf</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定配置文件</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app -- -DCONF_FILE=my_prj.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并多个配置文件</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app -- -DCONF_FILE=<span class="string">&quot;prj.conf;overlay.conf&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="设备树配置"><a href="#设备树配置" class="headerlink" title="设备树配置"></a>设备树配置</h3><p>设备树用于配置硬件：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* app.overlay */</span></span><br><span class="line"><span class="title class_">/</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="title class_">leds</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;gpio-leds&quot;</span><span class="punctuation">;</span></span><br><span class="line"><span class="symbol">        led0:</span> <span class="title class_">led_0</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">gpios</span> <span class="operator">=</span> <span class="params">&lt;<span class="variable">&amp;gpio0</span> <span class="number">13</span> GPIO_ACTIVE_LOW&gt;</span><span class="punctuation">;</span></span><br><span class="line">            <span class="attr">label</span> <span class="operator">=</span> <span class="string">&quot;Green LED 0&quot;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="punctuation">&#125;;</span></span><br><span class="line">    <span class="punctuation">&#125;;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以通过以下方式指定设备树覆盖文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用默认的 app.overlay</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定覆盖文件</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app -- -DDTC_OVERLAY_FILE=my_overlay.dts</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并多个覆盖文件</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app -- -DDTC_OVERLAY_FILE=<span class="string">&quot;app.overlay;extra.overlay&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="CMake-变量"><a href="#CMake-变量" class="headerlink" title="CMake 变量"></a>CMake 变量</h3><p>可以通过 CMake 变量配置构建过程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置构建类型</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app -- -DCMAKE_BUILD_TYPE=Debug</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用覆盖率分析</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app -- -DCMAKE_BUILD_TYPE=Debug -DCONFIG_COVERAGE=y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用编译器优化</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app -- -DEXTRA_CFLAGS=<span class="string">&quot;-O2 -fomit-frame-pointer&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="板级配置"><a href="#板级配置" class="headerlink" title="板级配置"></a>板级配置</h3><p>每个板子可以有特定的配置文件：</p>
+<ul>
+<li><strong>boards&#x2F;<arch>&#x2F;<board>&#x2F;<board>_defconfig</strong>：默认板级 Kconfig 配置</li>
+<li><strong>boards&#x2F;<arch>&#x2F;<board>&#x2F;<board>.dts</strong>：默认板级设备树</li>
+</ul>
+<p>可以创建板级特定的应用程序配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app/</span><br><span class="line">├── boards/</span><br><span class="line">│   ├── nrf52840dk_nrf52840.conf     # 板级特定 Kconfig</span><br><span class="line">│   └── nrf52840dk_nrf52840.overlay  # 板级特定设备树</span><br><span class="line">├── prj.conf                         # 通用 Kconfig</span><br><span class="line">└── app.overlay                      # 通用设备树</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义构建"><a href="#自定义构建" class="headerlink" title="自定义构建"></a>自定义构建</h2><h3 id="自定义构建目标"><a href="#自定义构建目标" class="headerlink" title="自定义构建目标"></a>自定义构建目标</h3><p>可以在应用程序的 CMakeLists.txt 中定义自定义目标：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加自定义目标</span></span><br><span class="line"><span class="keyword">add_custom_target</span>(my_target</span><br><span class="line">    <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E echo <span class="string">&quot;Running custom target&quot;</span></span><br><span class="line">    <span class="keyword">COMMAND</span> <span class="variable">$&#123;PYTHON_EXECUTABLE&#125;</span> <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/scripts/my_script.py</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>使用自定义目标：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">west build -t my_target</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义构建脚本"><a href="#自定义构建脚本" class="headerlink" title="自定义构建脚本"></a>自定义构建脚本</h3><p>可以创建自定义 CMake 模块：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cmake/custom_module.cmake</span></span><br><span class="line"><span class="keyword">function</span>(my_custom_function)</span><br><span class="line">    <span class="comment"># 实现自定义功能</span></span><br><span class="line"><span class="keyword">endfunction</span>()</span><br></pre></td></tr></table></figure>
+
+<p>在应用程序的 CMakeLists.txt 中使用自定义模块：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 包含自定义模块</span></span><br><span class="line"><span class="keyword">list</span>(APPEND CMAKE_MODULE_PATH <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/cmake)</span><br><span class="line"><span class="keyword">include</span>(custom_module)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用自定义函数</span></span><br><span class="line">my_custom_function()</span><br></pre></td></tr></table></figure>
+
+<h3 id="条件构建"><a href="#条件构建" class="headerlink" title="条件构建"></a>条件构建</h3><p>可以使用 CMake 条件语句根据配置选项控制构建：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据 Kconfig 选项控制源文件</span></span><br><span class="line"><span class="keyword">if</span>(CONFIG_FEATURE_X)</span><br><span class="line">    <span class="keyword">target_sources</span>(app PRIVATE src/feature_x.c)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据板子类型控制包含目录</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$&#123;BOARD&#125;</span> <span class="keyword">MATCHES</span> <span class="string">&quot;nrf52.*&quot;</span>)</span><br><span class="line">    <span class="keyword">target_include_directories</span>(app PRIVATE <span class="keyword">include</span>/nrf52)</span><br><span class="line"><span class="keyword">elseif</span>(<span class="variable">$&#123;BOARD&#125;</span> <span class="keyword">MATCHES</span> <span class="string">&quot;stm32.*&quot;</span>)</span><br><span class="line">    <span class="keyword">target_include_directories</span>(app PRIVATE <span class="keyword">include</span>/stm32)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="多应用程序构建"><a href="#多应用程序构建" class="headerlink" title="多应用程序构建"></a>多应用程序构建</h3><p>Zephyr 支持使用 sysbuild 构建多个应用程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用 sysbuild</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 --sysbuild app</span><br></pre></td></tr></table></figure>
+
+<p>sysbuild 配置示例 (sysbuild.cmake)：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(SB_CONFIG_BOOTLOADER_MCUBOOT y)</span><br><span class="line"><span class="keyword">set</span>(SB_CONFIG_MCUBOOT_BUILD_STRATEGY_FROM_SOURCE y)</span><br><span class="line"></span><br><span class="line">add_child_image(</span><br><span class="line">    NAME mcuboot</span><br><span class="line">    SOURCE_DIR <span class="variable">$&#123;ZEPHYR_BASE&#125;</span>/../bootloader/mcuboot/boot/zephyr</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">add_child_image(</span><br><span class="line">    NAME app</span><br><span class="line">    SOURCE_DIR <span class="variable">$&#123;APP_DIR&#125;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="构建缓存和优化"><a href="#构建缓存和优化" class="headerlink" title="构建缓存和优化"></a>构建缓存和优化</h2><h3 id="使用-ccache"><a href="#使用-ccache" class="headerlink" title="使用 ccache"></a>使用 ccache</h3><p>启用 ccache 加速重复构建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 prj.conf 中启用</span></span><br><span class="line">CONFIG_CCACHE=y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或在构建命令中启用</span></span><br><span class="line">west build -b nrf52840dk_nrf52840 app -- -DCCACHE=1</span><br></pre></td></tr></table></figure>
+
+<h3 id="增量构建"><a href="#增量构建" class="headerlink" title="增量构建"></a>增量构建</h3><p>默认情况下，Zephyr 使用增量构建。可以控制构建清理级别：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 完全清理构建目录</span></span><br><span class="line">west build --pristine=always</span><br><span class="line"></span><br><span class="line"><span class="comment"># 智能清理（仅在必要时清理）</span></span><br><span class="line">west build --pristine=auto</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从不清理</span></span><br><span class="line">west build --pristine=never</span><br></pre></td></tr></table></figure>
+
+<h3 id="并行构建"><a href="#并行构建" class="headerlink" title="并行构建"></a>并行构建</h3><p>配置并行构建任务数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 .west/config 中设置</span></span><br><span class="line">west config build.jobs 8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或在环境变量中设置</span></span><br><span class="line"><span class="built_in">export</span> ZEPHYR_JOBS=8</span><br></pre></td></tr></table></figure>
+
+<h2 id="构建输出"><a href="#构建输出" class="headerlink" title="构建输出"></a>构建输出</h2><p>构建过程生成的主要文件：</p>
+<ul>
+<li><strong>zephyr.elf</strong>：ELF 格式的可执行文件</li>
+<li><strong>zephyr.bin</strong>：二进制格式的固件</li>
+<li><strong>zephyr.hex</strong>：Intel HEX 格式的固件</li>
+<li><strong>zephyr.map</strong>：链接映射文件</li>
+<li><strong>zephyr.lst</strong>：反汇编列表</li>
+<li><strong>zephyr.stat</strong>：内存使用统计</li>
+</ul>
+<p>这些文件位于构建目录的 <code>zephyr</code> 子目录中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/zephyr/zephyr.hex</span><br></pre></td></tr></table></figure>
+
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="1-构建错误"><a href="#1-构建错误" class="headerlink" title="1. 构建错误"></a>1. 构建错误</h3><p><strong>问题</strong>：构建过程中出现错误</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>尝试使用 <code>--pristine</code> 选项重新构建</li>
+<li>检查配置文件和源代码错误</li>
+<li>验证工具链和依赖是否正确安装</li>
+</ul>
+<h3 id="2-配置问题"><a href="#2-配置问题" class="headerlink" title="2. 配置问题"></a>2. 配置问题</h3><p><strong>问题</strong>：配置选项不生效</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>检查配置文件路径是否正确</li>
+<li>确认配置选项名称和值是否正确</li>
+<li>使用 <code>west build -t menuconfig</code> 验证配置</li>
+</ul>
+<h3 id="3-设备树问题"><a href="#3-设备树问题" class="headerlink" title="3. 设备树问题"></a>3. 设备树问题</h3><p><strong>问题</strong>：设备树覆盖不生效</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>检查设备树语法是否正确</li>
+<li>确认覆盖文件路径是否正确</li>
+<li>使用 <code>west build -t devicetree</code> 检查处理后的设备树</li>
+</ul>
+<h3 id="4-内存不足"><a href="#4-内存不足" class="headerlink" title="4. 内存不足"></a>4. 内存不足</h3><p><strong>问题</strong>：链接阶段报告内存不足</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>优化代码减少内存使用</li>
+<li>调整链接脚本增加可用内存</li>
+<li>禁用不必要的功能和模块</li>
+</ul>
+<h3 id="5-构建性能问题"><a href="#5-构建性能问题" class="headerlink" title="5. 构建性能问题"></a>5. 构建性能问题</h3><p><strong>问题</strong>：构建过程缓慢</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>启用 ccache</li>
+<li>增加并行任务数</li>
+<li>使用增量构建</li>
+<li>使用更快的存储设备</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Zephyr 的构建系统基于 CMake，提供了强大而灵活的配置和构建能力。通过 West 工具，可以简化构建命令和工作流程。Kconfig 和设备树系统提供了软件和硬件配置的分离，使得应用程序更加可移植。了解这些构建系统组件和工作流程对于高效开发 Zephyr 应用程序至关重要。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io">JoeNero</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/toolchain/build_system/">https://joeforkyou.github.io/2025/03/21/nodic/zephyr/toolchain/build_system/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/%E7%BE%8E%E5%A5%B3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/21/nodic/zephyr/testing/README/" title="README"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">README</div></div><div class="info-2"><div class="info-item-1">Zephyr 系统测试指南1. 测试框架概述1.1 测试架构1234567891011graph TD    A[测试用例] --&gt; B[测试框架]    B --&gt; C[测试运行器]    C --&gt; D[测试报告]        subgraph &quot;测试类型&quot;        E[单元测试]        F[集成测试]        G[系统测试]        H[性能测试]    end  1.2 测试配置12345678910# 测试支持CONFIG_ZTEST=yCONFIG_ZTEST_NEW_API=y# 断言支持CONFIG_ASSERT=y# 覆盖率支持CONFIG_COVERAGE=yCONFIG_COVERAGE_GCOV=y  2. 单元测试2.1 基本测试用例1234567891011121314151617181920212223242526272829#include &lt;zephyr/ztest.h&gt;/* 测试套件 */ZTEST_SUITE(basic_tests, NULL, NULL,...</div></div></div></a><a class="pagination-related" href="/2025/03/21/nodic/zephyr/toolchain/debugging/" title="debugging"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">debugging</div></div><div class="info-2"><div class="info-item-1">Zephyr 调试工具本文档详细介绍了 Zephyr RTOS 的调试工具，包括 GDB 调试、OpenOCD 配置、SEGGER J-Link 使用以及跟踪和分析工具等内容。 GDB 调试GNU 调试器 (GDB) 是 Zephyr 开发中最常用的调试工具，用于检查程序运行状态、设置断点和分析问题。 基本设置要使用 GDB 调试 Zephyr 应用程序，需要以调试模式构建： 12# 构建调试版本west build -b &lt;board&gt; &lt;app_directory&gt; -- -DCMAKE_BUILD_TYPE=Debug  启动调试会话使用 West 启动调试会话： 1234567# 启动调试west debug# 或指定运行器west debug --runner openocdwest debug --runner jlinkwest debug --runner pyocd  常用 GDB 命令在 GDB...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/JoeForkYou"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">wow!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Zephyr-%E6%9E%84%E5%BB%BA%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">Zephyr 构建系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CMake-%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">CMake 构建流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.1.</span> <span class="toc-text">构建系统架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">基本构建流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMake-%E8%84%9A%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.3.</span> <span class="toc-text">CMake 脚本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F-CMakeLists-txt"><span class="toc-number">1.1.4.</span> <span class="toc-text">应用程序 CMakeLists.txt</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#West-%E5%91%BD%E4%BB%A4%E5%B7%A5%E5%85%B7"><span class="toc-number">1.2.</span> <span class="toc-text">West 命令工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#West-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text">West 基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#West-%E6%9E%84%E5%BB%BA%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.2.</span> <span class="toc-text">West 构建命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#West-%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.3.</span> <span class="toc-text">West 配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9"><span class="toc-number">1.3.</span> <span class="toc-text">构建配置选项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kconfig-%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">Kconfig 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E6%A0%91%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.2.</span> <span class="toc-text">设备树配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMake-%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.3.</span> <span class="toc-text">CMake 变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%BF%E7%BA%A7%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">板级配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9E%84%E5%BB%BA"><span class="toc-number">1.4.</span> <span class="toc-text">自定义构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9E%84%E5%BB%BA%E7%9B%AE%E6%A0%87"><span class="toc-number">1.4.1.</span> <span class="toc-text">自定义构建目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9E%84%E5%BB%BA%E8%84%9A%E6%9C%AC"><span class="toc-number">1.4.2.</span> <span class="toc-text">自定义构建脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%9E%84%E5%BB%BA"><span class="toc-number">1.4.3.</span> <span class="toc-text">条件构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%9E%84%E5%BB%BA"><span class="toc-number">1.4.4.</span> <span class="toc-text">多应用程序构建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E7%BC%93%E5%AD%98%E5%92%8C%E4%BC%98%E5%8C%96"><span class="toc-number">1.5.</span> <span class="toc-text">构建缓存和优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-ccache"><span class="toc-number">1.5.1.</span> <span class="toc-text">使用 ccache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E9%87%8F%E6%9E%84%E5%BB%BA"><span class="toc-number">1.5.2.</span> <span class="toc-text">增量构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E6%9E%84%E5%BB%BA"><span class="toc-number">1.5.3.</span> <span class="toc-text">并行构建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E8%BE%93%E5%87%BA"><span class="toc-number">1.6.</span> <span class="toc-text">构建输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.7.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%84%E5%BB%BA%E9%94%99%E8%AF%AF"><span class="toc-number">1.7.1.</span> <span class="toc-text">1. 构建错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98"><span class="toc-number">1.7.2.</span> <span class="toc-text">2. 配置问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%BE%E5%A4%87%E6%A0%91%E9%97%AE%E9%A2%98"><span class="toc-number">1.7.3.</span> <span class="toc-text">3. 设备树问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%86%85%E5%AD%98%E4%B8%8D%E8%B6%B3"><span class="toc-number">1.7.4.</span> <span class="toc-text">4. 内存不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%9E%84%E5%BB%BA%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-number">1.7.5.</span> <span class="toc-text">5. 构建性能问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.8.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/drivers/" title="drivers">drivers</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/filesystem/" title="filesystem">filesystem</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/hardware/" title="hardware">hardware</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/kernel/" title="kernel">kernel</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/networking/" title="networking">networking</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true});</script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>

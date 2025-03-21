@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>添加新板子到 Zephyr | JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="添加新板子到 Zephyr版本信息 版本：V1.0 更新时间：2025年03月21日 00:45  本文档详细介绍了如何将新的开发板添加到 Zephyr RTOS 中，包括移植流程、设备树配置、驱动适配和调试方法。 移植流程概述 准备工作  收集硬件文档 确定 SoC 和 CPU 架构 检查现有的类似板子支持   创建板级支持包 (BSP)  添加新的板子目录 创建基本配置文件   配置设备树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="添加新板子到 Zephyr">
+<meta property="og:url" content="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/boards/porting/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:description" content="添加新板子到 Zephyr版本信息 版本：V1.0 更新时间：2025年03月21日 00:45  本文档详细介绍了如何将新的开发板添加到 Zephyr RTOS 中，包括移植流程、设备树配置、驱动适配和调试方法。 移植流程概述 准备工作  收集硬件文档 确定 SoC 和 CPU 架构 检查现有的类似板子支持   创建板级支持包 (BSP)  添加新的板子目录 创建基本配置文件   配置设备树">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg">
+<meta property="article:published_time" content="2025-03-20T16:45:18.000Z">
+<meta property="article:modified_time" content="2025-03-21T13:20:06.129Z">
+<meta property="article:author" content="JoeNero">
+<meta property="article:tag" content="zephyr">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/boards/porting/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"IZ845G3SQG","apiKey":"381e98702820650923216a5f47f18d71","indexName":"movie","hitsPerPage":6,"languages":{"input_placeholder":"Search for Posts","hits_empty":"No results found for: ${query}","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '添加新板子到 Zephyr',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="JoeNero的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">添加新板子到 Zephyr</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">添加新板子到 Zephyr</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-03-20T16:45:18.000Z" title="Created 2025-03-21 00:45:18">2025-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-03-21T13:20:06.129Z" title="Updated 2025-03-21 21:20:06">2025-03-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/zephyr/">zephyr</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="添加新板子到-Zephyr"><a href="#添加新板子到-Zephyr" class="headerlink" title="添加新板子到 Zephyr"></a>添加新板子到 Zephyr</h1><h2 id="版本信息"><a href="#版本信息" class="headerlink" title="版本信息"></a>版本信息</h2><ul>
+<li>版本：V1.0</li>
+<li>更新时间：2025年03月21日 00:45</li>
+</ul>
+<p>本文档详细介绍了如何将新的开发板添加到 Zephyr RTOS 中，包括移植流程、设备树配置、驱动适配和调试方法。</p>
+<h2 id="移植流程概述"><a href="#移植流程概述" class="headerlink" title="移植流程概述"></a>移植流程概述</h2><ol>
+<li><p><strong>准备工作</strong></p>
+<ul>
+<li>收集硬件文档</li>
+<li>确定 SoC 和 CPU 架构</li>
+<li>检查现有的类似板子支持</li>
+</ul>
+</li>
+<li><p><strong>创建板级支持包 (BSP)</strong></p>
+<ul>
+<li>添加新的板子目录</li>
+<li>创建基本配置文件</li>
+</ul>
+</li>
+<li><p><strong>配置设备树</strong></p>
+<ul>
+<li>定义板子特定的设备树</li>
+<li>配置引脚复用和外设</li>
+</ul>
+</li>
+<li><p><strong>适配驱动程序</strong></p>
+<ul>
+<li>确认所需驱动的可用性</li>
+<li>修改或创建新的驱动程序</li>
+</ul>
+</li>
+<li><p><strong>实现板级初始化</strong></p>
+<ul>
+<li>配置时钟系统</li>
+<li>设置中断控制器</li>
+<li>初始化关键外设</li>
+</ul>
+</li>
+<li><p><strong>配置构建系统</strong></p>
+<ul>
+<li>更新 CMakeLists.txt</li>
+<li>设置 Kconfig 选项</li>
+</ul>
+</li>
+<li><p><strong>测试和调试</strong></p>
+<ul>
+<li>编译基本示例</li>
+<li>使用调试工具验证功能</li>
+</ul>
+</li>
+<li><p><strong>文档和示例</strong></p>
+<ul>
+<li>编写板级文档</li>
+<li>创建板子特定的示例代码</li>
+</ul>
+</li>
+</ol>
+<h2 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h2><h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h3><ul>
+<li><p>收集硬件文档</p>
+<ul>
+<li>处理器数据手册</li>
+<li>开发板原理图</li>
+<li>引脚分配表</li>
+</ul>
+</li>
+<li><p>确定 SoC 和 CPU 架构</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查 Zephyr 支持的架构</span></span><br><span class="line"><span class="built_in">ls</span> zephyr/arch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查 SoC 支持</span></span><br><span class="line"><span class="built_in">ls</span> zephyr/soc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查类似板子</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找类似的板子支持</span></span><br><span class="line">find zephyr/boards -name <span class="string">&quot;*_defconfig&quot;</span> | grep -i &lt;your_soc_family&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-创建板级支持包"><a href="#2-创建板级支持包" class="headerlink" title="2. 创建板级支持包"></a>2. 创建板级支持包</h3><ul>
+<li><p>添加新的板子目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p zephyr/boards/&lt;<span class="built_in">arch</span>&gt;/&lt;your_board_name&gt;</span><br><span class="line"><span class="built_in">cd</span> zephyr/boards/&lt;<span class="built_in">arch</span>&gt;/&lt;your_board_name&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建基本配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> &lt;your_board_name&gt;.dts</span><br><span class="line"><span class="built_in">touch</span> &lt;your_board_name&gt;_defconfig</span><br><span class="line"><span class="built_in">touch</span> board.cmake</span><br><span class="line"><span class="built_in">touch</span> Kconfig.board</span><br><span class="line"><span class="built_in">touch</span> Kconfig.defconfig</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-配置设备树"><a href="#3-配置设备树" class="headerlink" title="3. 配置设备树"></a>3. 配置设备树</h3><ul>
+<li>编辑 <code>&lt;your_board_name&gt;.dts</code><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">/dts-v1/</span><span class="punctuation">;</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;your_soc.dtsi&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="title class_">/</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">model</span> <span class="operator">=</span> <span class="string">&quot;Your Board Name&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;vendor,your-board-name&quot;</span><span class="punctuation">;</span></span><br><span class="line"></span><br><span class="line">    <span class="title class_">chosen</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">zephyr,console</span> <span class="operator">=</span> <span class="variable">&amp;uart0</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">zephyr,shell-uart</span> <span class="operator">=</span> <span class="variable">&amp;uart0</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">zephyr,sram</span> <span class="operator">=</span> <span class="variable">&amp;sram0</span><span class="punctuation">;</span></span><br><span class="line">        <span class="attr">zephyr,flash</span> <span class="operator">=</span> <span class="variable">&amp;flash0</span><span class="punctuation">;</span></span><br><span class="line">    <span class="punctuation">&#125;;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 定义 LED */</span></span><br><span class="line">    <span class="title class_">leds</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;gpio-leds&quot;</span><span class="punctuation">;</span></span><br><span class="line"><span class="symbol">        led0:</span> <span class="title class_">led_0</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">gpios</span> <span class="operator">=</span> <span class="params">&lt;<span class="variable">&amp;gpio0</span> <span class="number">13</span> GPIO_ACTIVE_LOW&gt;</span><span class="punctuation">;</span></span><br><span class="line">            <span class="attr">label</span> <span class="operator">=</span> <span class="string">&quot;Green LED 0&quot;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="punctuation">&#125;;</span></span><br><span class="line">    <span class="punctuation">&#125;;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 定义按钮 */</span></span><br><span class="line">    <span class="title class_">buttons</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;gpio-keys&quot;</span><span class="punctuation">;</span></span><br><span class="line"><span class="symbol">        button0:</span> <span class="title class_">button_0</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">gpios</span> <span class="operator">=</span> <span class="params">&lt;<span class="variable">&amp;gpio0</span> <span class="number">11</span> GPIO_ACTIVE_LOW&gt;</span><span class="punctuation">;</span></span><br><span class="line">            <span class="attr">label</span> <span class="operator">=</span> <span class="string">&quot;Push button switch 0&quot;</span><span class="punctuation">;</span></span><br><span class="line">        <span class="punctuation">&#125;;</span></span><br><span class="line">    <span class="punctuation">&#125;;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="variable">&amp;uart0</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">status</span> <span class="operator">=</span> <span class="string">&quot;okay&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">current-speed</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">115200</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">tx-pin</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">6</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">rx-pin</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">8</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="variable">&amp;i2c0</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">status</span> <span class="operator">=</span> <span class="string">&quot;okay&quot;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">sda-pin</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">26</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">    <span class="attr">scl-pin</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">27</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 添加其他外设配置 */</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-适配驱动程序"><a href="#4-适配驱动程序" class="headerlink" title="4. 适配驱动程序"></a>4. 适配驱动程序</h3><ul>
+<li><p>检查驱动可用性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> zephyr/drivers</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改驱动程序（如果需要）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 示例：修改 UART 驱动以支持新的硬件特性</span></span><br><span class="line"><span class="comment">// 文件：zephyr/drivers/serial/uart_your_soc.c</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">uart_your_soc_init</span><span class="params">(<span class="type">const</span> <span class="keyword">struct</span> device *dev)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 实现初始化逻辑</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">uart_driver_api</span> <span class="title">uart_your_soc_driver_api</span> =</span> &#123;</span><br><span class="line">    .poll_in = uart_your_soc_poll_in,</span><br><span class="line">    .poll_out = uart_your_soc_poll_out,</span><br><span class="line">    .err_check = uart_your_soc_err_check,</span><br><span class="line">    <span class="comment">// 添加其他必要的函数</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义设备</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> UART_YOUR_SOC_INIT(n)                                            \</span></span><br><span class="line"><span class="meta">    static struct uart_your_soc_data uart_your_soc_data_##n = &#123;          \</span></span><br><span class="line"><span class="meta">        <span class="comment">// 初始化数据                                                     \</span></span></span><br><span class="line"><span class="comment"><span class="meta">    &#125;;                                                                   \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                                                                         \</span></span></span><br><span class="line"><span class="comment"><span class="meta">    static const struct uart_your_soc_config uart_your_soc_config_##n = &#123;\</span></span></span><br><span class="line"><span class="comment"><span class="meta">        // 配置数据                                                       \</span></span></span><br><span class="line"><span class="comment"><span class="meta">    &#125;;                                                                   \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                                                                         \</span></span></span><br><span class="line"><span class="comment"><span class="meta">    DEVICE_DT_INST_DEFINE(n,                                             \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                          uart_your_soc_init,                            \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                          NULL,                                          \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                          &amp;uart_your_soc_data_##n,                       \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                          &amp;uart_your_soc_config_##n,                     \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                          PRE_KERNEL_1,                                  \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                          CONFIG_SERIAL_INIT_PRIORITY,                   \</span></span></span><br><span class="line"><span class="comment"><span class="meta">                          &amp;uart_your_soc_driver_api);</span></span></span><br><span class="line"></span><br><span class="line">DT_INST_FOREACH_STATUS_OKAY(UART_YOUR_SOC_INIT)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="5-实现板级初始化"><a href="#5-实现板级初始化" class="headerlink" title="5. 实现板级初始化"></a>5. 实现板级初始化</h3><ul>
+<li>创建 <code>board.c</code> 文件<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;zephyr/init.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;zephyr/drivers/gpio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">board_your_board_init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 配置时钟</span></span><br><span class="line">    <span class="comment">// 设置中断控制器</span></span><br><span class="line">    <span class="comment">// 初始化关键外设</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SYS_INIT(board_your_board_init, PRE_KERNEL_1, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="6-配置构建系统"><a href="#6-配置构建系统" class="headerlink" title="6. 配置构建系统"></a>6. 配置构建系统</h3><ul>
+<li><p>编辑 <code>CMakeLists.txt</code></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加源文件</span></span><br><span class="line">zephyr_library_sources(board.c)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 包含头文件目录</span></span><br><span class="line">zephyr_library_include_directories(<span class="variable">$&#123;ZEPHYR_BASE&#125;</span>/drivers)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 <code>Kconfig.board</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config BOARD_YOUR_BOARD_NAME</span><br><span class="line">    bool &quot;Your Board Name&quot;</span><br><span class="line">    depends on SOC_SERIES_YOUR_SOC_SERIES</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 <code>Kconfig.defconfig</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">if BOARD_YOUR_BOARD_NAME</span><br><span class="line"></span><br><span class="line">config BOARD</span><br><span class="line">    default &quot;your_board_name&quot;</span><br><span class="line"></span><br><span class="line">if GPIO</span><br><span class="line"></span><br><span class="line">config GPIO_AS_PINRESET</span><br><span class="line">    default y</span><br><span class="line"></span><br><span class="line">endif # GPIO</span><br><span class="line"></span><br><span class="line">endif # BOARD_YOUR_BOARD_NAME</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="7-测试和调试"><a href="#7-测试和调试" class="headerlink" title="7. 测试和调试"></a>7. 测试和调试</h3><ul>
+<li><p>编译基本示例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">west build -b your_board_name samples/basic/blinky</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用调试工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">west debug</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="8-文档和示例"><a href="#8-文档和示例" class="headerlink" title="8. 文档和示例"></a>8. 文档和示例</h3><ul>
+<li>创建 <code>doc/board.rst</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">.. _your_board_name:</span><br><span class="line"></span><br><span class="line">Your Board Name</span><br><span class="line">###############</span><br><span class="line"></span><br><span class="line">Overview</span><br><span class="line">********</span><br><span class="line"></span><br><span class="line">The Your Board Name is a development board based on the YOUR_SOC.</span><br><span class="line"></span><br><span class="line">Hardware</span><br><span class="line">********</span><br><span class="line"></span><br><span class="line">- YOUR_SOC ARM Cortex-M4 processor at 64 MHz</span><br><span class="line">- 512 KiB flash memory</span><br><span class="line">- 64 KiB RAM</span><br><span class="line">- GPIO</span><br><span class="line">- UART</span><br><span class="line">- I2C</span><br><span class="line">- SPI</span><br><span class="line"></span><br><span class="line">Supported Features</span><br><span class="line">==================</span><br><span class="line"></span><br><span class="line">The your_board_name board configuration supports the following hardware features:</span><br><span class="line"></span><br><span class="line">+-----------+------------+-------------------------------------+</span><br><span class="line">| Interface | Controller | Driver/Component                    |</span><br><span class="line">+===========+============+=====================================+</span><br><span class="line">| NVIC      | on-chip    | nested vector interrupt controller  |</span><br><span class="line">+-----------+------------+-------------------------------------+</span><br><span class="line">| UART      | on-chip    | serial port-polling;                |</span><br><span class="line">|           |            | serial port-interrupt               |</span><br><span class="line">+-----------+------------+-------------------------------------+</span><br><span class="line">| GPIO      | on-chip    | gpio                                |</span><br><span class="line">+-----------+------------+-------------------------------------+</span><br><span class="line">| I2C       | on-chip    | i2c                                 |</span><br><span class="line">+-----------+------------+-------------------------------------+</span><br><span class="line">| SPI       | on-chip    | spi                                 |</span><br><span class="line">+-----------+------------+-------------------------------------+</span><br><span class="line"></span><br><span class="line">Connections and IOs</span><br><span class="line">===================</span><br><span class="line"></span><br><span class="line">LED</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">* LED0 (green) = P0.13</span><br><span class="line"></span><br><span class="line">Push buttons</span><br><span class="line">------------</span><br><span class="line"></span><br><span class="line">* BUTTON0 = P0.11</span><br><span class="line"></span><br><span class="line">Programming and Debugging</span><br><span class="line">*************************</span><br><span class="line"></span><br><span class="line">Flashing</span><br><span class="line">========</span><br><span class="line"></span><br><span class="line">Here is an example for the :ref:`hello_world` application.</span><br><span class="line"></span><br><span class="line">.. zephyr-app-commands::</span><br><span class="line">   :zephyr-app: samples/hello_world</span><br><span class="line">   :board: your_board_name</span><br><span class="line">   :goals: flash</span><br><span class="line"></span><br><span class="line">Debugging</span><br><span class="line">=========</span><br><span class="line"></span><br><span class="line">Refer to the :ref:`cmake_debugging` guide for information about debugging Zephyr applications.</span><br><span class="line"></span><br><span class="line">References</span><br><span class="line">**********</span><br><span class="line"></span><br><span class="line">.. target-notes::</span><br><span class="line"></span><br><span class="line">.. _Your Board Name website: https://www.example.com/your_board</span><br><span class="line">.. _YOUR_SOC Datasheet: https://www.example.com/your_soc_datasheet.pdf</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="调试方法"><a href="#调试方法" class="headerlink" title="调试方法"></a>调试方法</h2><ol>
+<li><p><strong>使用 OpenOCD</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建 OpenOCD 配置文件</span></span><br><span class="line"><span class="built_in">touch</span> your_board.cfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑配置文件</span></span><br><span class="line"><span class="built_in">source</span> [find interface/jlink.cfg]</span><br><span class="line">transport <span class="keyword">select</span> swd</span><br><span class="line"><span class="built_in">source</span> [find target/your_soc.cfg]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 OpenOCD</span></span><br><span class="line">openocd -f your_board.cfg</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用 GDB</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动 GDB</span></span><br><span class="line">arm-zephyr-eabi-gdb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 GDB 中连接到目标</span></span><br><span class="line">(gdb) target remote localhost:3333</span><br><span class="line">(gdb) monitor reset halt</span><br><span class="line">(gdb) load</span><br><span class="line">(gdb) <span class="built_in">continue</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用 Segger J-Link</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动 J-Link GDB 服务器</span></span><br><span class="line">JLinkGDBServer -device YOUR_SOC -<span class="keyword">if</span> SWD -speed 4000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在另一个终端中启动 GDB</span></span><br><span class="line">arm-zephyr-eabi-gdb</span><br><span class="line">(gdb) target remote localhost:2331</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用 pyOCD</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 pyOCD</span></span><br><span class="line">pip install pyocd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 pyOCD GDB 服务器</span></span><br><span class="line">pyocd gdbserver -t YOUR_SOC</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 GDB 连接</span></span><br><span class="line">arm-zephyr-eabi-gdb</span><br><span class="line">(gdb) target remote localhost:3333</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li><p><strong>复用现有代码</strong></p>
+<ul>
+<li>尽可能使用现有的 SoC 和驱动程序代码</li>
+<li>只添加必要的板级特定代码</li>
+</ul>
+</li>
+<li><p><strong>遵循命名约定</strong></p>
+<ul>
+<li>使用一致的命名方式，如 <code>&lt;vendor&gt;_&lt;board&gt;</code></li>
+<li>在设备树中使用描述性的标签</li>
+</ul>
+</li>
+<li><p><strong>文档化</strong></p>
+<ul>
+<li>详细记录硬件特性和支持的功能</li>
+<li>提供清晰的配置和使用说明</li>
+</ul>
+</li>
+<li><p><strong>测试覆盖</strong></p>
+<ul>
+<li>为所有支持的功能编写测试用例</li>
+<li>使用持续集成确保兼容性</li>
+</ul>
+</li>
+<li><p><strong>保持更新</strong></p>
+<ul>
+<li>跟踪上游 Zephyr 的变化</li>
+<li>定期更新板级支持包</li>
+</ul>
+</li>
+</ol>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li><p><strong>编译错误</strong></p>
+<ul>
+<li>检查 Kconfig 和 CMake 配置</li>
+<li>验证所有必要的驱动程序都已启用</li>
+</ul>
+</li>
+<li><p><strong>设备树错误</strong></p>
+<ul>
+<li>确保设备树语法正确</li>
+<li>验证所有必要的节点都已定义</li>
+</ul>
+</li>
+<li><p><strong>驱动程序不工作</strong></p>
+<ul>
+<li>检查设备树配置</li>
+<li>验证驱动程序初始化顺序</li>
+</ul>
+</li>
+<li><p><strong>调试连接失败</strong></p>
+<ul>
+<li>检查硬件连接</li>
+<li>验证调试器配置</li>
+</ul>
+</li>
+<li><p><strong>性能问题</strong></p>
+<ul>
+<li>检查时钟配置</li>
+<li>优化中断和 DMA 设置</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>将新的开发板添加到 Zephyr RTOS 需要详细了解硬件规格、熟悉 Zephyr 的架构和开发流程。通过遵循本文档中的步骤和最佳实践，您可以成功地将新的硬件平台集成到 Zephyr 生态系统中。记住，良好的文档和全面的测试对于确保您的贡献被社区接受和长期维护至关重要。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io">JoeNero</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/boards/porting/">https://joeforkyou.github.io/2025/03/21/nodic/zephyr/boards/porting/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/zephyr/">zephyr</a></div><div class="post-share"><div class="social-share" data-image="/img/%E7%BE%8E%E5%A5%B3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/21/nodic/zephyr/boards/supported/" title="Zephyr 支持的开发板"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Zephyr 支持的开发板</div></div><div class="info-2"><div class="info-item-1">Zephyr 支持的开发板版本信息 版本：V1.0 更新时间：2025年03月21日 01:00  本文档详细介绍了 Zephyr RTOS 支持的主要开发板、它们的硬件特性对比以及开发板选择指南。 主要开发板列表ARM Cortex-M 系列Nordic Semiconductor nRF52840 DK (nrf52840dk_nrf52840)  处理器: ARM Cortex-M4F @ 64 MHz 闪存: 1 MB RAM: 256 KB 特性: BLE 5.0, NFC, USB, 多种无线协议   nRF52 DK (nrf52dk_nrf52832)  处理器: ARM Cortex-M4F @ 64 MHz 闪存: 512 KB RAM: 64 KB 特性: BLE 5.0, NFC   nRF5340 DK (nrf5340dk_nrf5340)  处理器: ARM Cortex-M33 (应用核 + 网络核) 闪存: 1 MB (应用核) + 256 KB (网络核) RAM: 512 KB (应用核) + 64 KB (网络核) 特性: BLE...</div></div></div></a><a class="pagination-related" href="/2025/03/21/nodic/zephyr/boards/hal/" title="Zephyr 硬件抽象层"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Zephyr 硬件抽象层</div></div><div class="info-2"><div class="info-item-1">Zephyr 硬件抽象层版本信息 版本：V1.0 更新时间：2025年03月21日 00:30  本文档详细介绍了 Zephyr RTOS 的硬件抽象层 (HAL) 架构、驱动框架、中断管理和时钟系统等内容。 HAL 架构Zephyr 的硬件抽象层采用分层设计，从底层硬件到应用程序分为以下几层： 1. 架构层 (Architecture Layer)架构层提供了与 CPU 架构相关的抽象，如上下文切换、中断处理、内存管理单元等。 123456789101112131415161718192021// 架构层代码示例 (arch/arm/core/aarch32/cpu_idle.S)_ASM_FILE_PROLOGUEGTEXT(arch_cpu_idle)GTEXT(arch_cpu_atomic_idle)SECTION_FUNC(TEXT, arch_cpu_idle)    wfi    bx lrSECTION_FUNC(TEXT, arch_cpu_atomic_idle)    // 禁用中断    cpsid i    // 等待中断    wfi    //...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/20/zephyer/zephyer1/" title="【Zephyr】【一】Zephyr RTOS 示例代码集"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-20</div><div class="info-item-2">【Zephyr】【一】Zephyr RTOS 示例代码集</div></div><div class="info-2"><div class="info-item-1">Zephyr RTOS 示例代码集1. 基础示例1.0 基础配置每个示例都需要一个 prj.conf 文件来配置项目。以下是各个示例所需的配置： 基础示例 prj.conf1234567891011# 控制台输出CONFIG_PRINTK=yCONFIG_SERIAL=yCONFIG_UART_CONSOLE=y# 日志系统CONFIG_LOG=yCONFIG_LOG_DEFAULT_LEVEL=3# 内核配置CONFIG_KERNEL_BIN_NAME=&quot;app&quot;  线程示例 prj.conf123456789# 基础配置CONFIG_PRINTK=yCONFIG_SERIAL=yCONFIG_UART_CONSOLE=y# 线程配置CONFIG_THREAD_NAME=yCONFIG_THREAD_MONITOR=yCONFIG_THREAD_STACK_INFO=y  1.1 Hello...</div></div></div></a><a class="pagination-related" href="/2025/03/20/zephyer/zephyr2/" title="【Zephyr】【二】Zephyr RTOS 系统架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-20</div><div class="info-item-2">【Zephyr】【二】Zephyr RTOS 系统架构</div></div><div class="info-2"><div class="info-item-1"> mermaid.initialize({startOnLoad:true});  Zephyr RTOS 系统架构整体架构 graph TB     subgraph "应用层"         App1[应用1]         App2[应用2]         App3[应用3]     end     subgraph "系统服务层"         FS[文件系统]         Net[网络协议栈]         Shell[命令行界面]     end     subgraph "内核层"         Sched[调度器]         Mem[内存管理]         IPC[进程间通信]         Time[时间管理]     end     subgraph "硬件抽象层"         GPIO[GPIO驱动]         UART[串口驱动]         SPI[SPI驱动]         I2C[I2C驱动]     end     App1 & App2 & App3 --> FS & Net & Shell    ...</div></div></div></a><a class="pagination-related" href="/2023/12/21/nodic/zephyr/architecture/devicetree/" title="Zephyr 设备树"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-21</div><div class="info-item-2">Zephyr 设备树</div></div><div class="info-2"><div class="info-item-1">Zephyr 设备树版本信息 版本：V1.0 更新时间：2025年03月20日 23:15  设备树（Device Tree）是 Zephyr RTOS 用于描述硬件配置的机制。它提供了一种统一的方式来描述系统硬件，使得硬件配置与软件代码分离，提高了代码的可移植性和可维护性。 设备树概述什么是设备树设备树是一种描述硬件的数据结构，它以树形结构表示硬件设备及其属性。在 Zephyr 中，设备树用于：  描述硬件配置 生成设备驱动的初始化代码 配置中断和引脚复用 定义内存映射  设备树的优势 硬件描述与软件分离：便于硬件配置的修改和维护 跨平台兼容性：同一套代码可以适用于不同的硬件平台 动态配置：支持运行时修改设备配置 标准化：采用行业标准的描述方式，提高可读性和互操作性  设备树语法基本结构设备树文件（.dts）的基本结构如下： 123456789101112131415161718/dts-v1/;/ &#123;    model = &quot;Example Board&quot;;    compatible = &quot;example,board&quot;;  ...</div></div></div></a><a class="pagination-related" href="/2025/03/20/nodic/zephyr/architecture/README/" title="Zephyr RTOS 系统架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-20</div><div class="info-item-2">Zephyr RTOS 系统架构</div></div><div class="info-2"><div class="info-item-1">Zephyr RTOS 系统架构版本信息 版本：V1.0 更新时间：2025年03月20日 22:30  Zephyr RTOS 是一个模块化、可扩展的实时操作系统，设计用于资源受限的嵌入式系统。本章节将介绍 Zephyr 的整体系统架构。 目录 内核架构 硬件支持 设备树 驱动模型  架构概览Zephyr 的系统架构主要包括以下几个部分：  微内核  提供基本的线程管理、同步原语和内存管理 支持抢占式多任务和协作式多任务 实现了实时调度器   硬件抽象层 (HAL)  提供统一的硬件访问接口 支持多种 CPU 架构和开发板   设备驱动框架  统一的驱动模型 支持动态加载和卸载驱动   网络协议栈  支持多种网络协议，如 TCP&#x2F;IP、Bluetooth、IEEE 802.15.4   文件系统  支持多种文件系统，如 FAT、LittleFS   电源管理  提供低功耗模式和动态频率调节   安全子系统  提供加密、认证和安全启动等功能    模块化设计Zephyr 采用高度模块化的设计，主要体现在：  内核模块化  核心功能和可选功能分离 通过 Kconfig...</div></div></div></a><a class="pagination-related" href="/2023/12/21/nodic/zephyr/README/" title="Zephyr RTOS 学习指南"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-21</div><div class="info-item-2">Zephyr RTOS 学习指南</div></div><div class="info-2"><div class="info-item-1">Zephyr RTOS 学习指南版本信息 版本：V1.0 更新时间：2025年03月20日 22:09  目录结构 快速入门  环境搭建 Hello World 示例 基本概念   系统架构  内核架构 硬件支持 设备树 驱动模型   核心模块  内核模块 线程管理 内存管理 中断处理 定时器   驱动系统 GPIO UART SPI I2C   网络协议栈 文件系统 电源管理   开发指南  应用开发流程 驱动开发指南 调试技巧 测试框架 贡献指南   示例代码  基础示例 网络示例 传感器示例 蓝牙示例   硬件支持  支持的开发板 添加新板子 硬件抽象层   工具链  West 工具 配置系统 构建系统 调试工具   常见问题  编译问题 运行问题 开发问题    文档说明本文档旨在帮助开发者快速上手 Zephyr RTOS，涵盖了从入门到进阶的完整学习路径。基于 Zephyr v2.9.1...</div></div></div></a><a class="pagination-related" href="/2025/03/20/nodic/zephyr/architecture/hardware/" title="Zephyr 硬件支持"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-20</div><div class="info-item-2">Zephyr 硬件支持</div></div><div class="info-2"><div class="info-item-1">Zephyr 硬件支持版本信息 版本：V1.0 更新时间：2025年03月20日 23:00  Zephyr RTOS 提供了广泛的硬件平台支持，包括多种 CPU 架构和开发板。本文档将详细介绍 Zephyr 的硬件支持架构。 支持的硬件架构ARM 架构 Cortex-M 系列  Cortex-M0&#x2F;M0+ Cortex-M3 Cortex-M4 Cortex-M7 Cortex-M23 Cortex-M33   Cortex-R 系列  Cortex-R5 Cortex-R7   Cortex-A 系列  Cortex-A53 Cortex-A72    x86 架构 Intel IA-32  Intel Quark Intel Atom   x86_64  支持现代 x86_64 处理器    RISC-V RV32  RV32I RV32IM RV32IMC RV32IMAC   RV64  RV64I RV64IM RV64IMAC    其他架构 Xtensa  ESP32 ESP32-S2 ESP32-S3   ARC  EM 系列 HS...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/JoeForkYou"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">wow!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%B0%E6%9D%BF%E5%AD%90%E5%88%B0-Zephyr"><span class="toc-number">1.</span> <span class="toc-text">添加新板子到 Zephyr</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">版本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E6%A4%8D%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="toc-number">1.2.</span> <span class="toc-text">移植流程概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.3.</span> <span class="toc-text">详细步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E6%9D%BF%E7%BA%A7%E6%94%AF%E6%8C%81%E5%8C%85"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. 创建板级支持包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. 配置设备树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%80%82%E9%85%8D%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.3.4.</span> <span class="toc-text">4. 适配驱动程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AE%9E%E7%8E%B0%E6%9D%BF%E7%BA%A7%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.3.5.</span> <span class="toc-text">5. 实现板级初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.3.6.</span> <span class="toc-text">6. 配置构建系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E6%B5%8B%E8%AF%95%E5%92%8C%E8%B0%83%E8%AF%95"><span class="toc-number">1.3.7.</span> <span class="toc-text">7. 测试和调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E6%96%87%E6%A1%A3%E5%92%8C%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.3.8.</span> <span class="toc-text">8. 文档和示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">调试方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">1.5.</span> <span class="toc-text">最佳实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.6.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/drivers/" title="drivers">drivers</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/filesystem/" title="filesystem">filesystem</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/hardware/" title="hardware">hardware</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/kernel/" title="kernel">kernel</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/networking/" title="networking">networking</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true});</script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>

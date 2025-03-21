@@ -1,0 +1,378 @@
+<!DOCTYPE html><html lang="cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>README | JoeNero的博客</title><meta name="author" content="JoeNero"><meta name="copyright" content="JoeNero"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Zephyr 工具链本章节详细介绍了 Zephyr RTOS 开发所需的工具链，包括安装配置、构建系统、调试工具以及开发环境设置等内容。 目录 工具链安装  支持的操作系统 SDK 安装步骤 交叉编译器配置 常见问题解决   构建系统  CMake 构建流程 West 命令工具 构建配置选项 自定义构建   调试工具  GDB 调试 OpenOCD 配置 SEGGER J-Link 跟踪和分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="README">
+<meta property="og:url" content="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/toolchain/README/index.html">
+<meta property="og:site_name" content="JoeNero的博客">
+<meta property="og:description" content="Zephyr 工具链本章节详细介绍了 Zephyr RTOS 开发所需的工具链，包括安装配置、构建系统、调试工具以及开发环境设置等内容。 目录 工具链安装  支持的操作系统 SDK 安装步骤 交叉编译器配置 常见问题解决   构建系统  CMake 构建流程 West 命令工具 构建配置选项 自定义构建   调试工具  GDB 调试 OpenOCD 配置 SEGGER J-Link 跟踪和分析">
+<meta property="og:locale">
+<meta property="og:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg">
+<meta property="article:published_time" content="2025-03-21T12:49:56.000Z">
+<meta property="article:modified_time" content="2025-03-21T13:20:53.523Z">
+<meta property="article:author" content="JoeNero">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joeforkyou.github.io/img/%E7%BE%8E%E5%A5%B3.jpg"><link rel="shortcut icon" href="/img/1.jpg"><link rel="canonical" href="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/toolchain/README/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"IZ845G3SQG","apiKey":"381e98702820650923216a5f47f18d71","indexName":"movie","hitsPerPage":6,"languages":{"input_placeholder":"Search for Posts","hits_empty":"No results found for: ${query}","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'README',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="JoeNero的博客" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">JoeNero的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">README</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-image"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">README</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-03-21T13:20:53.523Z" title="Updated 2025-03-21 21:20:53">2025-03-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Zephyr-工具链"><a href="#Zephyr-工具链" class="headerlink" title="Zephyr 工具链"></a>Zephyr 工具链</h1><p>本章节详细介绍了 Zephyr RTOS 开发所需的工具链，包括安装配置、构建系统、调试工具以及开发环境设置等内容。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><p><a href="./installation.md">工具链安装</a></p>
+<ul>
+<li>支持的操作系统</li>
+<li>SDK 安装步骤</li>
+<li>交叉编译器配置</li>
+<li>常见问题解决</li>
+</ul>
+</li>
+<li><p><a href="./build_system.md">构建系统</a></p>
+<ul>
+<li>CMake 构建流程</li>
+<li>West 命令工具</li>
+<li>构建配置选项</li>
+<li>自定义构建</li>
+</ul>
+</li>
+<li><p><a href="./debugging.md">调试工具</a></p>
+<ul>
+<li>GDB 调试</li>
+<li>OpenOCD 配置</li>
+<li>SEGGER J-Link</li>
+<li>跟踪和分析</li>
+</ul>
+</li>
+<li><p><a href="./ide.md">开发环境</a></p>
+<ul>
+<li>Visual Studio Code 配置</li>
+<li>Eclipse 集成</li>
+<li>SEGGER Embedded Studio</li>
+<li>命令行工具</li>
+</ul>
+</li>
+</ol>
+<h2 id="工具链概述"><a href="#工具链概述" class="headerlink" title="工具链概述"></a>工具链概述</h2><p>Zephyr RTOS 开发需要以下核心工具：</p>
+<ol>
+<li><strong>Zephyr SDK</strong>：包含交叉编译器、调试器和工具</li>
+<li><strong>West</strong>：Zephyr 的元工具，用于管理多仓库项目</li>
+<li><strong>CMake</strong>：构建系统</li>
+<li><strong>Ninja</strong>：构建工具</li>
+<li><strong>Python</strong>：脚本和工具依赖</li>
+</ol>
+<h2 id="支持的操作系统"><a href="#支持的操作系统" class="headerlink" title="支持的操作系统"></a>支持的操作系统</h2><p>Zephyr 开发工具链支持以下操作系统：</p>
+<ul>
+<li><strong>Linux</strong>：Ubuntu, Fedora, Clear Linux OS</li>
+<li><strong>macOS</strong>：10.15 Catalina 及更高版本</li>
+<li><strong>Windows</strong>：Windows 10 及更高版本</li>
+</ul>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="Linux-环境设置"><a href="#Linux-环境设置" class="headerlink" title="Linux 环境设置"></a>Linux 环境设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="built_in">sudo</span> apt install --no-install-recommends git cmake ninja-build gperf \</span><br><span class="line">  ccache dfu-util device-tree-compiler wget \</span><br><span class="line">  python3-dev python3-pip python3-setuptools python3-tk python3-wheel xz-utils file \</span><br><span class="line">  make gcc gcc-multilib g++-multilib libsdl2-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 West</span></span><br><span class="line">pip3 install --user -U west</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=~/.local/bin:&quot;$PATH&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取 Zephyr 源码</span></span><br><span class="line">west init ~/zephyrproject</span><br><span class="line"><span class="built_in">cd</span> ~/zephyrproject</span><br><span class="line">west update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Python 依赖</span></span><br><span class="line">pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Zephyr SDK</span></span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.1/zephyr-sdk-0.16.1_linux-x86_64.tar.gz</span><br><span class="line">tar xvf zephyr-sdk-0.16.1_linux-x86_64.tar.gz</span><br><span class="line"><span class="built_in">cd</span> zephyr-sdk-0.16.1</span><br><span class="line">./setup.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-环境设置"><a href="#Windows-环境设置" class="headerlink" title="Windows 环境设置"></a>Windows 环境设置</h3><ol>
+<li>安装 Git</li>
+<li>安装 Python 3</li>
+<li>安装 CMake</li>
+<li>安装 West: <code>pip install west</code></li>
+<li>获取 Zephyr 源码: <code>west init zephyrproject</code></li>
+<li>安装 Zephyr SDK (Windows 版本)</li>
+</ol>
+<h3 id="macOS-环境设置"><a href="#macOS-环境设置" class="headerlink" title="macOS 环境设置"></a>macOS 环境设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Homebrew (如果尚未安装)</span></span><br><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">brew install cmake ninja gperf python3 ccache qemu dtc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 West</span></span><br><span class="line">pip3 install west</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取 Zephyr 源码</span></span><br><span class="line">west init ~/zephyrproject</span><br><span class="line"><span class="built_in">cd</span> ~/zephyrproject</span><br><span class="line">west update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Python 依赖</span></span><br><span class="line">pip3 install -r ~/zephyrproject/zephyr/scripts/requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 ARM 工具链</span></span><br><span class="line">brew install gcc-arm-embedded</span><br></pre></td></tr></table></figure>
+
+<h2 id="工具链组件"><a href="#工具链组件" class="headerlink" title="工具链组件"></a>工具链组件</h2><h3 id="1-交叉编译器"><a href="#1-交叉编译器" class="headerlink" title="1. 交叉编译器"></a>1. 交叉编译器</h3><p>Zephyr SDK 包含多种架构的交叉编译器：</p>
+<ul>
+<li><strong>arm-zephyr-eabi</strong>: ARM Cortex-M&#x2F;R</li>
+<li><strong>aarch64-zephyr-elf</strong>: ARM Cortex-A</li>
+<li><strong>riscv64-zephyr-elf</strong>: RISC-V</li>
+<li><strong>arc-zephyr-elf</strong>: ARC</li>
+<li><strong>x86_64-zephyr-elf</strong>: x86</li>
+<li><strong>xtensa-espressif_esp32_zephyr-elf</strong>: ESP32</li>
+</ul>
+<h3 id="2-调试工具"><a href="#2-调试工具" class="headerlink" title="2. 调试工具"></a>2. 调试工具</h3><ul>
+<li><strong>GDB</strong>: GNU 调试器，支持各种架构</li>
+<li><strong>OpenOCD</strong>: 开源调试器，支持多种调试适配器</li>
+<li><strong>SEGGER J-Link</strong>: 商业调试解决方案</li>
+<li><strong>pyOCD</strong>: Python 调试工具</li>
+</ul>
+<h3 id="3-构建工具"><a href="#3-构建工具" class="headerlink" title="3. 构建工具"></a>3. 构建工具</h3><ul>
+<li><strong>CMake</strong>: 跨平台构建系统</li>
+<li><strong>Ninja</strong>: 高性能构建工具</li>
+<li><strong>West</strong>: Zephyr 元工具</li>
+</ul>
+<h3 id="4-其他工具"><a href="#4-其他工具" class="headerlink" title="4. 其他工具"></a>4. 其他工具</h3><ul>
+<li><strong>Device Tree Compiler (DTC)</strong>: 设备树编译器</li>
+<li><strong>Kconfig</strong>: 配置系统</li>
+<li><strong>QEMU</strong>: 硬件模拟器</li>
+<li><strong>Uniflash</strong>: TI 设备烧录工具</li>
+<li><strong>nrfjprog</strong>: Nordic 设备烧录工具</li>
+</ul>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>重要的环境变量：</p>
+<ul>
+<li><strong>ZEPHYR_BASE</strong>: Zephyr 源码根目录</li>
+<li><strong>ZEPHYR_SDK_INSTALL_DIR</strong>: Zephyr SDK 安装目录</li>
+<li><strong>ZEPHYR_TOOLCHAIN_VARIANT</strong>: 使用的工具链变体</li>
+</ul>
+<h2 id="版本兼容性"><a href="#版本兼容性" class="headerlink" title="版本兼容性"></a>版本兼容性</h2><table>
+<thead>
+<tr>
+<th>Zephyr 版本</th>
+<th>推荐 SDK 版本</th>
+<th>最低 CMake 版本</th>
+<th>Python 版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>v2.9.x</td>
+<td>0.16.x</td>
+<td>3.20.0</td>
+<td>3.8+</td>
+</tr>
+<tr>
+<td>v2.7.x</td>
+<td>0.15.x</td>
+<td>3.20.0</td>
+<td>3.6+</td>
+</tr>
+<tr>
+<td>v2.5.x</td>
+<td>0.13.x</td>
+<td>3.13.1</td>
+<td>3.6+</td>
+</tr>
+</tbody></table>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li><p><strong>使用虚拟环境</strong></p>
+<ul>
+<li>为每个项目创建独立的 Python 虚拟环境</li>
+<li>避免全局依赖冲突</li>
+</ul>
+</li>
+<li><p><strong>版本控制</strong></p>
+<ul>
+<li>记录工具链版本信息</li>
+<li>使用 manifest 文件锁定依赖版本</li>
+</ul>
+</li>
+<li><p><strong>构建优化</strong></p>
+<ul>
+<li>使用 ccache 加速重复构建</li>
+<li>配置并行构建</li>
+</ul>
+</li>
+<li><p><strong>IDE 集成</strong></p>
+<ul>
+<li>配置 IDE 使用正确的工具链</li>
+<li>设置调试器配置</li>
+</ul>
+</li>
+</ol>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li><p><strong>工具链安装失败</strong></p>
+<ul>
+<li>检查系统依赖</li>
+<li>验证下载完整性</li>
+<li>确认权限设置</li>
+</ul>
+</li>
+<li><p><strong>构建错误</strong></p>
+<ul>
+<li>检查环境变量</li>
+<li>验证 CMake 版本</li>
+<li>确认工具链路径</li>
+</ul>
+</li>
+<li><p><strong>调试连接问题</strong></p>
+<ul>
+<li>检查硬件连接</li>
+<li>验证调试器配置</li>
+<li>确认驱动安装</li>
+</ul>
+</li>
+<li><p><strong>West 命令失败</strong></p>
+<ul>
+<li>检查 Python 版本</li>
+<li>验证 West 安装</li>
+<li>确认 manifest 文件</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Zephyr RTOS 开发需要一套完整的工具链，包括交叉编译器、构建系统和调试工具。正确设置和配置这些工具对于成功开发 Zephyr 应用程序至关重要。本章节提供了工具链安装和使用的详细指南，帮助开发者快速搭建开发环境。</p>
+<p>在接下来的章节中，我们将详细介绍工具链的各个组件，包括安装配置、构建系统、调试工具和开发环境设置。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io">JoeNero</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://joeforkyou.github.io/2025/03/21/nodic/zephyr/toolchain/README/">https://joeforkyou.github.io/2025/03/21/nodic/zephyr/toolchain/README/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/%E7%BE%8E%E5%A5%B3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/21/nodic/zephyr/timing/README/" title="README"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">README</div></div><div class="info-2"><div class="info-item-1">Zephyr 时间管理指南1. 时间管理配置1.1 基础配置 (prj.conf)1234567891011121314# 系统时钟配置CONFIG_SYS_CLOCK_TICKS_PER_SEC=1000CONFIG_TICKLESS_KERNEL=y# 定时器配置CONFIG_TIMER_HAS_64BIT_CYCLE_COUNTER=yCONFIG_TIMER_READS_ITS_FREQUENCY_AT_RUNTIME=y# RTC配置（如果使用）CONFIG_COUNTER=yCONFIG_COUNTER_RTC0=y# 时间测量配置CONFIG_TIMING_FUNCTIONS=y  1.2 时钟源配置 (boards&#x2F;xxx.overlay)12345678910/ &#123;    soc &#123;        timer0: timer@40000000 &#123;            compatible = &quot;nordic,nrf-timer&quot;;            reg = &lt;0x40000000...</div></div></div></a><a class="pagination-related" href="/2025/03/21/nodic/zephyr/testing/README/" title="README"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">README</div></div><div class="info-2"><div class="info-item-1">Zephyr 系统测试指南1. 测试框架概述1.1 测试架构1234567891011graph TD    A[测试用例] --&gt; B[测试框架]    B --&gt; C[测试运行器]    C --&gt; D[测试报告]        subgraph &quot;测试类型&quot;        E[单元测试]        F[集成测试]        G[系统测试]        H[性能测试]    end  1.2 测试配置12345678910# 测试支持CONFIG_ZTEST=yCONFIG_ZTEST_NEW_API=y# 断言支持CONFIG_ASSERT=y# 覆盖率支持CONFIG_COVERAGE=yCONFIG_COVERAGE_GCOV=y  2. 单元测试2.1 基本测试用例1234567891011121314151617181920212223242526272829#include &lt;zephyr/ztest.h&gt;/* 测试套件 */ZTEST_SUITE(basic_tests, NULL, NULL,...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/%E7%BE%8E%E5%A5%B3.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JoeNero</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">126</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/JoeForkYou"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/JoeForkYou" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:17549663745@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">wow!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Zephyr-%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">1.</span> <span class="toc-text">Zephyr 工具链</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E9%93%BE%E6%A6%82%E8%BF%B0"><span class="toc-number">1.2.</span> <span class="toc-text">工具链概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.3.</span> <span class="toc-text">支持的操作系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">1.4.</span> <span class="toc-text">快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text">Linux 环境设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.2.</span> <span class="toc-text">Windows 环境设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS-%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.4.3.</span> <span class="toc-text">macOS 环境设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E9%93%BE%E7%BB%84%E4%BB%B6"><span class="toc-number">1.5.</span> <span class="toc-text">工具链组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number">1.5.1.</span> <span class="toc-text">1. 交叉编译器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.2.</span> <span class="toc-text">2. 调试工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.3.</span> <span class="toc-text">3. 构建工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.4.</span> <span class="toc-text">4. 其他工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.6.</span> <span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="toc-number">1.7.</span> <span class="toc-text">版本兼容性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">1.8.</span> <span class="toc-text">最佳实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.9.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.10.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/drivers/" title="drivers">drivers</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/filesystem/" title="filesystem">filesystem</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/hardware/" title="hardware">hardware</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/kernel/" title="kernel">kernel</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/21/nodic/zephyr/core/networking/" title="networking">networking</a><time datetime="2025-03-21T12:49:56.000Z" title="Created 2025-03-21 20:49:56">2025-03-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By JoeNero</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script><script>mermaid.initialize({startOnLoad:true});</script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>
